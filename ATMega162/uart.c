@@ -29,3 +29,8 @@ unsigned char UART_recieve() {
     // read data register
     return UDR0;
 }
+
+void UART_link_printf() {
+    UART_recieve();
+    fdevopen(UART_transmit, UART_recieve);
+}

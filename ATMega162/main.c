@@ -8,11 +8,15 @@
 int main() {
     // JTAG_test_PA0();
     UART_init(UBRR);
+
+    // link printf() to UART by sending one character to the MCU
+    UART_link_printf();
+
+    printf("Onsdager er kult \n");
+
+    int i = 14;
+    printf("%d", i);
     
-    while(1) {
-        unsigned char c = UART_recieve();
-        UART_transmit(c);
-    }
     
     return 0;
 }
