@@ -1,0 +1,8 @@
+Rød - Vcc
+svart Jord
+gul - sammenkobling, nand(logiske kretser og chip select)
+grønn - addresse(eksternt minne), transmit(uart)
+blå - data(eksternt minne), recieve(uart)
+rosa - ALE (Latch enable)
+oransje - read enable
+lilla - write enable 
