@@ -1,16 +1,15 @@
 #include "uart.h"
-#include <avr/io.h>
+
 
 void UART_init(unsigned int ubrr) {
     // set baudrate
-    UCSR0A &= ~(1 << U2X0);
     UBRR0H = (unsigned char)(ubrr >> 8);
     UBRR0L = (unsigned char)ubrr;
 
     // enable reciever and transmitter
     UCSR0B = (1 << RXEN0) | (1 << TXEN0);
 
-    // set communication format
+    // set frame format
     UCSR0C = (1 << URSEL0) | (1 << USBS0) | (3 << UCSZ00);
 }
 
@@ -30,7 +29,6 @@ unsigned char UART_recieve() {
     return UDR0;
 }
 
-void UART_link_printf() {
-    UART_recieve();
-    fdevopen(UART_transmit, UART_recieve);
+void UART_link_printf() {    
+    fdevopen(&UART_transmit, &UART_recieve);
 }
