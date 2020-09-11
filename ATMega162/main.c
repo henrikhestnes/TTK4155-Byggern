@@ -5,35 +5,27 @@
 #include "adc.h"
 
 #define FOSC 4915200
-//#define FOSC 8000000
 #define BAUD 9600
 #define UBRR FOSC / 16 / BAUD - 1
 
 int main() {
+    xmem_init();
     UART_init(UBRR);
-    //xmem_init();
+    UART_link_printf();
+
+    // SRAM_test();
+
     adc_init();
 
-    // link printf() to UART by sending one character to the MCU
-    //UART_link_printf();
-    
-    //SRAM_test();
+    //test reading from adc
+    while (1) {
+        pos_t pos = adc_pos_read();
+        dir_t dir = adc_get_dir(pos);
+        slider_t slider = adc_get_slider();
 
-    //while(1){
-    //    printf("Magnus er søt \t");
-    //    int i = 14;
-    //    printf("%d", i);
-    //    _delay_ms(1000);
-    //}
+        printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
+        _delay_ms(500);
+    }
 
-    //DDRB = 1;
-    //while (1) {
-    //    PORTB |= (1 << PB0);
-    //    _delay_ms(1000);
-    //    PORTB &= ~(1 << PB0);
-    //    _delay_ms(1000);
-    //}
-
-  
     return 0;
 }
