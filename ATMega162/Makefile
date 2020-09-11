@@ -1,5 +1,5 @@
 # List all source files to be compiled; separate with space
-SOURCE_FILES := main.c jtag.c uart.c xmem.c sram_test.c
+SOURCE_FILES := main.c jtag.c uart.c xmem.c sram_test.c adc.c
 
 # Set this flag to "yes" (no quotes) to use JTAG; otherwise ISP (SPI) is used
 PROGRAM_WITH_JTAG := yes
@@ -35,14 +35,18 @@ $(BUILD_DIR)/main.hex: $(OBJECT_FILES) | $(BUILD_DIR)
 flash: $(BUILD_DIR)/main.hex
 	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -U flash:w:$(BUILD_DIR)/main.hex:i
 
+
+.PHONY: fuse
+fuse:
+	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -U efuse:w:0xff:m
+	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -U hfuse:w:0x19:m
+	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -U lfuse:w:0xfd:m
+
 .PHONY: clean
 clean:
 	rm -rf $(BUILD_DIR)
-
-.PHONY: erase
-erase:
-	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -e
 	
+
 .PHONY: debug
 debug:
 	if pgrep avarice; then pkill avarice; fi
@@ -50,4 +54,9 @@ debug:
 	x-terminal-emulator -e avarice --edbg --ignore-intr :4242
 	sleep 2
 	avr-gdb -tui -iex "target remote localhost:4242" $(BUILD_DIR)/a.out
-	killall -s 9 avarice	
+	killall -s 9 avarice
+
+
+.PHONY: erase
+erase:
+	avrdude -p $(TARGET_DEVICE) -c $(PROGRAMMER) -e

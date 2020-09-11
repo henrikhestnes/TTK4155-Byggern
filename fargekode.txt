@@ -6,3 +6,4 @@ blå - data(eksternt minne), recieve(uart)
 rosa - ALE (Latch enable)
 oransje - read enable
 lilla - write enable 
+grå - clk/pwm adc
