@@ -6,6 +6,7 @@
 #include "joystick.h"
 #include "slider.h"
 #include "oled.h"
+#include "menu.h"
 
 
 #define FOSC 4915200
@@ -32,17 +33,24 @@ int main() {
         oled_set_pos(1, 0);
         oled_write_string("Lasse er lok", LARGE);
 
-        oled_set_pos(4, 0);
+        _delay_ms(1000);
+
+        oled_set_pos(1, 0);
         oled_write_string("Magnus er sot", LARGE);
+    
+    // Menu
+        oled_clear();
+        menu_init();
+        menu_print(LARGE);
 
     // ADC test
         while (1) {
-            pos_t pos = joystick_pos_read();
-            dir_t dir = joystick_get_dir(pos);
-            slider_t slider = slider_pos_read();
+            // pos_t pos = joystick_pos_read();
+            // dir_t dir = joystick_get_dir(pos);
+            // slider_t slider = slider_pos_read();
 
-            printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
-            _delay_ms(500);
+            // printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
+            // _delay_ms(500);
             
         }
 
