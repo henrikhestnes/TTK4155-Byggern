@@ -14,33 +14,37 @@
 
 
 int main() {
-    xmem_init();
-    // UART_init(UBRR);
-    // UART_link_printf();
+    // XMEM
+        xmem_init();
 
-    // SRAM_test();
+    // UART
+        UART_init(UBRR);
+        UART_link_printf();
 
-    // adc_init();
+    // SRAM
+        SRAM_test();
 
-    oled_init();
-    oled_set_pos(1, 60);
-    oled_draw_arrow();
+    // ADC
+        adc_init();
 
-    oled_set_pos(6, 120);
-    oled_draw_arrow();
+    // OLED
+        oled_init();
+        oled_set_pos(1, 0);
+        oled_write_string("Lasse er lok", LARGE);
 
-    
-    while (1) {
-        
-        // pos_t pos = joystick_pos_read();
-        // dir_t dir = joystick_get_dir(pos);
-        // slider_t slider = slider_pos_read();
-        //JTAG_test_PA0();
+        oled_set_pos(4, 0);
+        oled_write_string("Magnus er sot", LARGE);
 
-        // printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
-        //_delay_ms(500);
-        
-    }
+    // ADC test
+        while (1) {
+            pos_t pos = joystick_pos_read();
+            dir_t dir = joystick_get_dir(pos);
+            slider_t slider = slider_pos_read();
+
+            printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
+            _delay_ms(500);
+            
+        }
 
     return 0;
 }
