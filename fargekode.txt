@@ -1,11 +1,11 @@
 Rød - Vcc
 svart Jord
-gul - sammenkobling, nand(logiske kretser og chip select), høyre slider(multibrett)
-grønn - addresse(eksternt minne), transmit(uart), x_pos(joystick)
-blå - data(eksternt minne, adc), recieve(uart), venstre slider(multibrett)
+gul - sammenkobling, nand(logiske kretser og chip select)
+grønn - addresse(eksternt minne), transmit(uart)
+blå - data(eksternt minne, adc), recieve(uart)
 rosa - ALE (Latch enable)
 oransje - read enable
 lilla - write enable 
 grå - clk/pwm ad
-brun -  y_pos(joystick)
+brun -  usb multifunction board
 

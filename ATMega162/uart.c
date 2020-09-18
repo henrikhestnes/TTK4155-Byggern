@@ -1,4 +1,5 @@
 #include "uart.h"
+#include <avr/io.h>
 
 
 void UART_init(unsigned int ubrr) {
@@ -13,6 +14,7 @@ void UART_init(unsigned int ubrr) {
     UCSR0C = (1 << URSEL0) | (1 << USBS0) | (3 << UCSZ00);
 }
 
+
 void UART_transmit(unsigned char data){
     // wait for empty buffer
     while(!(UCSR0A & (1 << UDRE0)));
@@ -21,6 +23,7 @@ void UART_transmit(unsigned char data){
     UDR0 = data;
 }
 
+
 unsigned char UART_recieve() {
     // wait for completed recieve
     while (!(UCSR0A & (1 << RXC0)));
@@ -28,6 +31,7 @@ unsigned char UART_recieve() {
     // read data register
     return UDR0;
 }
+
 
 void UART_link_printf() {    
     fdevopen(&UART_transmit, &UART_recieve);

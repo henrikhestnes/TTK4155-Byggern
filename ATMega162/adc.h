@@ -1,43 +1,34 @@
 #ifndef ADC_H
 #define ADC_H
 
-#include "xmem.h"
-#include <avr/io.h>
-#include <math.h>
 
-#define F_CPU 4.9152E6
-#include <util/delay.h>
+#include <stdint.h>
 
-typedef enum {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    NEUTRAL
-} dir_t;
 
-typedef struct {
-    int x;
-    int y;
-} pos_t;
-
-typedef struct {
-    int left;
-    int right;
-} slider_t;
-
+/**
+ * @brief Configurates the external clock signal delivered from
+ * the ATMega162 to the ADC. Sets the frequency to half the
+ * frequency of the CPU interal clock.
+ */
 void adc_config_clock(void); 
 
+
+/**
+ * @brief Initiates the ADC by configuring the external clock.
+ */
 void adc_init(void);
 
+
+/**
+ * @brief Reads the output data from the ADC conversion. Starts the
+ * conversion by writing to the ADC address space, and reads serially
+ * until data from channel @p channel is read.
+ * 
+ * @param channel The analog channel to be read from
+ * 
+ * @return The output data from the conversion of channel @p channel.
+ */
 uint8_t adc_read(uint8_t channel);
 
-void adc_calibrate();
-
-pos_t adc_pos_read(void);
-
-dir_t adc_get_dir(pos_t pos);
-
-slider_t adc_get_slider();
 
 #endif
