@@ -18,19 +18,19 @@ int main() {
     // UART_init(UBRR);
     // UART_link_printf();
 
+    // SRAM_test();
+
+    // adc_init();
+
     oled_init();
-    //SRAM_test();
+    oled_set_pos(1, 60);
+    oled_draw_arrow();
 
-    //adc_init();
-    //volatile char* ext_mem = (char*) 0x1000;
+    oled_set_pos(6, 120);
+    oled_draw_arrow();
 
-    oled_command(0xA5);
-    // test reading from adc
+    
     while (1) {
-
-        
-        
-        //ext_mem[0]=0xA5;
         
         // pos_t pos = joystick_pos_read();
         // dir_t dir = joystick_get_dir(pos);
