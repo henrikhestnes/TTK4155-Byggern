@@ -18,12 +18,12 @@ typedef enum {
 } menu_state_t;
 
 
-typedef struct menu_node{
-    char** content;
-    struct menu_node* children;
-    struct menu_node* parent;
+typedef struct menu {
+    const char** content;
+    struct menu** children;
+    struct menu* parent;
     int length;
-} menu_node_t;
+} menu_t;
 
 
 void menu_init(void);

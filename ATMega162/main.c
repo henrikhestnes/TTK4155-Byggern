@@ -16,13 +16,6 @@
 #define UBRR FOSC / 16 / BAUD - 1
 
 
-ISR(INT1_vect) {
-    oled_clear();
-    oled_set_pos(1, 0);
-    oled_print_string("Sug meg", LARGE);
-}
-
-
 int main() {
     // XMEM
         xmem_init();
@@ -30,7 +23,6 @@ int main() {
     // INTERRUPT
         sei();
         interrupt_init();
-
         
     // UART
         UART_init(UBRR);
@@ -64,7 +56,6 @@ int main() {
 
             // printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
             // _delay_ms(500);
-            
         }
 
     return 0;

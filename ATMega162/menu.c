@@ -2,29 +2,37 @@
 #include "oled.h"
 #include <stdlib.h>
 #include <avr/interrupt.h>
+#include <avr/pgmspace.h>
 
 
-#define MAIN_MENU_LENGTH 3
+#define MAIN_MENU_LENGTH 4
 
 
-menu_node_t* main_menu;
-menu_node_t* settings_menu;
-menu_node_t* highscore_menu;
+menu_t* menu;
+menu_state_t state;
+
+
+const char text_new_game[] PROGMEM = "New game";
+const char text_settings[] PROGMEM = "Settings";
+const char text_highscore[] PROGMEM = "Highscore";
+const char text_quit[] PROGMEM = "Quit";
+
+
+PGM_P const content_main_menu[] PROGMEM = {text_new_game, text_settings, text_highscore, text_quit};
 
 
 void menu_init() {
-    main_menu = malloc(sizeof(menu_node_t));
-    settings_menu = malloc(sizeof(menu_node_t));
+    // initiate main menu
+    menu = malloc(sizeof(menu_t));
+    menu->length = MAIN_MENU_LENGTH;
+    menu->parent = NULL;
+    menu->content = content_main_menu;
 
-    main_menu->length = MAIN_MENU_LENGTH;
-    main_menu->content = malloc(sizeof(char*) * main_menu->length);
-    
-    main_menu->content[0] = "New game";
-    main_menu->content[1] = "Settings";
-    main_menu->content[2] = "Quit";
-
-    main_menu->children = settings_menu;
-    settings_menu->parent = main_menu;
+    // add submenus
+    // menu->children[0] = NULL;
+    // menu->children[1] = malloc(sizeof(menu_t));
+    // menu->children[2] = malloc(sizeof(menu_t));
+    // menu->children[3] = NULL;
 }
 
 
@@ -41,11 +49,19 @@ void menu_init() {
 
 
 void menu_print(font_type_t type) {
-    char* content[3] = {"New game", "Settings", "Quit"};
+    char word[10];
 
-    for (int i = 0; i < main_menu->length; i++) {
-        oled_set_pos(2*i + 1, 8);
-        oled_print_string(main_menu->content[i], type);
-        //printf("%s", *main_menu.content[i]);
-    }
+    for (int i = 0; i < menu->length; i++) {
+        strcpy_P(word, (PGM_P)pgm_read_word(&(menu->content[i])));
+
+        oled_set_pos(i + 1, 8);
+        oled_print_string(word, type);
+    }    
+}
+
+
+ISR(INT1_vect) {
+    oled_clear();
+    oled_set_pos(1, 0);
+    oled_print_string("Sug meg", LARGE);
 }
