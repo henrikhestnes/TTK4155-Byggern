@@ -21,8 +21,10 @@ int main() {
         xmem_init();
 
     // INTERRUPT
+        cli();
+        interrupt_joystick_init();
+        interrupt_timer_init();
         sei();
-        interrupt_init();
         
     // UART
         UART_init(UBRR);
@@ -46,16 +48,16 @@ int main() {
     // Menu
         oled_clear();
         menu_init();
-        menu_print(LARGE);
+        //menu_print(LARGE);
 
     // ADC test
         while (1) {
             // pos_t pos = joystick_pos_read();
             // dir_t dir = joystick_get_dir(pos);
             // slider_t slider = slider_pos_read();
-
             // printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
             // _delay_ms(500);
+            menu_set_state();
         }
 
     return 0;

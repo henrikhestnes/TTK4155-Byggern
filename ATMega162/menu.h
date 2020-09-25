@@ -19,7 +19,7 @@ typedef enum {
 
 
 typedef struct menu {
-    const char** content;
+    const char* const* content;
     struct menu** children;
     struct menu* parent;
     int length;
@@ -32,13 +32,16 @@ void menu_init(void);
 // void menu_free(void);
 
 
-void menu_set_state(menu_state_t state);
+void menu_add_submenu(menu_t* parent, int length);
+
+
+void menu_add_submenu_content(menu_t* submenu, const char* const * content, int content_length);
 
 
 void menu_print(font_type_t type);
 
 
-void action_function(int state);
+void menu_set_state();
 
 
 #endif

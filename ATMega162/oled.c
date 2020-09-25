@@ -1,11 +1,13 @@
 #include "oled.h"
 #include "fonts.h"
+#include "joystick.h"
 
 
 #define ASCII_OFFSET 32
 
 
 const int FONT_LENGTH[3] = {8, 5, 4};
+
 
 
 void oled_init(){
@@ -121,6 +123,46 @@ void oled_print_string(const char* string, font_type_t type) {
 }
 
 
+void oled_print_inverted_char(char c, font_type_t type) {
+    if (' ' <= c && c <= '~') {
+        switch (type) {
+            case LARGE:
+                for (int i = 0; i < FONT_LENGTH[LARGE]; i++) {
+                    uint8_t character = pgm_read_byte(&(font8[c - ASCII_OFFSET][i]));
+                    oled_write_data(~character);
+                }
+                break;
+
+            case NORMAL:
+                for (int i = 0; i < FONT_LENGTH[NORMAL]; i++) {
+                    uint8_t character = pgm_read_byte(&(font5[c - ASCII_OFFSET][i]));
+                    oled_write_data(~character);
+                }
+                break;
+
+            case SMALL:
+                for (int i = 0; i < FONT_LENGTH[SMALL]; i++) {
+                    uint8_t character = pgm_read_byte(&(font4[c - ASCII_OFFSET][i]));
+                    oled_write_data(~character);
+                }
+                break;
+
+            default:
+                break;
+        }
+    }  
+}
+
+
+void oled_print_inverted_string(const char* string, font_type_t type) {
+    int i = 0;
+    while (string[i] != '\0') {
+        oled_print_inverted_char(string[i], type);
+        ++i;
+    }
+}
+
+
 void oled_draw_arrow() {
     oled_write_data(0b00011000);
     oled_write_data(0b00011000);
@@ -128,4 +170,5 @@ void oled_draw_arrow() {
     oled_write_data(0b00111100);
     oled_write_data(0b00011000);
 }
+
 
