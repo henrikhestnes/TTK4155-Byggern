@@ -7,6 +7,8 @@
 #include "slider.h"
 #include "oled.h"
 #include "menu.h"
+#include "interrupt.h"
+#include <avr/interrupt.h>
 
 
 #define FOSC 4915200
@@ -14,10 +16,22 @@
 #define UBRR FOSC / 16 / BAUD - 1
 
 
+ISR(INT1_vect) {
+    oled_clear();
+    oled_set_pos(1, 0);
+    oled_print_string("Sug meg", LARGE);
+}
+
+
 int main() {
     // XMEM
         xmem_init();
 
+    // INTERRUPT
+        sei();
+        interrupt_init();
+
+        
     // UART
         UART_init(UBRR);
         UART_link_printf();
@@ -31,12 +45,11 @@ int main() {
     // OLED
         oled_init();
         oled_set_pos(1, 0);
-        oled_write_string("Lasse er lok", LARGE);
-
+        oled_print_string("Lasse er lok", LARGE);
         _delay_ms(1000);
 
         oled_set_pos(1, 0);
-        oled_write_string("Magnus er sot", LARGE);
+        oled_print_string("Magnus er sot", LARGE);
     
     // Menu
         oled_clear();

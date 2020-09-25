@@ -47,13 +47,14 @@ void oled_write_data(uint8_t data){
 }
 
 
-void oled_set_pos(int page, int col) {
-    // select page
-    if (0 <= page && page <=7) {
-        oled_write_command(0xB0 + page);
+void oled_go_to_line(int line){
+    if (0 <= line && line <=7) {
+        oled_write_command(0xB0 + line);
     }
+}
 
-    // select column
+
+void oled_go_to_col(int col){
     if (0 <= col && col <= 127) {
         // set lower 4 bits
         oled_write_command(0x00 + (col & 0x0F));
@@ -61,6 +62,12 @@ void oled_set_pos(int page, int col) {
         // set upper 4 bits
         oled_write_command(0x10 + ((col & 0xF0) >> 4));
     }
+}
+
+
+void oled_set_pos(int line, int col) {
+    oled_go_to_line(line);
+    oled_go_to_col(col);
 }
 
 
@@ -74,7 +81,7 @@ void oled_clear() {
 }
 
 
-void oled_write_char(char c, font_type type) {
+void oled_print_char(char c, font_type_t type) {
     if (' ' <= c && c <= '~') {
         switch (type) {
             case LARGE:
@@ -105,10 +112,10 @@ void oled_write_char(char c, font_type type) {
 }
 
 
-void oled_write_string(char* string, font_type type) {
+void oled_print_string(const char* string, font_type_t type) {
     int i = 0;
     while (string[i] != '\0') {
-        oled_write_char(string[i], type);
+        oled_print_char(string[i], type);
         ++i;
     }
 }

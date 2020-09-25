@@ -1,7 +1,7 @@
 #include "jtag.h"
 
 void JTAG_test_PA0() {
-    DDRC = (1<<PC2);
+    DDRC = (1 << PC2);
 
     while(1) {
         PORTC |= (1 << PC2);
