@@ -5,7 +5,7 @@
 
 #define X_CHANNEL 0
 #define Y_CHANNEL 1
-#define DIRECTION_TRESHOLD 40
+#define DIRECTION_TRESHOLD 50
 
 #define X_OFFSET 26
 #define Y_OFFSET 28
@@ -43,18 +43,30 @@ pos_t joystick_pos_read(void){
 }
 
 
-dir_t joystick_get_dir(pos_t pos){    
-    if(pos.x > DIRECTION_TRESHOLD && abs(pos.y) < abs(pos.x) ){
+dir_t joystick_get_dir(){    
+    pos_t pos = joystick_pos_read();
+
+    if (pos.x > DIRECTION_TRESHOLD && abs(pos.y) < abs(pos.x)){
         return RIGHT;
     }
-    if(pos.x < -DIRECTION_TRESHOLD && abs(pos.y) < abs(pos.x)){
+
+    else if(pos.x < -DIRECTION_TRESHOLD && abs(pos.y) < abs(pos.x)){
         return LEFT;
     }
-    if(pos.y > DIRECTION_TRESHOLD && abs(pos.x) <= abs(pos.y)){
+
+    else if(pos.y > DIRECTION_TRESHOLD && abs(pos.x) <= abs(pos.y)){
         return UP;
     }
-    if(pos.y < -DIRECTION_TRESHOLD && abs(pos.x) <= abs(pos.y)){
+
+    else if(pos.y < -DIRECTION_TRESHOLD && abs(pos.x) <= abs(pos.y)){
         return DOWN;
     }
-    return NEUTRAL;
+
+    else if (abs(pos.x) < 10 && abs(pos.y) < 10){
+        return CENTER;
+    }   
+
+    else{
+        return NEUTRAL;
+    }
 }

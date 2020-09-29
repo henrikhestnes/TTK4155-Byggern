@@ -9,7 +9,6 @@
 const int FONT_LENGTH[3] = {8, 5, 4};
 
 
-
 void oled_init(){
     oled_write_command(0xae);
     oled_write_command(0xa1);

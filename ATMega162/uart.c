@@ -17,7 +17,7 @@ void UART_init(unsigned int ubrr) {
 
 void UART_transmit(unsigned char data){
     // wait for empty buffer
-    while(!(UCSR0A & (1 << UDRE0)));
+    while (!(UCSR0A & (1 << UDRE0)));
 
     // write to data register
     UDR0 = data;

@@ -5,18 +5,19 @@
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 
-#include <util/delay.h>
+
+#define F_CPU 4.9152E6
+#include <util/delay.h> 
 
 
 #define MAIN_MENU_LENGTH 4
-#define SETTINGS_LENGTH 3
+#define SETTINGS_LENGTH 4
 #define HIGHSCORE_LENGTH 3
 
 
-menu_t* menu;
-menu_state_t state;
-
-char one_scroll_per_joystick_move;
+static menu_node_t* current;
+char state_changed;
+int state;
 
 
 const char text_new_game[] PROGMEM = "New game";
@@ -32,65 +33,86 @@ const char text_return[] PROGMEM = "Return";
 PGM_P const content_settings[] PROGMEM = {text_difficulty, text_brightness, text_music, text_return};
 
 const char text_reset[] PROGMEM = "Reset";
-PGM_P const content_highscore[] PROGMEM = {text_reset, text_return};
+PGM_P const content_highscore[] PROGMEM = {text_highscore, text_reset, text_return};
 
 
 void menu_init() {
-    // initiate main menu
-    menu = malloc(sizeof(menu_t));
-    menu->length = MAIN_MENU_LENGTH;
-    menu->parent = NULL;
-    menu->content = content_main_menu;
+    menu_t* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH);
+    menu_t* settings_menu = menu_new(content_settings, SETTINGS_LENGTH);
+    menu_t* highscore_menu = menu_new(content_highscore, HIGHSCORE_LENGTH);
 
-    state=MAIN_MENU_NEW_GAME;
+    // main menu linked list
+    menu_node_t* new_game_node = menu_new_node(main_menu, NULL, NULL);
+    menu_node_t* settings_node = menu_new_node(main_menu, settings_menu, go_to_child);
+    menu_node_t* highscore_node = menu_new_node(main_menu, highscore_menu, go_to_child);
+    menu_node_t* quit_node = menu_new_node(main_menu, NULL, NULL);
 
-    one_scroll_per_joystick_move=1;
+    menu_link_nodes(new_game_node, settings_node);
+    menu_link_nodes(settings_node, highscore_node);
+    menu_link_nodes(highscore_node, quit_node);
+    menu_link_nodes(quit_node, new_game_node);
 
-    // add submenus
-    menu_add_submenu(menu, 4);
-    // new game
-    menu_add_submenu_content(menu->children[0], NULL, 0);
-    // highscore
-    menu_add_submenu_content(menu->children[1], content_highscore, 1);
-    // settings
-    menu_add_submenu_content(menu->children[2], content_settings, 3);
-    // quit
-    menu_add_submenu_content(menu->children[3], NULL, 0);
+    main_menu->head = new_game_node;
+
+    // settings menu linked list
+    menu_node_t* difficulty_node = menu_new_node(settings_menu, NULL, NULL);
+    menu_node_t* brightness_node = menu_new_node(settings_menu, NULL, NULL);
+    menu_node_t* music_node = menu_new_node(settings_menu, NULL, NULL);
+    menu_node_t* settings_return_node = menu_new_node(settings_menu, NULL, go_to_parent);
+
+    menu_link_nodes(difficulty_node, brightness_node);
+    menu_link_nodes(brightness_node, music_node);
+    menu_link_nodes(music_node, settings_return_node);
+    menu_link_nodes(settings_return_node, difficulty_node);
+
+    settings_menu->head = difficulty_node;
+
+    // highscore menu linked list
+    menu_node_t* reset_node = menu_new_node(highscore_menu, NULL, NULL);
+    menu_node_t* highscore_return_node = menu_new_node(highscore_menu, NULL, go_to_parent);
+
+    menu_link_nodes(reset_node, highscore_return_node);
+
+    highscore_menu->head = reset_node;
+
+    // init the current state node
+    current = new_game_node;
+    state = 0;
+    menu_print(LARGE);
 }
 
 
-void menu_add_submenu(menu_t* parent, int length) {
-    menu_t* submenu = malloc(sizeof(menu_t)*length);
-    submenu->parent = parent;
-    submenu->children = NULL;
+menu_t* menu_new(const char* const* text_display, int length) {
+    menu_t* menu = malloc(sizeof(menu_t));
+    menu->text_display = text_display;
+    menu->length = length;
+    menu->head = NULL;
 
-    parent->children = &submenu;
+    return menu;
 }
 
 
-void menu_add_submenu_content(menu_t* submenu, const char* const* content, int content_length) {
-    submenu->length = content_length;
-    submenu->content = content;
+menu_node_t* menu_new_node(menu_t* parent_menu, menu_t* child_menu, void (*action_function)()) {
+    menu_node_t* node = malloc(sizeof(menu_node_t));
+    node->child_menu = child_menu;
+    node->parent_menu = parent_menu;
+    node->action_function = action_function;
+
+    node->next = NULL;
+    node->prev = NULL;
+
+    return node;
 }
-
-// void menu_free() {
-//     free(main_menu->content);
-//     free(main_menu);
-
-//     free(settings_menu->content);
-//     free(settings_menu);
-
-//     free(highscore_menu->content);
-//     free(highscore_menu);
-// }
 
 
 void menu_print(font_type_t type) {
     char word[20];
-    for(int i = 0; i<menu->length; i++){
-        strcpy_P(word, (PGM_P)pgm_read_word(&(menu->content[i])));
-        oled_set_pos(i+1,8);
-        if (i==state){
+    menu_t* current_menu = current->parent_menu;
+
+    for (int i = 0; i < current_menu->length; i++){
+        strcpy_P(word, (PGM_P)pgm_read_word(&(current_menu->text_display[i])));
+        oled_set_pos(i+1, 8);
+        if (i == state){
             oled_print_inverted_string(word,LARGE);
         }
         else{
@@ -98,60 +120,69 @@ void menu_print(font_type_t type) {
         }
     }
 }
-//     char word[20];
-//     strcpy_P(word, (PGM_P)pgm_read_word(&(menu->content[0])));
-
-//     oled_set_pos(0,8);
-//     oled_print_inverted_string(word, type);
-
-//     for (int i = 1; i < menu->length; i++) {
-//         strcpy_P(word, (PGM_P)pgm_read_word(&(menu->content[i])));
-
-//         oled_set_pos(i, 8);
-//         oled_print_string(word, type);
-//     }    
-// }
 
 
+void menu_link_nodes(menu_node_t* first, menu_node_t* second) {
+    first->next = second;
+    second->prev = first;
+}
 
-void menu_set_state(){
-    switch (joystick_get_dir(joystick_pos_read())){
-        case UP:{
-            if (one_scroll_per_joystick_move){
-                if (state==0){
-                    state = menu->length-1;
-                }
-                else{
-                    state -=1;
-                }
-                one_scroll_per_joystick_move = 0;
+
+void menu_run() {
+    switch (joystick_get_dir()) {
+        case UP:
+            if (state == 0) {
+                state = current->parent_menu->length - 1;
             }
-            break;
-        }
-        case DOWN:{
-            if (one_scroll_per_joystick_move){
-                if (state==menu->length-1){
-                    state=0;
-                }
-                else{
-                    state+=1;
-                }
-                one_scroll_per_joystick_move = 0;
+            else {
+                --state;
             }
+            state_changed = 1;
             break;
-        }
-        case NEUTRAL:
-            one_scroll_per_joystick_move = 1;
+
+        case DOWN:
+            if (state == current->parent_menu->length - 1) {
+                state = 0;
+            }
+            else{
+                ++state;
+            }
+            state_changed = 1;
+        
+        case CENTER:
+
+        default:
             break;
     }
+
+    _delay_ms(150);
+}
+
+
+void go_to_child() {
+    current = current->child_menu->head;
+    state = 0;
+}
+
+
+void go_to_parent() {
+    current = current->parent_menu->head;
+    state = 0;
 }
 
 
 ISR(INT1_vect) {
-
+    if (current->action_function) {
+        current->action_function();
+    }
 }
 
+
 ISR(TIMER1_COMPA_vect){
-    oled_clear();
+    if (!state_changed) {
+        return;
+    }
+
+    state_changed = 0;
     menu_print(LARGE);
 }

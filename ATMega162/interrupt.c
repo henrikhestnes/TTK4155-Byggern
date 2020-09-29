@@ -18,14 +18,14 @@ void interrupt_joystick_init() {
 }
 
 
-void interrupt_timer_init(){
+void interrupt_oled_timer_init(){
     TCCR1A = 0;
     TCCR1B = 0;
     TCNT1 = 0;
 
-    // set compare match register for 60hz
-    OCR1A = 2000;
-    
+    // set compare match register for 23.76 hz
+    OCR1A = 100;
+
     // turn on CTC mode
     TCCR1B |= (1 << WGM12);
 

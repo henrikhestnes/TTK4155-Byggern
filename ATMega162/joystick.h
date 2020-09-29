@@ -13,7 +13,8 @@ typedef enum {
     DOWN,
     LEFT,
     RIGHT,
-    NEUTRAL
+    NEUTRAL,
+    CENTER
 } dir_t;
 
 
@@ -54,11 +55,9 @@ pos_t joystick_pos_read(void);
 /**
  * @brief Calculates the joystick's direction from it's postiton.
  * 
- * @param pos The position of the joystick.
- * 
  * @return The direction the joystick is pointing when in position @p pos.
  */
-dir_t joystick_get_dir(pos_t pos);
+dir_t joystick_get_dir(void);
 
 
 #endif
