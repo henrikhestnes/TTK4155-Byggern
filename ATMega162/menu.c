@@ -26,14 +26,14 @@ const char text_highscore[] PROGMEM = "Highscore";
 const char text_quit[] PROGMEM = "Quit";
 PGM_P const content_main_menu[] PROGMEM = {text_new_game, text_settings, text_highscore, text_quit};
 
-const char text_difficulty[] PROGMEM = "Select difficulty";
-const char text_brightness[] PROGMEM = "Change brightness";
+const char text_difficulty[] PROGMEM = "Set difficulty";
+const char text_brightness[] PROGMEM = "Set brightness";
 const char text_music[] PROGMEM = "Select music";
 const char text_return[] PROGMEM = "Return";
 PGM_P const content_settings[] PROGMEM = {text_difficulty, text_brightness, text_music, text_return};
 
 const char text_reset[] PROGMEM = "Reset";
-PGM_P const content_highscore[] PROGMEM = {text_highscore, text_reset, text_return};
+PGM_P const content_highscore[] PROGMEM = {text_reset, text_return};
 
 
 void menu_init() {
@@ -131,22 +131,28 @@ void menu_link_nodes(menu_node_t* first, menu_node_t* second) {
 void menu_run() {
     switch (joystick_get_dir()) {
         case UP:
+            current = current->next;
+
             if (state == 0) {
                 state = current->parent_menu->length - 1;
             }
             else {
                 --state;
             }
+
             state_changed = 1;
             break;
 
         case DOWN:
+            current = current->prev;
+
             if (state == current->parent_menu->length - 1) {
                 state = 0;
             }
             else{
                 ++state;
             }
+
             state_changed = 1;
         
         case CENTER:
@@ -173,6 +179,8 @@ void go_to_parent() {
 
 ISR(INT1_vect) {
     if (current->action_function) {
+        oled_clear();
+        state_changed = 1;
         current->action_function();
     }
 }

@@ -41,17 +41,17 @@ int main() {
         oled_clear();
 
     // Menu
-        // menu_init();    
+        menu_init();    
 
     // ADC test
         while (1) {
-            pos_t pos = joystick_pos_read();
-            dir_t dir = joystick_get_dir();
-            slider_t slider = slider_pos_read();
-            printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
-            _delay_ms(500);
+            // pos_t pos = joystick_pos_read();
+            // dir_t dir = joystick_get_dir();
+            // slider_t slider = slider_pos_read();
+            // printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
+            // _delay_ms(500);
 
-            // menu_run();
+            menu_run();
         }
 
     return 0;
