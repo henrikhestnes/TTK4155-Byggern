@@ -3,14 +3,14 @@
 #include <math.h>
 
 
-#define X_CHANNEL 0
-#define Y_CHANNEL 1
-#define DIRECTION_TRESHOLD 50
+#define X_CHANNEL           0
+#define Y_CHANNEL           1
+#define DIRECTION_TRESHOLD  50
 
-#define X_OFFSET 26
-#define Y_OFFSET 28
-#define MAX_VALUE 100
-#define MIN_VALUE -100
+#define X_OFFSET    26
+#define Y_OFFSET    28
+#define MAX_VALUE   100
+#define MIN_VALUE  -100
 
 
 int joystick_scale_value(uint8_t value, int offset, int max, int min) {

@@ -9,6 +9,8 @@
 #include "menu.h"
 #include "interrupt.h"
 #include "spi_driver.h"
+#include "mcp2515_driver.h"
+#include "can_driver.h"
 #include <avr/interrupt.h>
 
 
@@ -44,10 +46,23 @@ int main() {
     // Menu
         menu_init(); 
 
-    // SPI
-        spi_init();
+    // CAN
+        can_init();
+        message_t message = {
+            20,
+            8,
+            "heii"
+        };
 
-    // ADC test
+        printf("%d \r\n", message.length);
+
+        can_trancieve(&message);
+        message_t recieved = can_recieve();
+        printf("id: %d\r\n", recieved.id);
+        printf("length: %d\r\n", recieved.length);
+        printf("data: %s\r\n", recieved.data);
+
+    // Testing
         while (1) {
             // pos_t pos = joystick_pos_read();
             // dir_t dir = joystick_get_dir();
@@ -55,12 +70,9 @@ int main() {
             // printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
             // _delay_ms(500);
 
-            // menu_run();
-
-            spi_write(0xAA);
-            _delay_ms(1);
-
+            menu_run();
         }
+        
 
     return 0;
 }

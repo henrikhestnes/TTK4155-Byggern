@@ -1,8 +1,9 @@
 #include "mcp2515_driver.h"
+#include "uart.h"
 #include <avr/io.h>
 
 
-#define CAN_CS PB4
+#define CAN_CS      PB4
 
 
 void clear_cs(void) {
@@ -21,7 +22,7 @@ int mcp2515_init() {
 
     uint8_t value = mcp2515_read(MCP_CANSTAT);
     if ((value & MODE_MASK) != MODE_CONFIG) {
-        printf("ERROR: MCP2515 not in configuration mode after reset.");
+        printf("ERROR: MCP2515 not in configuration mode after reset. \r \n");
         return 1;
     }
 
@@ -44,7 +45,7 @@ uint8_t mcp2515_read(uint8_t address) {
 }
 
 
-uint8_t mcp2515_write(uint8_t data, uint8_t address) {
+uint8_t mcp2515_write(uint8_t address, uint8_t data) {
     clear_cs();
 
     spi_write(MCP_WRITE);
@@ -106,7 +107,7 @@ int mcp2515_set_mode(uint8_t mode) {
     // verify new mode
     uint8_t new_mode = mcp2515_read(MCP_CANSTAT);
     if ((new_mode & MODE_MASK) != mode) {
-        printf("ERROR: failed to set mode.");
+        printf("ERROR: failed to set mode. \r \n");
         return 1;
     }
 

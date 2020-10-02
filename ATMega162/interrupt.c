@@ -5,7 +5,6 @@
 
 
 void interrupt_joystick_init() {
-    //joystick
     // enable INT1 interrupt vector
     GICR |= (1 << INT1);
 
@@ -34,4 +33,17 @@ void interrupt_oled_timer_init(){
 
     // enable timer compare interrupt
     TIMSK |= (1 << OCIE1A);
+}
+
+
+void interrupt_can_transmission_init() {
+    // enable INT1 interrupt vector
+    GICR |= (1 << INT0);
+
+    // interrupt on falling edge
+    MCUCR |= (1 << ISC11);
+    MCUCR &= ~(1 << ISC10);
+
+    // set INT0 as input
+    DDRD &= ~(1 << PD2);
 }
