@@ -8,6 +8,7 @@
 #include "oled.h"
 #include "menu.h"
 #include "interrupt.h"
+#include "spi_driver.h"
 #include <avr/interrupt.h>
 
 
@@ -41,7 +42,10 @@ int main() {
         oled_clear();
 
     // Menu
-        menu_init();    
+        menu_init(); 
+
+    // SPI
+        spi_init();
 
     // ADC test
         while (1) {
@@ -51,7 +55,11 @@ int main() {
             // printf("(x,y) = (%d, %d). Direction = %d (LS,RS)=(%d,%d)\r\n", pos.x, pos.y, dir, slider.left, slider.right);
             // _delay_ms(500);
 
-            menu_run();
+            // menu_run();
+
+            spi_write(0xAA);
+            _delay_ms(1);
+
         }
 
     return 0;

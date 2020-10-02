@@ -1,11 +1,11 @@
 Rød - Vcc
 svart Jord
-gul - sammenkobling, nand(logiske kretser og chip select)
+gul - sammenkobling, nand(logiske kretser og chip select), reset, slave select
 grønn - addresse(eksternt minne), transmit(uart)
 blå - data(eksternt minne, adc), recieve(uart)
-rosa - ALE (Latch enable)
-oransje - read enable
-lilla - write enable 
+rosa - ALE (Latch enable), SPI interrupt
+oransje - read enable, MISO
+lilla - write enable, MOSI
 grå - clk/pwm ad
 brun -  usb multifunction board
 
