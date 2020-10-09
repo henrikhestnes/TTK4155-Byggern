@@ -1,4 +1,3 @@
-#include "jtag.h"
 #include "uart.h"
 #include "xmem.h"
 #include "sram_test.h"
@@ -42,12 +41,12 @@ int main() {
         oled_init();
 
     // Menu
-        menu_init(); 
+        // menu_init(); 
 
     // CAN
         can_init();
         message_t message = {
-            9,
+            1,
             6,
             "heiiii"
         };
@@ -62,10 +61,10 @@ int main() {
         sei();
         
     // Testing
-        while (1) {
-            
-            menu_run();
-        }
+        // while (1){
+
+        //     // menu_run();
+        // }
         
 
     return 0;
