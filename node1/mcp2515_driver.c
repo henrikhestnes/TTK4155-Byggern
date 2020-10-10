@@ -31,9 +31,9 @@ int mcp2515_init() {
     // set CAN bit-rate
     uint8_t BRP = F_OSC / (2 * NUMBER_OF_TQ * BAUDRATE);
 
-    // mcp2515_write(MCP_CNF1, ((SJW - 1) << 6) | BRP);
-    // mcp2515_write(MCP_CNF2, (BTLMODE << 7) | (SAM << 6) | ((PS1 - 1) << 3) | (PROPAG - 1));
-    // mcp2515_write(MCP_CNF3, (WAKFIL << 6) | (PS2 - 1));
+    mcp2515_write(MCP_CNF1, ((SJW - 1) << 6) | BRP);
+    mcp2515_write(MCP_CNF2, (BTLMODE << 7) | (SAM << 6) | ((PS1 - 1) << 3) | (PROPAG - 1));
+    mcp2515_write(MCP_CNF3, (WAKFIL << 6) | (PS2 - 1));
 
 
 

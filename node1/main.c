@@ -13,9 +13,15 @@
 #include <avr/interrupt.h>
 
 
+#define F_CPU 4.9152E6
+#include <util/delay.h> 
+
+
 #define FOSC 4915200
 #define BAUD 9600
 #define UBRR FOSC / 16 / BAUD - 1
+
+#define CAN_JOYSTICK 1
 
 
 int main() {
@@ -37,34 +43,35 @@ int main() {
     // ADC
         adc_init();
 
+
     // OLED
         oled_init();
 
     // Menu
-        // menu_init(); 
+        menu_init(); 
 
     // CAN
         can_init();
-        message_t message = {
-            1,
-            6,
-            "heiiii"
-        };
-
-        can_trancieve(&message);
-        message_t recieved = can_recieve();
-        printf("id: %d\r\n", recieved.id);
-        printf("length: %d\r\n", recieved.length);
-        printf("data: %s\r\n", recieved.data);
 
     // Enable interrupts
         sei();
         
     // Testing
-        // while (1){
+        message_t object = {
+            7,
+            6,
+            "heiiii"
+        };
 
-        //     // menu_run();
-        // }
+        // can_trancieve(&object);
+        // can_trancieve(&object);
+        // printf("id: %d\r\n", object.id);
+        // printf("length: %d\r\n", object.length);
+        // printf("data: %s\r\n", object.data);
+
+        while (1){
+            menu_run();
+        }
         
 
     return 0;

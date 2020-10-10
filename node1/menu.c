@@ -177,6 +177,7 @@ void go_to_parent() {
     state = 0;
 }
 
+#include "can_driver.h"
 
 ISR(INT1_vect) {
     if (current->action_function) {
@@ -184,6 +185,13 @@ ISR(INT1_vect) {
         state_changed = 1;
         current->action_function();
     }
+    message_t message = {
+        1,
+        6,
+        "heiiii"
+    };
+
+    can_trancieve(&message);
 }
 
 

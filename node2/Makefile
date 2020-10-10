@@ -2,7 +2,7 @@ LDSCRIPT = sam/flash.ld
 BOOTUP = sam/sam3x/source/exceptions.c sam/sam3x/source/startup_sam3x.c sam/sam3x/source/system_sam3x.c
 MCUTYPE = __SAM3X8E__
 # List all source files to be compiled; separate with space
-SOURCE_FILES=$(BOOTUP) main.c led.c uart_and_printf/uart.c uart_and_printf/printf-stdarg.c
+SOURCE_FILES=$(BOOTUP) main.c led.c uart_and_printf/uart.c uart_and_printf/printf-stdarg.c can/can_controller.c can/can_interrupt.c
 
 # Feel free to ignore anything below this line
 VPATH:= $(dir $(SOURCE_FILES))

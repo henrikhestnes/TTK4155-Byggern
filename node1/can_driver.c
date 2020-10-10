@@ -9,7 +9,7 @@ void can_init(void) {
     mcp2515_set_mode(MODE_LOOPBACK);
 
     // enable interrupt generation for successful reception
-    // mcp2515_bit_modify(MCP_CANINTE, MCP_RX0IF, 0xFF);
+    mcp2515_bit_modify(MCP_CANINTE, MCP_RX0IF, 0xFF);
 }
 
 
@@ -46,8 +46,8 @@ message_t can_recieve() {
 }
 
 
-// void ISR(INT0_vect) {
-//     message_t message = can_recieve();
-// }
+void ISR(INT0_vect) {
+     message_t message = can_recieve();
+ }      
 
 
