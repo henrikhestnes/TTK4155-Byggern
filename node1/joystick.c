@@ -54,7 +54,7 @@ pos_t joystick_scaled_pos_read(void){
 
 
 dir_t joystick_get_dir(){    
-    pos_t pos = joystick_pos_read();
+    pos_t pos = joystick_scaled_pos_read();
 
     if (pos.x > DIRECTION_TRESHOLD && abs(pos.y) < abs(pos.x)){
         return RIGHT;

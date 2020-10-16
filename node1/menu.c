@@ -12,7 +12,7 @@
 
 #define MAIN_MENU_LENGTH 4
 #define SETTINGS_LENGTH 4
-#define HIGHSCORE_LENGTH 3
+#define HIGHSCORE_LENGTH 2
 
 
 static menu_node_t* current;
@@ -72,6 +72,7 @@ void menu_init() {
     menu_node_t* highscore_return_node = menu_new_node(main_menu, highscore_menu, NULL, go_to_parent);
 
     menu_link_nodes(reset_node, highscore_return_node);
+    menu_link_nodes(highscore_return_node, reset_node);
 
     highscore_menu->head = reset_node;
 
@@ -134,7 +135,7 @@ void menu_run() {
     
     switch (joystick_get_dir()) {
         case UP:
-            current = current->next;
+            current = current->prev;
 
             if (state == 0) {
                 state = current->own_menu->length - 1;
@@ -147,7 +148,7 @@ void menu_run() {
             break;
 
         case DOWN:
-            current = current->prev;
+            current = current->next;
 
             if (state == current->own_menu->length - 1) {
                 state = 0;
@@ -157,6 +158,7 @@ void menu_run() {
             }
 
             state_changed = 1;
+            break;
 
         default:
             break;
@@ -177,8 +179,6 @@ void go_to_parent() {
     state = 0;
 }
 
-
-#include "can_driver.h"
 
 ISR(INT1_vect) {
     if (current->action_function) {
