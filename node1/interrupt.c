@@ -2,8 +2,6 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 
-#define TOP 79
-
 
 void interrupt_joystick_init() {
     cli();
@@ -29,8 +27,8 @@ void interrupt_oled_timer_init(){
     TCCR1B = 0;
     TCNT1 = 0;
 
-    // set compare match register for 23.76 hz
-    OCR1A = 100;
+    // set compare match register for 60 hz
+    OCR1A = 39;
 
     // turn on CTC mode
     TCCR1B |= (1 << WGM12);

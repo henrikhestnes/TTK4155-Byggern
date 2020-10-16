@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "oled.h"
+#include "sram.h"
 #include "joystick.h"
 #include <stdlib.h>
 #include <avr/interrupt.h>
@@ -80,7 +81,7 @@ void menu_init() {
     current = new_game_node;
     state = 0;
     oled_clear();
-    menu_print(LARGE);
+    menu_print();
 }
 
 
@@ -105,23 +106,6 @@ menu_node_t* menu_new_node(menu_t* parent_menu, menu_t* own_menu, menu_t* child_
     node->prev = NULL;
 
     return node;
-}
-
-
-void menu_print(font_type_t type) {
-    char word[20];
-    menu_t* current_menu = current->own_menu;
-
-    for (int i = 0; i < current_menu->length; i++){
-        strcpy_P(word, (PGM_P)pgm_read_word(&(current_menu->text_display[i])));
-        oled_set_pos(i+1, 8);
-        if (i == state){
-            oled_print_inverted_string(word,LARGE);
-        }
-        else{
-            oled_print_string(word, LARGE);
-        }
-    }
 }
 
 
@@ -153,7 +137,7 @@ void menu_run() {
             if (state == current->own_menu->length - 1) {
                 state = 0;
             }
-            else{
+            else {
                 ++state;
             }
 
@@ -165,6 +149,23 @@ void menu_run() {
     }
     
     _delay_ms(150);
+}
+
+
+void menu_print() {
+    char word[20];
+    menu_t* current_menu = current->own_menu;
+
+    for (int i = 0; i < current_menu->length; i++) {
+        strcpy_P(word, (PGM_P)pgm_read_word(&(current_menu->text_display[i])));
+        oled_set_pos(i+1, 8);
+        if (i == state) {
+            oled_print_inverted_string(word);
+        }
+        else {
+            oled_print_string(word);
+        }
+    }
 }
 
 
@@ -189,11 +190,59 @@ ISR(INT1_vect) {
 }
 
 
-ISR(TIMER1_COMPA_vect){
+ISR(TIMER1_COMPA_vect) {
+    PORTB ^= (1 << PB3);
+    
     if (!state_changed) {
         return;
     }
 
     state_changed = 0;
-    menu_print(LARGE);
+    menu_print();
 }
+
+
+// void menu_write_to_sram() {
+//     char word[20];
+//     menu_t* current_menu = current->own_menu;
+
+//     for (int p = 0; p < NUMBER_OF_PAGES; p++) {       
+//         for (int i = 0; i < 20; ++i) {
+//             uint16_t address = p * sizeof(word) + i * sizeof(char);
+
+//             if (p >= current_menu->length) {
+//                 sram_write(0, address);
+//                 // avoid accessing text_display
+//                 continue;
+//             }
+
+//             strcpy_P(word, (PGM_P)pgm_read_word(&(current_menu->text_display[p])));
+//             if (p == state) {
+//                 sram_write(~(word[i]), address);
+//             }
+
+//             else {
+//                 sram_write(word[i], address);
+//             }
+//         }
+//     }
+// }
+
+
+// ISR(INT1_vect) {
+//     if (current->action_function) {
+//         state_changed = 1;
+//         current->action_function();
+//         menu_write_to_sram();
+//     }
+// }
+
+
+// ISR(TIMER1_COMPA_vect) {
+//     if (!state_changed) {
+//         return;
+//     }
+
+//     state_changed = 0;
+//     oled_print_from_sram();
+// }

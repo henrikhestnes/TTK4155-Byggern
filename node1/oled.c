@@ -1,12 +1,11 @@
 #include "oled.h"
+#include "sram.h"
 #include "fonts.h"
 #include "joystick.h"
 
 
-#define ASCII_OFFSET 32
-
-
-const int FONT_LENGTH[3] = {8, 5, 4};
+#define ASCII_OFFSET    32
+#define FONT_LENGTH     8
 
 
 void oled_init(){
@@ -82,92 +81,54 @@ void oled_clear() {
 }
 
 
-void oled_print_char(char c, font_type_t type) {
+void oled_print_char(char c) {
     if (' ' <= c && c <= '~') {
-        switch (type) {
-            case LARGE:
-                for (int i = 0; i < FONT_LENGTH[LARGE]; i++) {
-                    uint8_t character = pgm_read_byte(&(font8[c - ASCII_OFFSET][i]));
-                    oled_write_data(character);
-                }
-                break;
-
-            case NORMAL:
-                for (int i = 0; i < FONT_LENGTH[NORMAL]; i++) {
-                    uint8_t character = pgm_read_byte(&(font5[c - ASCII_OFFSET][i]));
-                    oled_write_data(character);
-                }
-                break;
-
-            case SMALL:
-                for (int i = 0; i < FONT_LENGTH[SMALL]; i++) {
-                    uint8_t character = pgm_read_byte(&(font4[c - ASCII_OFFSET][i]));
-                    oled_write_data(character);
-                }
-                break;
-
-            default:
-                break;
+        for (int i = 0; i < FONT_LENGTH; i++) {
+            uint8_t character = pgm_read_byte(&(font8[c - ASCII_OFFSET][i]));
+            oled_write_data(character);
         }
-    }  
+    }
 }
 
 
-void oled_print_string(const char* string, font_type_t type) {
+void oled_print_string(const char* string) {
     int i = 0;
     while (string[i] != '\0') {
-        oled_print_char(string[i], type);
+        oled_print_char(string[i]);
         ++i;
     }
 }
 
 
-void oled_print_inverted_char(char c, font_type_t type) {
+void oled_print_inverted_char(char c) {
     if (' ' <= c && c <= '~') {
-        switch (type) {
-            case LARGE:
-                for (int i = 0; i < FONT_LENGTH[LARGE]; i++) {
-                    uint8_t character = pgm_read_byte(&(font8[c - ASCII_OFFSET][i]));
-                    oled_write_data(~character);
-                }
-                break;
-
-            case NORMAL:
-                for (int i = 0; i < FONT_LENGTH[NORMAL]; i++) {
-                    uint8_t character = pgm_read_byte(&(font5[c - ASCII_OFFSET][i]));
-                    oled_write_data(~character);
-                }
-                break;
-
-            case SMALL:
-                for (int i = 0; i < FONT_LENGTH[SMALL]; i++) {
-                    uint8_t character = pgm_read_byte(&(font4[c - ASCII_OFFSET][i]));
-                    oled_write_data(~character);
-                }
-                break;
-
-            default:
-                break;
+        for (int i = 0; i < FONT_LENGTH; i++) {
+            uint8_t character = pgm_read_byte(&(font8[c - ASCII_OFFSET][i]));
+            oled_write_data(~character);
         }
     }  
 }
 
 
-void oled_print_inverted_string(const char* string, font_type_t type) {
+void oled_print_inverted_string(const char* string) {
     int i = 0;
     while (string[i] != '\0') {
-        oled_print_inverted_char(string[i], type);
+        oled_print_inverted_char(string[i]);
         ++i;
     }
 }
 
 
-void oled_draw_arrow() {
-    oled_write_data(0b00011000);
-    oled_write_data(0b00011000);
-    oled_write_data(0b01111110);
-    oled_write_data(0b00111100);
-    oled_write_data(0b00011000);
-}
+// void oled_print_from_sram() {
+//     oled_clear();
 
-
+//     for (int p = 0; p < NUMBER_OF_PAGES; ++p) {
+//         char word[20];
+//         for (int i = 0; i < 20; ++i) {
+//             uint16_t address = p*sizeof(word) + i*sizeof(char);
+//             word[i] = sram_read(address);
+//         }
+//         oled_set_pos(p, 8);
+//         oled_print_string(word);
+//     }
+// }

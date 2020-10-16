@@ -5,6 +5,9 @@
 #include <stdint.h>
 
 
+#define NUMBER_OF_PAGES 8
+
+
 typedef enum {
     LARGE,
     NORMAL,
@@ -33,20 +36,19 @@ void oled_set_pos(int line, int col);
 void oled_clear(void); 
 
 
-void oled_print_char(char c, font_type_t type);
+void oled_print_char(char c);
 
 
-void oled_print_string(const char* string, font_type_t type);
+void oled_print_string(const char* string);
 
 
-void oled_print_inverted_char(char c, font_type_t type);
+void oled_print_inverted_char(char c);
 
 
-void oled_print_inverted_string(const char* string, font_type_t type);
+void oled_print_inverted_string(const char* string);
 
 
-void oled_draw_arrow(void);
-
+// void oled_print_from_sram();
 
 
 #endif

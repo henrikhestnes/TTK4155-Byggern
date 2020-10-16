@@ -1,6 +1,5 @@
 #include "uart.h"
-#include "xmem.h"
-#include "sram_test.h"
+#include "sram.h"
 #include "adc.h"
 #include "joystick.h"
 #include "slider.h"
@@ -25,15 +24,13 @@
 
 
 int main() {
-    // XMEM
-        xmem_init();
-        
     // UART
         UART_init(UBRR);
         UART_link_printf();
 
     // SRAM
-        SRAM_test();
+        sram_init();
+        sram_test();
 
     // ADC
         adc_init();
@@ -53,6 +50,8 @@ int main() {
         interrupt_can_recieve_init();
         
     // Testing
+        DDRB |= (1 >> PB3);
+
         while (1){
             // joystick_send_pos_to_can();
 
