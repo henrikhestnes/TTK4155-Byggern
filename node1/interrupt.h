@@ -8,7 +8,7 @@ void interrupt_joystick_init();
 void interrupt_oled_timer_init();
 
 
-void interrupt_can_transmission_init();
+void interrupt_can_recieve_init();
 
 
 #endif

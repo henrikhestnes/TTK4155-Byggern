@@ -11,7 +11,7 @@
 #include "can_controller.h"
 #include "sam.h"
 #include "../uart_and_printf/printf-stdarg.h"
-#include "../../node1/mcp2515_driver.h"
+
 
 
 /**
@@ -28,6 +28,7 @@ uint8_t can_init_def_tx_rx_mb(uint32_t can_br)
 	return can_init(can_br, 1, 2);
 }
 
+
 /**
  * \brief Initialize can bus
  *
@@ -39,8 +40,6 @@ uint8_t can_init_def_tx_rx_mb(uint32_t can_br)
  *
  * \retval Success(0) or failure(1)
  */
-
-
 uint8_t can_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb)
 {
 	
@@ -204,11 +203,3 @@ uint8_t can_receive(CAN_MESSAGE* can_msg, uint8_t rx_mb_id)
 		return 1;
 	}
 }
-
-
-uint32_t can_get_br() {
-    uint8_t BRP = F_OSC / (2 * NUMBER_OF_TQ * BAUDRATE);
-
-    return (SAM << 24) | ((BRP - 1) << 16) | ((SJW - 1) << 12) | ((PROPAG - 1) << 8) | ((PS1 - 1) << 4) | (PS2 - 1);
-}
-

@@ -11,6 +11,7 @@
 #include "sam.h"
 #include "led.h"
 
+#include <unistd.h>
 
 
 int main()
@@ -19,17 +20,39 @@ int main()
 
     WDT->WDT_MR = WDT_MR_WDDIS; //Disable Watchdog Timer
 
-    configure_uart();
-    printf("Hello World\n\r");
+    // UART
+        configure_uart();
+        printf("Hello World\n\r");
 
-    uint32_t can_br = can_get_br();
-    can_init_def_tx_rx_mb(can_br);
+    // CAN
+        can_init_def_tx_rx_mb(ATSAM_CAN_BR);
 
-   
 
-    while (1)
-    {
+    // TESTING
+        CAN_MESSAGE object = {
+            1,
+            4,
+            "heii"
+        };
 
-    }
-    
+        while (1) {
+            // char can_sr = CAN0->CAN_SR; 
+            // CAN_MESSAGE message = {
+            //     0,
+            //     0,
+            //     ""
+            // };
+
+            // if(can_sr & CAN_SR_MB1) {
+			//     can_receive(&message, 1);
+		    // }
+            // else if(can_sr & CAN_SR_MB2) {
+            //     can_receive(&message, 2);
+            // }
+
+            // printf("message id: %d\n\r", message.id);
+            // printf("message data length: %d\n\r", message.data_length);
+            // printf("message data: %s\n\r", message.data); 
+        }
+
 }

@@ -173,12 +173,11 @@ Copyright 2003 Kimberly Otten Software Consulting
 
 
 // set baudrate to 500 kbit/s, equaling a bit time of 2 us
-// we choose PropSeg = 2TQ, as the propagation line is shorter than the example given in the datasheet
+// we choose PROPAG = 2TQ, as the propagation line is shorter than the example given in the datasheet
 // this gives 13 TQ for phase 1 and 2. We choose PS2 = 7TQ and PS1 = 6TQ to satisfy the requirements.
 // lastly, we choose the maximal value for the sychronization jump width, SJW = 4TQ.
 #define CAN_CS          PB4
 #define BAUDRATE        500000
-#define F_OSC           16000000
 #define NUMBER_OF_TQ    16
 
 #define PROPAG  2
@@ -187,8 +186,9 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define SJW     4
 
 #define BTLMODE 1
-#define SAM     1
-#define WAKFIL  1
+#define SAM     0
+#define WAKFIL  0
+
 
 int mcp2515_init(void);
 

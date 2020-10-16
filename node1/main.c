@@ -25,11 +25,6 @@
 
 
 int main() {
-    // INTERRUPT
-        cli();
-        interrupt_joystick_init();
-        interrupt_oled_timer_init();
-
     // XMEM
         xmem_init();
         
@@ -43,7 +38,6 @@ int main() {
     // ADC
         adc_init();
 
-
     // OLED
         oled_init();
 
@@ -51,28 +45,33 @@ int main() {
         menu_init(); 
 
     // CAN
-        can_init();
+        can_init(MODE_NORMAL);
 
-    // Enable interrupts
-        sei();
+    // INTERRUPT
+        interrupt_joystick_init();
+        interrupt_oled_timer_init();
+        interrupt_can_recieve_init();
         
     // Testing
         message_t object = {
-            7,
-            6,
-            "heiiii"
+            1,
+            4,
+            "heii"
         };
 
-        // can_trancieve(&object);
-        // can_trancieve(&object);
-        // printf("id: %d\r\n", object.id);
-        // printf("length: %d\r\n", object.length);
-        // printf("data: %s\r\n", object.data);
-
-        while (1){
-            menu_run();
-        }
         
+        while (1){
+            // if (can_get_recieve_flag()) {
+            //     message_t message = can_recieve();
+            //     printf("message id: %d\n\r", message.id);
+            //     printf("message data length: %d\n\r", message.length);
+            //     printf("message data: %s\n\r", message.data);
+            // }
+
+            can_transmit(&object);
+            _delay_ms(1);
+        }
+
 
     return 0;
 }

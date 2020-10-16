@@ -7,18 +7,21 @@
 
 typedef struct {
     uint16_t id;
-    uint8_t length;
-    uint8_t data[8];
+    char length;
+    char data[8];
 } message_t;
 
 
-void can_init(void);
+void can_init(uint8_t mode);
 
 
-void can_trancieve(message_t* message);
+void can_transmit(message_t* message);
 
 
 message_t can_recieve();
+
+
+char can_get_recieve_flag();
 
 
 #endif

@@ -12,7 +12,13 @@
 #ifndef CAN_CONTROLLER_H_
 #define CAN_CONTROLLER_H_
 
+
 #include <stdint.h>
+
+
+// baudrate of 500 kbits/s, propag = 2 TQ, phase1 = 6 TQ, phase2 = 7 TQ, sjw = 4 TQ
+#define ATSAM_CAN_BR 0x00053156
+
 
 typedef struct can_message_t
 {
@@ -21,12 +27,11 @@ typedef struct can_message_t
 	char data[8];
 } CAN_MESSAGE;
 
+
 uint8_t can_init_def_tx_rx_mb(uint32_t can_br);
 uint8_t can_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb);
 
 uint8_t can_send(CAN_MESSAGE* can_msg, uint8_t mailbox_id);
 uint8_t can_receive(CAN_MESSAGE* can_msg, uint8_t mailbox_id);
-
-uint32_t can_get_br(void);
 
 #endif /* CAN_CONTROLLER_H_ */

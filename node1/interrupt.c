@@ -6,6 +6,8 @@
 
 
 void interrupt_joystick_init() {
+    cli();
+
     // enable INT1 interrupt vector
     GICR |= (1 << INT1);
 
@@ -15,10 +17,14 @@ void interrupt_joystick_init() {
 
     // set INT1 as input
     DDRD &= ~(1 << PD3);
+
+    sei();
 }
 
 
 void interrupt_oled_timer_init(){
+    cli();
+
     TCCR1A = 0;
     TCCR1B = 0;
     TCNT1 = 0;
@@ -34,19 +40,25 @@ void interrupt_oled_timer_init(){
 
     // enable timer compare interrupt
     TIMSK |= (1 << OCIE1A);
+
+    sei();
 }
 
 
-void interrupt_can_transmission_init() {
-    // enable INT1 interrupt vector
-    GICR |= (1 << INT0);
-
-    // interrupt on falling edge
-    MCUCR |= (1 << ISC11);
-    MCUCR &= ~(1 << ISC10);
+void interrupt_can_recieve_init() {
+    cli();
 
     // set INT0 as input
     DDRD &= ~(1 << PD2);
+
+    // enable INT0 interrupt vector
+    GICR |= (1 << INT0);
+
+    // interrupt on falling edge
+    MCUCR |= (1 << ISC01);
+    MCUCR &= ~(1 << ISC00);
+
+    sei();
 }
 
 
