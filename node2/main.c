@@ -10,6 +10,7 @@
 
 #include "sam.h"
 #include "led.h"
+#include "joystick.h"
 
 #include <unistd.h>
 
@@ -29,14 +30,12 @@ int main()
 
 
     // TESTING
-        CAN_MESSAGE object = {
-            3,
-            4,
-            "heii"
-        };
+        CAN_MESSAGE pos_message;
 
         while (1) {
-            printf("transmit buffer 0: %d \r\n", can_send(&object, 0));
+            pos_t pos = joystick_pos_recieve();
+            printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
+            
         }
 
 }

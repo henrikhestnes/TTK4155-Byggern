@@ -1,5 +1,6 @@
 #include "joystick.h"
 #include "adc.h"
+#include "can_driver.h"
 #include <math.h>
 
 
@@ -32,12 +33,21 @@ int joystick_scale_value(uint8_t value, int offset, int max, int min) {
 
 
 pos_t joystick_pos_read(void){
-    uint8_t x = adc_read(X_CHANNEL);
-    uint8_t y = adc_read(Y_CHANNEL);
-
     pos_t pos;
-    pos.x = joystick_scale_value(x, X_OFFSET, MAX_VALUE, MIN_VALUE);
-    pos.y = joystick_scale_value(y, Y_OFFSET, MAX_VALUE, MIN_VALUE);
+    pos.x = adc_read(X_CHANNEL);
+    pos.y = adc_read(Y_CHANNEL);
+
+    return pos;
+}
+
+
+pos_t joystick_scaled_pos_read(void){
+    pos_t pos;
+    pos.x = adc_read(X_CHANNEL);
+    pos.y = adc_read(Y_CHANNEL);
+
+    pos.x = joystick_scale_value(pos.x, X_OFFSET, MAX_VALUE, MIN_VALUE);
+    pos.y = joystick_scale_value(pos.y, Y_OFFSET, MAX_VALUE, MIN_VALUE);
 
     return pos;
 }
@@ -50,15 +60,15 @@ dir_t joystick_get_dir(){
         return RIGHT;
     }
 
-    else if(pos.x < -DIRECTION_TRESHOLD && abs(pos.y) < abs(pos.x)){
+    else if (pos.x < -DIRECTION_TRESHOLD && abs(pos.y) < abs(pos.x)){
         return LEFT;
     }
 
-    else if(pos.y > DIRECTION_TRESHOLD && abs(pos.x) <= abs(pos.y)){
+    else if (pos.y > DIRECTION_TRESHOLD && abs(pos.x) <= abs(pos.y)){
         return UP;
     }
 
-    else if(pos.y < -DIRECTION_TRESHOLD && abs(pos.x) <= abs(pos.y)){
+    else if (pos.y < -DIRECTION_TRESHOLD && abs(pos.x) <= abs(pos.y)){
         return DOWN;
     }
 
@@ -69,4 +79,17 @@ dir_t joystick_get_dir(){
     else {
         return NEUTRAL;
     }
+}
+
+
+void joystick_send_pos_to_can() {
+    pos_t pos = joystick_pos_read();
+
+    message_t pos_message = {
+        .id = 1,
+        .length = 2,
+        .data = {pos.x, pos.y}
+    };
+
+    can_transmit(&pos_message);
 }

@@ -52,12 +52,18 @@ int joystick_scale_value(uint8_t value, int offset, int max, int min);
 pos_t joystick_pos_read(void);
 
 
+pos_t joystick_scaled_pos_read(void);
+
+
 /**
  * @brief Calculates the joystick's direction from it's postiton.
  * 
  * @return The direction the joystick is pointing when in position @p pos.
  */
 dir_t joystick_get_dir(void);
+
+
+void joystick_send_pos_to_can(void);
 
 
 #endif
