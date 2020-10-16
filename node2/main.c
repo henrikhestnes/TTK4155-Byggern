@@ -30,29 +30,13 @@ int main()
 
     // TESTING
         CAN_MESSAGE object = {
-            1,
+            3,
             4,
             "heii"
         };
 
         while (1) {
-            // char can_sr = CAN0->CAN_SR; 
-            // CAN_MESSAGE message = {
-            //     0,
-            //     0,
-            //     ""
-            // };
-
-            // if(can_sr & CAN_SR_MB1) {
-			//     can_receive(&message, 1);
-		    // }
-            // else if(can_sr & CAN_SR_MB2) {
-            //     can_receive(&message, 2);
-            // }
-
-            // printf("message id: %d\n\r", message.id);
-            // printf("message data length: %d\n\r", message.data_length);
-            // printf("message data: %s\n\r", message.data); 
+            printf("transmit buffer 0: %d \r\n", can_send(&object, 0));
         }
 
 }

@@ -71,6 +71,12 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define MCP_TXB0DLC     0x35
 #define MCP_TXB0D0      0X36
 #define MCP_TXB1CTRL	0x40
+#define MCP_TXB1SIDH    0x41
+#define MCP_TXB1SIDL    0x42
+#define MCP_TXB1EID8    0x43
+#define MCP_TXB1EID0    0x44
+#define MCP_TXB1DLC     0x45
+#define MCP_TXB1D0      0X46
 #define MCP_TXB2CTRL	0x50
 #define MCP_RXB0CTRL	0x60
 #define MCP_RXB0SIDH	0x61
@@ -81,7 +87,11 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define MCP_RXB0D0      0X66
 #define MCP_RXB1CTRL	0x70
 #define MCP_RXB1SIDH	0x71
-
+#define MCP_RXB1SIDL    0x72
+#define MCP_RXB1EID8    0x73
+#define MCP_RXB1EID0    0x74
+#define MCP_RXB1DLC     0x75
+#define MCP_RXB1D0      0X76
 
 #define MCP_TX_INT		0x1C		// Enable all transmit interrupts
 #define MCP_TX01_INT	0x0C		// Enable TXB0 and TXB1 interrupts
@@ -172,12 +182,16 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define MCP_MERRF		0x80
 
 
+// RXBnCTRL 
+#define MCP_RXM0        0x20
+#define MCP_RXM1        0x40
+
 // set baudrate to 500 kbit/s, equaling a bit time of 2 us
 // we choose PROPAG = 2TQ, as the propagation line is shorter than the example given in the datasheet
 // this gives 13 TQ for phase 1 and 2. We choose PS2 = 7TQ and PS1 = 6TQ to satisfy the requirements.
 // lastly, we choose the maximal value for the sychronization jump width, SJW = 4TQ.
 #define CAN_CS          PB4
-#define BAUDRATE        500000
+#define BAUDRATE        250000
 #define NUMBER_OF_TQ    16
 
 #define PROPAG  2

@@ -53,23 +53,30 @@ int main() {
         interrupt_can_recieve_init();
         
     // Testing
-        message_t object = {
-            1,
-            4,
-            "heii"
-        };
+        // message_t object_1 = {
+        //     1,
+        //     4,
+        //     "heii"
+        // };
+
+        // message_t object_2 = {
+        //     2,
+        //     5,
+        //     "yiiha"
+        // };
 
         
         while (1){
-            // if (can_get_recieve_flag()) {
-            //     message_t message = can_recieve();
-            //     printf("message id: %d\n\r", message.id);
-            //     printf("message data length: %d\n\r", message.length);
-            //     printf("message data: %s\n\r", message.data);
-            // }
-
-            can_transmit(&object);
-            _delay_ms(1);
+            // can_transmit(&object_1);
+            // _delay_ms(100);
+            // can_transmit(&object_2);
+            // _delay_ms(100);
+            if (can_get_recieve_flag()) {
+                message_t message = can_recieve();
+                printf("message id: %d\n\r", message.id);
+                printf("message data length: %d\n\r", message.length);
+                printf("message data: %s\n\r", message.data);
+            }
         }
 
 

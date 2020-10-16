@@ -16,8 +16,9 @@
 #include <stdint.h>
 
 
-// baudrate of 500 kbits/s, propag = 2 TQ, phase1 = 6 TQ, phase2 = 7 TQ, sjw = 4 TQ
-#define ATSAM_CAN_BR 0x00053156
+// baudrate of 250 kbits/s, propag = 2 TQ, phase1 = 6 TQ, phase2 = 7 TQ, sjw = 4 TQ
+#define ATSAM_CAN_BR 0x00143156
+// #define ATSAM_CAN_BR 0x00290165
 
 
 typedef struct can_message_t
