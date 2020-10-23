@@ -29,7 +29,7 @@ typedef struct {
 int joystick_scale_value(uint8_t value, int offset, int max, int min);
 
 
-pos_t joystick_pos_recieve(void);
+int joystick_pos_recieve(pos_t* pos);
 
 
 #endif

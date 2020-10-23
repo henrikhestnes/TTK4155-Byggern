@@ -43,8 +43,8 @@ void pwm_init() {
     PWM->PWM_CH_NUM[6].PWM_CPRD = PWM_CPRD_CPRD(CPRDB);
     
     // set duty cycles
-    pwm_set_duty_cycle(1, CHANNEL_PIN44);
-    pwm_set_duty_cycle(1, CHANNEL_PIN45);
+    pwm_set_duty_cycle(0.5, CHANNEL_PIN44);
+    pwm_set_duty_cycle(0.5, CHANNEL_PIN45);
 }
 
 

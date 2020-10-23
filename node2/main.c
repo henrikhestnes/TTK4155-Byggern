@@ -10,6 +10,7 @@
 #include "led.h"
 #include "joystick.h"
 #include "pwm.h"
+#include "servo_driver.h"
 
 
 #include <unistd.h>
@@ -31,17 +32,18 @@ int main()
     // CAN
         can_init_def_tx_rx_mb(ATSAM_CAN_BR);
 
-    // PWM
-        pwm_init();
+    // SERVO
+        servo_init();
 
 
     // TESTING
         CAN_MESSAGE pos_message;
 
         while (1) {
-            pos_t pos = joystick_pos_recieve();
-            printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
+            // pos_t pos = joystick_pos_recieve();
+            // printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
             
+            servo_set_position();
         }
 
 }

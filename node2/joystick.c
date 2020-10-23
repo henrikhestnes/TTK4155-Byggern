@@ -26,16 +26,16 @@ int joystick_scale_value(uint8_t value, int offset, int max, int min) {
 }
 
 
-pos_t joystick_pos_recieve() {
-    pos_t pos = {0,0};
-
+int joystick_pos_recieve(pos_t* pos) {
     CAN_MESSAGE pos_message;
     if(!(can_receive(&pos_message, 0))) {
         if (pos_message.id == 1) {
-            pos.x = joystick_scale_value(pos_message.data[0], X_OFFSET, MAX_VALUE, MIN_VALUE);
-            pos.y = joystick_scale_value(pos_message.data[1], Y_OFFSET, MAX_VALUE, MIN_VALUE);
+            pos->x = joystick_scale_value(pos_message.data[0], X_OFFSET, MAX_VALUE, MIN_VALUE);
+            pos->y = joystick_scale_value(pos_message.data[1], Y_OFFSET, MAX_VALUE, MIN_VALUE);
+
+            return 0;
         }
     }
 
-    return pos;
+    return 1;
 }
