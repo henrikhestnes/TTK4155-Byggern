@@ -1,5 +1,4 @@
 #include "adc.h"
-#include "xmem.h"
 #include <avr/io.h>
 
 

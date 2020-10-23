@@ -6,13 +6,16 @@
 #include "can/can_interrupt.h"
 
 
-#define CAN_JOYSTICK 1
-
 #include "sam.h"
 #include "led.h"
 #include "joystick.h"
+#include "pwm.h"
+
 
 #include <unistd.h>
+
+
+#define CAN_JOYSTICK 1
 
 
 int main()
@@ -27,6 +30,9 @@ int main()
 
     // CAN
         can_init_def_tx_rx_mb(ATSAM_CAN_BR);
+
+    // PWM
+        pwm_init();
 
 
     // TESTING
