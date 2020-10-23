@@ -9,8 +9,8 @@
 #define X_MIN               -100
 #define X_MAX               100
 
-#define GAIN                (MAX_DUTY_CYCLE - MIN_DUTY_CYCLE) / (X_MAX - X_MIN)
-#define OFFSET              MAX_DUTY_CYCLE - X_MAX * GAIN
+#define GAIN                (MAX_DUTY_CYCLE - MIN_DUTY_CYCLE) / (X_MIN - X_MAX)
+#define OFFSET              MAX_DUTY_CYCLE - X_MIN * GAIN
 
 
 void servo_init() {

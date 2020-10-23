@@ -1,5 +1,5 @@
 #include "pwm.h"
-#include "sam.h"
+#include "sam/sam3x/include/sam.h"
 
 
 #define MCK         84E6

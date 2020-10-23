@@ -6,11 +6,13 @@
 #include "can/can_interrupt.h"
 
 
-#include "sam.h"
+#include "sam/sam3x/include/sam.h"
 #include "led.h"
 #include "joystick.h"
 #include "pwm.h"
 #include "servo_driver.h"
+#include "adc.h"
+#include "game.h"
 
 
 #include <unistd.h>
@@ -35,15 +37,18 @@ int main()
     // SERVO
         servo_init();
 
+    // ADC
+        adc_init();
+
 
     // TESTING
-        CAN_MESSAGE pos_message;
-
         while (1) {
             // pos_t pos = joystick_pos_recieve();
             // printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
             
-            servo_set_position();
+            // servo_set_position();
+
+            game_count_score();
         }
 
 }

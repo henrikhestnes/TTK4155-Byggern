@@ -15,18 +15,31 @@ typedef struct {
 
 
 /**
- * @brief Scales an output from the analog measurement to the range
+ * @brief Scales x from the analog measurement to the range
  * [ @p min, @p max ].
  * 
  * @param value Measurement value to be scaled.
- * @param offset The measurement's offset from the origo when the
- * joystick is in a neutral position.
  * @param max The maximum value the scaled output can have.
  * @param min The minimum value the scaled output can have.
  * 
  * @return The scaled value as an integer. 
  */
-int joystick_scale_value(uint8_t value, int offset, int max, int min);
+
+int joystick_scale_x(uint8_t value, int max, int min);
+
+
+/**
+ * @brief Scales y from the analog measurement to the range
+ * [ @p min, @p max ].
+ * 
+ * @param value Measurement value to be scaled.
+ * @param max The maximum value the scaled output can have.
+ * @param min The minimum value the scaled output can have.
+ * 
+ * @return The scaled value as an integer. 
+ */
+
+int joystick_scale_y(uint8_t value, int max, int min);
 
 
 int joystick_pos_recieve(pos_t* pos);
