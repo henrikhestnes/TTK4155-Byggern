@@ -186,10 +186,11 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define MCP_RXM0        0x20
 #define MCP_RXM1        0x40
 
-// set baudrate to 500 kbit/s, equaling a bit time of 2 us
-// we choose PROPAG = 2TQ, as the propagation line is shorter than the example given in the datasheet
-// this gives 13 TQ for phase 1 and 2. We choose PS2 = 7TQ and PS1 = 6TQ to satisfy the requirements.
-// lastly, we choose the maximal value for the sychronization jump width, SJW = 4TQ.
+
+// Set baudrate to 500 kbit/s, equaling a bit time of 2 us.
+// We choose PROPAG = 2TQ, as the propagation line is shorter than the example given in the datasheet.
+// This gives 13 TQ for phase 1 and 2. We choose PS2 = 7TQ and PS1 = 6TQ to satisfy the requirements.
+// Lastly, we choose the maximal value for the sychronization jump width, SJW = 4TQ.
 #define CAN_CS          PB4
 #define BAUDRATE        250000
 #define NUMBER_OF_TQ    16
@@ -198,33 +199,81 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define PS1     6
 #define PS2     7
 #define SJW     4
-
 #define BTLMODE 1
 #define SAM     0
 #define WAKFIL  0
 
 
+/**
+ * @brief Initiates the MCP2515 driver by setting the CAN bitrate,
+ * resetting it using @c mcp2515_reset(), and controlling 
+ * that the MCP2515 is in configuration mode.
+ * 
+ * @return 0 on success, 1 if the MCP2515 is not in configuration mode.
+ */
 int mcp2515_init(void);
 
 
+/**
+ * @brief Reads the data byte located at @p address 
+ * in the MCP2515 memory.
+ * 
+ * @param address MCP2515 memory address to be read from.
+ */
 uint8_t mcp2515_read(uint8_t address);
 
 
+/**
+ * @brief Writes a data byte @p data to the @p address 
+ * in the MCP2515 memory.
+ * 
+ * @param address MCP2515 memory address to be written to.
+ * @param data Data byte to be written to the MCP2515.
+ */
 uint8_t mcp2515_write(uint8_t address, uint8_t data);
 
 
+/**
+ * @brief Requests to send data from the MCP2515. Initiates 
+ * the transmission of the data located in transmission buffer @c TX0.
+ */
 void mcp2515_request_to_send(void);
 
 
-uint8_t mcp2515_read_status();
+/**
+ * @brief Reads the current status of the MCP2515.
+ * 
+ * @return The contents of the MCP2515 status register.
+ */
+uint8_t mcp2515_read_status(void);
 
 
+/**
+ * @brief Modifies the data located at @p address in the MCP2515
+ * memory, by masking the contents with the new @p data. The updated
+ * data has the value (old data) | (mask & new data).
+ * 
+ * @param address MCP2515 memory address to be modified.
+ * @param mask Mask defining which bits to modify.
+ * @param data New values for bits being modified.
+ */
 void mcp2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data);
 
 
+/**
+ * @brief Resets the MCP2515.
+ */
 void mcp2515_reset(void);
 
 
+/**
+ * @brief Sets the mode of the MCP2515.
+ * 
+ * @param mode Mode MCP2515 is to be set to.
+ * 
+ * @return 0 on success, 1 if the MCP2515 is unable to verify that the mode
+ * has been set to @p mode.
+ */
 int mcp2515_set_mode(uint8_t mode);
 
 

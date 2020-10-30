@@ -16,7 +16,7 @@ void sram_init(void);
 
 /**
  * @brief Writes @p data to the address @p addr, defined
- * as offset from @c 0x1000.
+ * as offset from @c 0x1800.
  * 
  * @param data 8-bit value to be written to the external memory.
  * @param addr Offset from the base address @c 0x1800 in the external
@@ -27,7 +27,7 @@ void sram_write(uint8_t data, uint16_t addr);
 
 /**
  * @brief Reads from the address @p addr, defined as offset
- * from @c 0x1000.
+ * from @c 0x1800.
  * 
  * @param addr Offset from the base address @c 0x1800 in the external
  * memery address space.

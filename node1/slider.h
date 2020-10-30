@@ -32,7 +32,7 @@ int slider_scale_value(uint8_t value, int offset, int max);
 
 /**
  * @brief Reads the slider positions through the ADC. Uses
- * @c adc_scale_value() to scale the reading to the desired
+ * @c slider_scale_value() to scale the reading to the desired
  * interval.
  * 
  * @return The scaled slider positions.

@@ -42,9 +42,7 @@ pos_t joystick_pos_read(void){
 
 
 pos_t joystick_scaled_pos_read(void){
-    pos_t pos;
-    pos.x = adc_read(X_CHANNEL);
-    pos.y = adc_read(Y_CHANNEL);
+    pos_t pos = joystick_pos_read();
 
     pos.x = joystick_scale_value(pos.x, X_OFFSET, MAX_VALUE, MIN_VALUE);
     pos.y = joystick_scale_value(pos.y, Y_OFFSET, MAX_VALUE, MIN_VALUE);

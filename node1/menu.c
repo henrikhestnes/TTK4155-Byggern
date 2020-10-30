@@ -37,6 +37,18 @@ const char text_reset[] PROGMEM = "Reset";
 PGM_P const content_highscore[] PROGMEM = {text_reset, text_return};
 
 
+void go_to_child() {
+    current = current->child_menu->head;
+    state = 0;
+}
+
+
+void go_to_parent() {
+    current = current->parent_menu->head;
+    state = 0;
+}
+
+
 void menu_init() {
     menu_t* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH);
     menu_t* settings_menu = menu_new(content_settings, SETTINGS_LENGTH);
@@ -116,7 +128,6 @@ void menu_link_nodes(menu_node_t* first, menu_node_t* second) {
 
 
 void menu_run() {
-    
     switch (joystick_get_dir()) {
         case UP:
             current = current->prev;
@@ -166,18 +177,6 @@ void menu_print() {
             oled_print_string(word);
         }
     }
-}
-
-
-void go_to_child() {
-    current = current->child_menu->head;
-    state = 0;
-}
-
-
-void go_to_parent() {
-    current = current->parent_menu->head;
-    state = 0;
 }
 
 

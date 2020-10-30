@@ -43,26 +43,38 @@ int joystick_scale_value(uint8_t value, int offset, int max, int min);
 
 
 /**
- * @brief Reads the joystick position through the ADC. Uses
- * @c joystick_scale_value() to scale the reading to the desired
- * interval.
+ * @brief Reads the joystick position through the ADC. Returns a position
+ * with x and y values in the interval [0, 255].
  * 
  * @return The scaled joystick position.
  */
 pos_t joystick_pos_read(void);
 
 
+/**
+ * @brief Reads the joystick position using @c joystick_pos_read(). Uses
+ * @c joystick_scale_value() to scale the reading to the desired
+ * interval.
+ * 
+ * @return The scaled joystick position.
+ */
 pos_t joystick_scaled_pos_read(void);
 
 
 /**
- * @brief Calculates the joystick's direction from it's postiton.
+ * @brief Calculates the joystick's direction from it's postiton. Reads
+ * the joystick position using @c joystick_pos_read().
  * 
- * @return The direction the joystick is pointing when in position @p pos.
+ * @return The direction the joystick is pointing.
  */
 dir_t joystick_get_dir(void);
 
 
+/**
+ * @brief Reads the joystick position using @c joystick_pos_read(). Sends
+ * this position to node 2 using the can interface. The can message
+ * transmitted has @c id 1.
+ */
 void joystick_send_pos_to_can(void);
 
 

@@ -9,15 +9,21 @@
 static char recieved_flag = 0;
 
 
-void can_init(uint8_t mode) {
-    mcp2515_init();
-    mcp2515_set_mode(mode);
+int can_init(uint8_t mode) {
+    if (mcp2515_init()) {
+        return 1;
+    }
+    if (mcp2515_set_mode(mode)) {
+        return 1;
+    }
 
     // recieve all messages
     mcp2515_write(MCP_RXB0CTRL, MCP_RXM1 | MCP_RXM0);
 
     // enable interrupt generation for successful reception
     mcp2515_bit_modify(MCP_CANINTE, MCP_RX1IF | MCP_RX0IF, 0xFF);
+
+    return 0;
 }
 
 
@@ -73,7 +79,7 @@ message_t can_recieve() {
 }
 
 
-char can_get_recieve_flag() {
+char can_get_recieved_flag() {
     return recieved_flag;
 }
 

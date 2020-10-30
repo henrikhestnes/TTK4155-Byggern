@@ -53,7 +53,7 @@ int main() {
         DDRB |= (1 >> PB3);
 
         while (1){
-            joystick_send_pos_to_can();
+            // joystick_send_pos_to_can();
 
             // if (can_get_recieve_flag()) {
             //     message_t message = can_recieve();
@@ -62,7 +62,7 @@ int main() {
             //     printf("message data: %s\n\r", message.data);
             // }
 
-            // menu_run();
+            menu_run();
         }
 
 
