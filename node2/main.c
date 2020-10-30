@@ -43,12 +43,13 @@ int main()
 
     // TESTING
         while (1) {
-            // pos_t pos = joystick_pos_recieve();
-            // printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
-            
             // servo_set_position();
 
-            game_count_score();
+            // game_count_score();
+
+            pos_t pos = {0,0};
+            joystick_pos_recieve(&pos);
+            printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
         }
 
 }
