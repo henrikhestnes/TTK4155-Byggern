@@ -5,11 +5,7 @@
 #define RIGHT_SLIDER_CHANNEL 2
 #define LEFT_SLIDER_CHANNEL 3
 #define RIGHT_BUTTON_PIN PB1
-#define LEFT_BUTTON_PIN PB2
-
-#define LEFT_OFFSET 14
-#define RIGHT_OFFSET 15
-#define MAX_VALUE 100
+#define LEFT_BUTTON_PIN PB
 
 
 int slider_scale_value(uint8_t value, int offset, int max) {

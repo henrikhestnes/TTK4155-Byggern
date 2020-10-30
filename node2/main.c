@@ -13,6 +13,8 @@
 #include "servo_driver.h"
 #include "adc.h"
 #include "game.h"
+#include "motor.h"
+#include "timer.h"
 
 
 #include <unistd.h>
@@ -40,6 +42,12 @@ int main()
     // ADC
         adc_init();
 
+    // MOTOR
+        motor_init();
+
+    // TIMER
+        timer_init();
+
 
     // TESTING
         while (1) {
@@ -47,9 +55,15 @@ int main()
 
             // game_count_score();
 
-            pos_t pos = {0,0};
-            joystick_pos_recieve(&pos);
-            printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
+            // pos_t pos = {0,0};
+            // if (!(joystick_pos_recieve(&pos))) {
+            //     printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
+            // }
+            
+            // motor_set_speed();
+            // printf("Før delay");
+            // timer_delay_ms(2000);
+            // printf("Etter delay");
         }
 
 }

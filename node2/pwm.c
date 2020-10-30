@@ -20,7 +20,7 @@ void pwm_init() {
     PIOC->PIO_ABSR |= PIO_PC19B_PWMH5 | PIO_PC18B_PWMH6;
 
     // disable PIO from controlling PIN44 and PIN45
-    PIOC->PIO_PDR |= PIO_PC18B_PWMH6 | PIO_PC19B_PWMH5;
+    PIOC->PIO_PDR |= PIO_PC19B_PWMH5 | PIO_PC18B_PWMH6;
 
     // enable clock for PWM:    DIV = 0 (clk = MCK), CMD = 0 (read), PID = 36 (PWM)
     PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_PWM << PMC_PCR_PID_Pos);

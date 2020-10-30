@@ -38,11 +38,12 @@ void CAN0_Handler( void )
 		if(can_sr & CAN_SR_MB1)  //Mailbox 1 event
 		{
 			can_receive(&message, 1);
+            // printf("Mailbox 1 event\n\r");
 		}
 		else if(can_sr & CAN_SR_MB2) //Mailbox 2 event
-		
 		{
 			can_receive(&message, 2);
+            // printf("Mailbox 2 event\n\r");
 		}
 		else
 		{
@@ -55,9 +56,10 @@ void CAN0_Handler( void )
 		if(DEBUG_INTERRUPT)printf("message data length: %d\n\r", message.data_length);
 		for (int i = 0; i < message.data_length; i++)
 		{
-			if(DEBUG_INTERRUPT)printf("%c ", message.data[i]);
+			if(DEBUG_INTERRUPT)printf("%d ", message.data[i]);
 		}
-		if(DEBUG_INTERRUPT)printf("\n\r");
+
+		if(DEBUG_INTERRUPT)printf("\n\n\r");
 	}
 	
 	if(can_sr & CAN_SR_MB0)

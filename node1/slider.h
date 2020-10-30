@@ -5,6 +5,11 @@
 #include <stdint.h>
 
 
+#define LEFT_OFFSET 14
+#define RIGHT_OFFSET 15
+#define MAX_VALUE 100
+
+
 /**
  * @brief Data structure to be used to represent 
  * the position of the two sliders.
@@ -17,13 +22,12 @@ typedef struct {
 
 /**
  * @brief Scales an output from the analog measurement to the range
- * [0, @p max ].
+ * [0, @p max].
  * 
  * @param value Measurement value to be scaled.
  * @param offset The measurement's offset from the middle of the
  * interval when the slider is centered.
  * @param max The maximum value the scaled output can have.
- * @param min The minimum value the scaled output can have.
  * 
  * @return The scaled value as an integer. 
  */
