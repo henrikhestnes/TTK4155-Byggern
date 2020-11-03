@@ -17,7 +17,7 @@
 void motor_init(void);
 
 
-void motor_set_speed(void);
+void motor_run_slider(void);
 
 
 int motor_read_encoder(void);

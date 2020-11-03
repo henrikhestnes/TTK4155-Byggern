@@ -57,7 +57,7 @@ void motor_init() {
 }
 
 
-void motor_set_speed() {
+void motor_run_slider() {
     // pos_t pos = {0, 0};
     // if (!(joystick_pos_recieve(&pos))) {
     //     printf("recieved position \n\r");

@@ -17,6 +17,7 @@
 #include "game.h"
 #include "motor.h"
 #include "timer.h"
+#include "solenoid.h"
 
 
 #define CAN_JOYSTICK 1
@@ -47,17 +48,23 @@ int main()
     // TIMER
         timer_init();
 
+    // SOLENOID
+        solenoid_init();
+
 
     // TESTING
         // PIOA->PIO_PER |= PIO_PA23;
         // PIOA->PIO_OER |= PIO_PA23;
 
         while (1) {
-            motor_set_speed();
+            // solenoid_shoot();
+            // timer_delay_us(1000000);
+
+            // motor_run_slider();
 
             // servo_set_position();
 
-            // game_count_score();
+            game_count_score();
 
             // pos_t pos = {0,0};
             // if (!(joystick_pos_recieve(&pos))) {

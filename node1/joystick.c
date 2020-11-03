@@ -91,3 +91,14 @@ void joystick_send_pos_to_can() {
 
     can_transmit(&pos_message);
 }
+
+
+void joystick_send_solenoid_pulse_to_can() {
+    message_t solenoid_message = {
+        .id = 3,
+        .length = 1,
+        .data = 0
+    };
+
+    can_transmit(&solenoid_message);
+}
