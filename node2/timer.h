@@ -5,7 +5,7 @@
 void timer_init(void);
 
 
-void timer_delay_ms(int ms);
+void timer_delay_us(int us);
 
 
 #endif

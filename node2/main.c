@@ -1,23 +1,22 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include <unistd.h>
 #include "uart_and_printf/uart.h"
 #include "uart_and_printf/printf-stdarg.h"
 #include "can/can_controller.h"
 #include "can/can_interrupt.h"
-
-
 #include "sam/sam3x/include/sam.h"
+
+
 #include "led.h"
 #include "joystick.h"
+#include "slider.h"
 #include "pwm.h"
 #include "servo_driver.h"
 #include "adc.h"
 #include "game.h"
 #include "motor.h"
 #include "timer.h"
-
-
-#include <unistd.h>
 
 
 #define CAN_JOYSTICK 1
@@ -50,7 +49,12 @@ int main()
 
 
     // TESTING
+        // PIOA->PIO_PER |= PIO_PA23;
+        // PIOA->PIO_OER |= PIO_PA23;
+
         while (1) {
+            motor_set_speed();
+
             // servo_set_position();
 
             // game_count_score();
@@ -59,11 +63,16 @@ int main()
             // if (!(joystick_pos_recieve(&pos))) {
             //     printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
             // }
+
+            // slider_t slider_pos = {0, 0};
+            // if (!slider_pos_recieve(&slider_pos)) {
+            //     printf("(left, right) = (%d, %d) \r\n", slider_pos.left, slider_pos.right);
+            // }
             
-            // motor_set_speed();
-            // printf("Før delay");
-            // timer_delay_ms(2000);
-            // printf("Etter delay");
+            // PIOA->PIO_SODR = PIO_PA23;
+            // timer_delay_us(20);
+            // PIOA->PIO_CODR = PIO_PA23;
+            // timer_delay_us(20);
         }
 
 }

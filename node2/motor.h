@@ -20,7 +20,7 @@ void motor_init(void);
 void motor_set_speed(void);
 
 
-uint32_t motor_read_encoder(void);
+int motor_read_encoder(void);
 
 
 #endif

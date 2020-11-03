@@ -8,7 +8,4 @@
 int slider_pos_recieve(slider_t* slider_pos);
 
 
-int slider_send_to_can(void);
-
-
 #endif

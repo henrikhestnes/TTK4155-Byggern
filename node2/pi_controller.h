@@ -8,15 +8,15 @@
  * the PI-regulator parameters
  */
 typedef struct {
-    int k_p;
-    int k_i;
+    int K_p;
+    int K_i;
     int sum_error;
-    //max_error;
-    //max_sum_error;
+    double T;
+    int max_u;
 } PI_data_t;
 
 
-void pi_controller(PI_data_t* PI, int T);
+int pi_controller(PI_data_t* PI, int ref, int current_value);
 
 
 #endif

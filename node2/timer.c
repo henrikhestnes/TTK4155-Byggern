@@ -4,8 +4,9 @@
 #include <time.h>
 
 
-#define TC0_CLK0    84E6 / 2
-#define TC1_CLK0    84E6 / 128
+#define F_OSC       84E6
+#define TC0_CLK0    F_OSC / 2
+#define TC1_CLK0    F_OSC / 128
 #define FREQ        100
 
 
@@ -37,7 +38,7 @@ void timer_init() {
 
 
     // initiate TC1 channel 0
-    // enable clock for TC1:    DIV = 0 (clk = MCK), CMD = 0 (read), PID = 28 (TC1)
+    // // enable clock for TC1:    DIV = 0 (clk = MCK), CMD = 0 (read), PID = 28 (TC1)
     // PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_TC1 << PMC_PCR_PID_Pos);
     // PMC->PMC_PCER0 |= 1 << (ID_TC1);
 
@@ -49,24 +50,14 @@ void timer_init() {
 }
 
 
-void timer_delay_ms(int ms) {
-    TC1->TC_CHANNEL[0].TC_CCR |= TC_CCR_SWTRG;
-    while (TC1->TC_CHANNEL[0].TC_CV < TC1_CLK0 * ms * 1e-3) {
-        printf("counter value: %d \n\r", TC1->TC_CHANNEL[0].TC_CV);
-    }
-    TC1->TC_CHANNEL[0].TC_CCR &= ~TC_CCR_SWTRG;
-}
+void timer_delay_us(int us) {
+    // TC1->TC_CHANNEL[0].TC_CCR |= TC_CCR_SWTRG;
+    // while (TC1->TC_CHANNEL[0].TC_CV < TC1_CLK0 * ms * 1e-3) {
+    //     printf("counter value: %d \n\r", TC1->TC_CHANNEL[0].TC_CV);
+    // }
+    // TC1->TC_CHANNEL[0].TC_CCR &= ~TC_CCR_SWTRG;
 
-
-void TC0_Handler(void) {
-    // toggle pin PA16
-    if (PIOA->PIO_ODSR & PIO_PA16) {
-        PIOA->PIO_CODR = PIO_PA16;
-    }
-    else {
-        PIOA->PIO_SODR = PIO_PA16;
-    }
-
-    // clear interrupt flag
-    TC0->TC_CHANNEL[0].TC_SR;
+    // NOT A GOOD SOLUTION. USE TIMER.
+    volatile int i;
+    for (i = 0; i < 4*us; ++i) {}
 }

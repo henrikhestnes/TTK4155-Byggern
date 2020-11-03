@@ -7,7 +7,7 @@
 
 #define LEFT_OFFSET 14
 #define RIGHT_OFFSET 15
-#define MAX_VALUE 100
+#define SLIDER_MAX_VALUE 100
 
 
 /**
@@ -41,7 +41,10 @@ int slider_scale_value(uint8_t value, int offset, int max);
  * 
  * @return The scaled slider positions.
  */
-slider_t slider_pos_read();
+slider_t slider_pos_read(void);
+
+
+void slider_send_pos_to_can(void);
 
 
 #endif
