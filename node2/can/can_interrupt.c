@@ -9,13 +9,16 @@
  */ 
 
 #include "can_interrupt.h"
-
-#include <stdio.h>
+#include "can_controller.h"
+#include "../uart_and_printf/printf-stdarg.h"
 #include "sam.h"
 
-#include "../uart_and_printf/printf-stdarg.h"
+#include <stdio.h>
 
-#include "can_controller.h"
+#include "../user_input.h"
+#include "../solenoid.h"
+#include "../servo_driver.h"
+#include "../motor.h"
 
 #define DEBUG_INTERRUPT 0
 
@@ -32,24 +35,37 @@ void CAN0_Handler( void )
 	char can_sr = CAN0->CAN_SR; 
 	
 	//RX interrupt
-	if(can_sr & (CAN_SR_MB1 | CAN_SR_MB2) )//Only mailbox 1 and 2 specified for receiving
+	if(can_sr & (CAN_SR_MB1 | CAN_SR_MB2) ) // Mailbox 1 and 2 specified for receiving
 	{
 		CAN_MESSAGE message;
-		if(can_sr & CAN_SR_MB1)  //Mailbox 1 event
+		if(can_sr & CAN_SR_MB1)  // Mailbox 1 event
 		{
 			can_receive(&message, 1);
-            // printf("Mailbox 1 event\n\r");
 		}
-		else if(can_sr & CAN_SR_MB2) //Mailbox 2 event
+		else if(can_sr & CAN_SR_MB2) // Mailbox 2 event
 		{
 			can_receive(&message, 2);
-            // printf("Mailbox 2 event\n\r");
 		}
 		else
 		{
 			printf("CAN0 message arrived in non-used mailbox\n\r");
 		}
 
+
+        switch(message.id) {
+            case 1:
+                // run servo
+                servo_set_position(message.data[0]);
+
+                // run motor
+                motor_run_slider(message.data[3]);
+
+                // poll button for solenoid
+                solenoid_run_button(message.data[5]);
+
+            default:
+                break;
+        }
 
 
 		if(DEBUG_INTERRUPT)printf("message id: %d\n\r", message.id);

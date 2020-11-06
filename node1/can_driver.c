@@ -72,18 +72,18 @@ message_t can_recieve() {
     }
 
     // clear interrupt flag
-    recieved_flag = 0;
-    mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF | MCP_RX1IF, 0);
+    // recieved_flag = 0;
+    // mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF | MCP_RX1IF, 0);
 
     return message;    
 }
 
 
-char can_get_recieved_flag() {
-    return recieved_flag;
-}
+// char can_get_recieved_flag() {
+//     return recieved_flag;
+// }
 
 
-ISR(INT0_vect) {
-    recieved_flag = 1;
-}      
+// ISR(INT0_vect) {
+//     recieved_flag = 1;
+// }      

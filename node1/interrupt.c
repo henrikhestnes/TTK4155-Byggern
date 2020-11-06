@@ -60,4 +60,21 @@ void interrupt_can_recieve_init() {
 }
 
 
+void interrupt_enable_oled_timer() {
+    cli();
+
+    TIMSK |= (1 << OCIE1A);
+
+    sei();
+}
+
+void interrupt_disable_oled_timer() {
+    cli();
+
+    TIMSK &= ~(1 << OCIE1A);
+
+    sei();
+}
+
+
 ISR(BADISR_vect){}

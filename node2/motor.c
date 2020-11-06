@@ -10,8 +10,8 @@
 
 #define ENCODER_DATA_MASK   (0xFF << DO0_IDX)
 
-#define K_P                 50
-#define K_I                 12
+#define K_P                 30
+#define K_I                 6
 #define T                   1.0 / 50
 #define MAX_SPEED           0x4FF
 
@@ -57,7 +57,7 @@ void motor_init() {
 }
 
 
-void motor_run_slider() {
+void motor_run_slider(int reference) {
     // pos_t pos = {0, 0};
     // if (!(joystick_pos_recieve(&pos))) {
     //     printf("recieved position \n\r");
@@ -77,26 +77,23 @@ void motor_run_slider() {
     //     printf("speed = %X \n\n\r", speed);
     //     dac_write(speed);
     // }
+   
+    int current_position = scaled_encoder_value();
+    // printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
+    int u = pi_controller(&PI, reference, current_position);
+    // printf("pådrag: %d \r\n", u);
 
-    slider_t reference;
-    if (!(slider_pos_recieve(&reference))) {
-        int current_position = scaled_encoder_value();
-        printf("reference: %d, \t\tcurrent position: %d \r\n ", reference.right, current_position);
-        int u = pi_controller(&PI, reference.right, current_position);
-        printf("pådrag: %d \r\n", u);
-
-        if (u > 0) {
-            // moving right, set direction pin
-            PIOD->PIO_SODR = DIR;
-        }
-        else {
-            // moving left, clear direction pin
-            PIOD->PIO_CODR = DIR;
-        }
-
-        // set motor speed
-        dac_write(abs(u));
+    if (u > 0) {
+        // moving right, set direction pin
+        PIOD->PIO_SODR = DIR;
     }
+    else {
+        // moving left, clear direction pin
+        PIOD->PIO_CODR = DIR;
+    }
+
+    // set motor speed
+    dac_write(abs(u));
 }
 
 

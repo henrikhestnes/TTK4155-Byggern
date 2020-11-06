@@ -18,10 +18,7 @@ void servo_init() {
 }
 
 
-void servo_set_position() {
-    pos_t pos = {0, 0};
-    if (!(joystick_pos_recieve(&pos))) {
-        float duty_cycle = GAIN * pos.x + OFFSET;
-        pwm_set_duty_cycle(duty_cycle, CHANNEL_PIN45);
-    }
+void servo_set_position(int x) {
+    float duty_cycle = GAIN * x + OFFSET;
+    pwm_set_duty_cycle(duty_cycle, CHANNEL_PIN45);
 }

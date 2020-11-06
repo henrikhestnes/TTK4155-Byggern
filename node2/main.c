@@ -11,6 +11,7 @@
 #include "led.h"
 #include "joystick.h"
 #include "slider.h"
+#include "buttons.h"
 #include "pwm.h"
 #include "servo_driver.h"
 #include "adc.h"
@@ -34,13 +35,13 @@ int main()
         printf("Hello World\n\r");
 
     // CAN
-        can_init_def_tx_rx_mb(ATSAM_CAN_BR);
-
-    // SERVO
-        servo_init();
+        can_init(ATSAM_CAN_BR, 1, 3);
 
     // ADC
         adc_init();
+
+    // SERVO
+        servo_init();
 
     // MOTOR
         motor_init();
@@ -60,20 +61,25 @@ int main()
             // solenoid_shoot();
             // timer_delay_us(1000000);
 
-            // motor_run_slider();
+            // slider_t slider_pos = {0, 0};
+            // if (!slider_pos_recieve(&slider_pos)) {
+            //     printf("(left, right) = (%d, %d) \r\n", slider_pos.left, slider_pos.right);
+            // }
+            // motor_run_slider(slider_pos.right);
 
             // servo_set_position();
 
-            game_count_score();
+            // game_count_score();
+
+
+            // int button_status = 0;
+            // if (!(buttons_status_recieve(&button_status))) {
+            //     printf("button status = %d \r\n", button_status);
+            // }
 
             // pos_t pos = {0,0};
             // if (!(joystick_pos_recieve(&pos))) {
             //     printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
-            // }
-
-            // slider_t slider_pos = {0, 0};
-            // if (!slider_pos_recieve(&slider_pos)) {
-            //     printf("(left, right) = (%d, %d) \r\n", slider_pos.left, slider_pos.right);
             // }
             
             // PIOA->PIO_SODR = PIO_PA23;

@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "random": "c"
+        "random": "c",
+        "chrono": "c",
+        "limits": "c",
+        "algorithm": "c"
     }
 }

@@ -9,7 +9,7 @@
  */ 
 
 #include "can_controller.h"
-#include "sam.h"
+#include "../sam/sam3x/include/sam.h"
 #include "../uart_and_printf/printf-stdarg.h"
 
 

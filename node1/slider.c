@@ -1,12 +1,11 @@
 #include "slider.h"
 #include "adc.h"
 #include "can_driver.h"
+#include <avr/io.h>
 
 
 #define RIGHT_SLIDER_CHANNEL 2
 #define LEFT_SLIDER_CHANNEL 3
-#define RIGHT_BUTTON_PIN PB1
-#define LEFT_BUTTON_PIN PB
 
 
 int slider_scale_value(uint8_t value, int offset, int max) {
@@ -43,9 +42,9 @@ void slider_send_pos_to_can() {
   slider_t slider_pos = slider_pos_read();
 
   message_t slider_message = {
-    2,
-    2,
-    {slider_pos.left, slider_pos.right}
+    .id = 3,
+    .length = 2,
+    .data = {slider_pos.left, slider_pos.right}
   };
 
   can_transmit(&slider_message);

@@ -5,7 +5,7 @@
 void servo_init(void);
 
 
-void servo_set_position(void);
+void servo_set_position(int x);
 
 
 #endif

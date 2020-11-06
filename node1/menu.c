@@ -2,6 +2,7 @@
 #include "oled.h"
 #include "sram.h"
 #include "joystick.h"
+#include "fsm.h"
 #include <stdlib.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
@@ -49,13 +50,18 @@ void go_to_parent() {
 }
 
 
+void start_new_game() {
+    fsm_transition_to(PLAYING);
+}
+
+
 void menu_init() {
     menu_t* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH);
     menu_t* settings_menu = menu_new(content_settings, SETTINGS_LENGTH);
     menu_t* highscore_menu = menu_new(content_highscore, HIGHSCORE_LENGTH);
 
     // main menu linked list
-    menu_node_t* new_game_node = menu_new_node(NULL, main_menu, NULL, NULL);
+    menu_node_t* new_game_node = menu_new_node(NULL, main_menu, NULL, start_new_game);
     menu_node_t* settings_node = menu_new_node(NULL, main_menu, settings_menu, go_to_child);
     menu_node_t* highscore_node = menu_new_node(NULL, main_menu, highscore_menu, go_to_child);
     menu_node_t* quit_node = menu_new_node(NULL, main_menu, NULL, NULL);
@@ -164,6 +170,7 @@ void menu_run() {
 
 
 void menu_print() {
+    oled_clear();
     char word[20];
     menu_t* current_menu = current->own_menu;
 
@@ -180,15 +187,6 @@ void menu_print() {
 }
 
 
-ISR(INT1_vect) {
-    if (current->action_function) {
-        oled_clear();
-        state_changed = 1;
-        current->action_function();
-    }
-}
-
-
 ISR(TIMER1_COMPA_vect) {
     PORTB ^= (1 << PB3);
     
@@ -198,6 +196,14 @@ ISR(TIMER1_COMPA_vect) {
 
     state_changed = 0;
     menu_print();
+}
+
+
+ISR(INT1_vect) {
+    if (current->action_function) {
+        state_changed = 1;
+        current->action_function();
+    }
 }
 
 

@@ -14,22 +14,22 @@
 #define MIN_VALUE  -100
 
 
-int joystick_scale_value(uint8_t value, int offset, int max, int min) {
-    // scale to values between min and max 
-    int scaled_value = (int)(value - 128)*(max - min)/256;
+// int joystick_scale_value(uint8_t value, int offset, int max, int min) {
+//     // scale to values between min and max 
+//     int scaled_value = (int)(value - 128)*(max - min)/256;
 
-    // correct offset and nonlinear scaling
-    // based on measurements we assume positive offset
-    if (scaled_value > offset) {
-        scaled_value -= (int)(offset*(max - scaled_value)/(max - offset));
-    }
-    else
-    {
-        scaled_value -= (int)(offset*(min - scaled_value)/(min - offset));
-    }
+//     // correct offset and nonlinear scaling
+//     // based on measurements we assume positive offset
+//     if (scaled_value > offset) {
+//         scaled_value -= (int)(offset*(max - scaled_value)/(max - offset));
+//     }
+//     else
+//     {
+//         scaled_value -= (int)(offset*(min - scaled_value)/(min - offset));
+//     }
 
-    return scaled_value;
-}
+//     return scaled_value;
+// }
 
 
 pos_t joystick_pos_read(void){
@@ -84,21 +84,10 @@ void joystick_send_pos_to_can() {
     pos_t pos = joystick_pos_read();
 
     message_t pos_message = {
-        .id = 1,
+        .id = 2,
         .length = 2,
         .data = {pos.x, pos.y}
     };
 
     can_transmit(&pos_message);
-}
-
-
-void joystick_send_solenoid_pulse_to_can() {
-    message_t solenoid_message = {
-        .id = 3,
-        .length = 1,
-        .data = 0
-    };
-
-    can_transmit(&solenoid_message);
 }

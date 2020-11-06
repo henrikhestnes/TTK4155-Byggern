@@ -23,4 +23,10 @@ void interrupt_oled_timer_init();
 void interrupt_can_recieve_init();
 
 
+void interrupt_enable_oled_timer();
+
+
+void interrupt_disable_oled_timer();
+
+
 #endif
