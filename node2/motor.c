@@ -10,8 +10,8 @@
 
 #define ENCODER_DATA_MASK   (0xFF << DO0_IDX)
 
-#define K_P                 12
-#define K_I                 1.2
+#define K_P                 15
+#define K_I                 2
 #define T                   1.0 / 50
 #define MAX_SPEED           0x4FF
 
@@ -36,7 +36,7 @@ static PI_data_t PI = {
 void motor_init() {
     // initiate dac
     dac_init();
-
+   
     // enable PIOD pins to motor box as output
     PIOD->PIO_PER |= DIR | EN | SEL | NOT_RST | NOT_OE;
     PIOD->PIO_OER |= DIR | EN | SEL | NOT_RST | NOT_OE;

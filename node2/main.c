@@ -46,7 +46,6 @@ int main()
 
     // MOTOR
         motor_init();
-        motor_disable();
 
     // TIMER
         timer_init();

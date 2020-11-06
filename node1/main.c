@@ -85,7 +85,9 @@ int main() {
                 if (user_input_buttons().left) {
                     fsm_transition_to(POSTGAME);
                     _delay_ms(1000);
-                } 
+                }
+
+                _delay_ms(1);
                 break;
             }
             case POSTGAME:

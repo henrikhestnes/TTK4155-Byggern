@@ -12,6 +12,8 @@ void dac_init() {
 
     // enable channel 1
     DACC->DACC_CHER = DACC_CHER_CH1;
+
+    dac_write(0);
 }
 
 
