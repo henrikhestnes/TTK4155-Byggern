@@ -1,7 +1,7 @@
 #include "menu.h"
 #include "oled.h"
 #include "sram.h"
-#include "joystick.h"
+#include "user_input.h"
 #include "fsm.h"
 #include <stdlib.h>
 #include <avr/interrupt.h>
@@ -134,7 +134,7 @@ void menu_link_nodes(menu_node_t* first, menu_node_t* second) {
 
 
 void menu_run() {
-    switch (joystick_get_dir()) {
+    switch (user_input_joystick_dir()) {
         case UP:
             current = current->prev;
 
@@ -188,7 +188,7 @@ void menu_print() {
 
 
 ISR(TIMER1_COMPA_vect) {
-    PORTB ^= (1 << PB3);
+    // PORTB ^= (1 << PB3);
     
     if (!state_changed) {
         return;

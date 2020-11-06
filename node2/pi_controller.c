@@ -1,5 +1,4 @@
 #include "pi_controller.h"
-#include "slider.h"
 
 
 int pi_controller(PI_data_t* PI, int ref, int current_value) {

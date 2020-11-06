@@ -1,6 +1,5 @@
 #include "servo_driver.h"
 #include "pwm.h"
-#include "joystick.h"
 
 
 #define PERIOD              20E-3

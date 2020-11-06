@@ -1,9 +1,6 @@
 #include "uart.h"
 #include "sram.h"
 #include "adc.h"
-//#include "joystick.h"
-//#include "slider.h"
-//#include "buttons.h"
 #include "user_input.h"
 #include "oled.h"
 #include "menu.h"
@@ -38,8 +35,8 @@ int main() {
         sram_init();
         sram_test();
 
-    // ADC
-        adc_init();
+    // USER INPUT
+        user_input_init();
 
     // OLED
         oled_init();
@@ -50,8 +47,6 @@ int main() {
     // CAN
         can_init(MODE_NORMAL);
 
-    // BUTTONS
-        buttons_init();
 
     // INTERRUPT
         interrupt_joystick_init();
@@ -59,37 +54,52 @@ int main() {
         interrupt_can_recieve_init();
 
     // Testing
-        DDRB |= (1 >> PB3);
+        // DDRB |= (1 >> PB3);
 
-        while (1){
-            user_input_transmit();
+        // while (1){
+        //     // user_input_transmit();
 
-            // if (can_get_recieve_flag()) {
-            //     message_t message = can_recieve();
-            //     printf("message id: %d\n\r", message.id);
-            //     printf("message data length: %d\n\r", message.length);
-            //     printf("message data: %s\n\r", message.data);
-            // }
+        //     // if (can_get_recieve_flag()) {
+        //     //     message_t message = can_recieve();
+        //     //     printf("message id: %d\n\r", message.id);
+        //     //     printf("message data length: %d\n\r", message.length);
+        //     //     printf("message data: %s\n\r", message.data);
+        //     // }
 
-            // menu_run();
+        //     // menu_run();
+        // }
+
+
+    fsm_current_state = MENU;
+    while (1) {
+        switch (fsm_current_state) {
+            case MENU:
+            {
+                menu_run();
+                break;
+            }
+            case PLAYING:
+            {
+                user_input_transmit();
+
+                if (user_input_buttons().left) {
+                    fsm_transition_to(POSTGAME);
+                    _delay_ms(1000);
+                } 
+                break;
+            }
+            case POSTGAME:
+            {
+                if (user_input_buttons().left) {
+                    fsm_transition_to(MENU);
+                    _delay_ms(1000);
+                }
+                break;
+            }
+            default:
+                break;
         }
-
-
-    // switch (fsm_current_state) {
-    //     case MENU:
-    //         menu_run();
-    //         break;
-        
-    //     case PLAYING:
-    //         slider_send_pos_to_can();
-    //         joystick_send_pos_to_can();
-    //         buttons_send_status_to_can();
-    //         break;
-
-    //     default:
-    //         break;
-    // }
-
+    }
 
     return 0;
 }

@@ -17,6 +17,12 @@
 void motor_init(void);
 
 
+void motor_disable(void);
+
+
+void motor_enable(void);
+
+
 void motor_run_slider(int reference);
 
 

@@ -1,5 +1,5 @@
-#ifndef NODE1_FSM_H
-#define NODE1_FSM_H
+#ifndef NODE2_FSM_H
+#define NODE2_FSM_H
 
 
 enum FSM_STATE {

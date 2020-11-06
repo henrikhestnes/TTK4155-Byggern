@@ -1,7 +1,6 @@
 #include "oled.h"
 #include "sram.h"
 #include "fonts.h"
-#include "joystick.h"
 
 
 #define ASCII_OFFSET    32

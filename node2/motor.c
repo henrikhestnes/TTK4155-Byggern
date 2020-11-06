@@ -1,6 +1,6 @@
 #include "motor.h"
 #include "dac.h"
-#include "slider.h"
+#include "../node1/user_input.h"
 #include "timer.h"
 #include "pi_controller.h"
 #include "sam/sam3x/include/sam.h"
@@ -10,8 +10,8 @@
 
 #define ENCODER_DATA_MASK   (0xFF << DO0_IDX)
 
-#define K_P                 30
-#define K_I                 6
+#define K_P                 12
+#define K_I                 1.2
 #define T                   1.0 / 50
 #define MAX_SPEED           0x4FF
 
@@ -21,7 +21,7 @@
 
 static int encoder_value = 0;
 int scaled_encoder_value() {
-    return SLIDER_MAX_VALUE * encoder_value / (MAX_ENCODER_VALUE - MIN_ENCODER_VALUE);
+    return SLIDER_MAX * encoder_value / (MAX_ENCODER_VALUE - MIN_ENCODER_VALUE);
 }
 
 static PI_data_t PI = {    
@@ -31,9 +31,6 @@ static PI_data_t PI = {
     T,
     MAX_SPEED
 };
-
-
-
 
 
 void motor_init() {
@@ -53,7 +50,18 @@ void motor_init() {
     PMC->PMC_PCER0 |= 1 << (ID_PIOC);
 
     // enable motor
-    PIOD->PIO_SODR = EN | NOT_RST;
+    // PIOD->PIO_SODR = EN | NOT_RST;
+}
+
+
+void motor_disable() {
+    PIOD->PIO_CODR = EN;
+}
+
+
+void motor_enable() {
+    PIOD->PIO_SODR = EN;
+    PI.sum_error = 0;
 }
 
 

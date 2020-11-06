@@ -13,12 +13,14 @@
 #include "../uart_and_printf/printf-stdarg.h"
 #include "sam.h"
 
-#include <stdio.h>
-
 #include "../user_input.h"
 #include "../solenoid.h"
 #include "../servo_driver.h"
 #include "../motor.h"
+#include "../fsm.h"
+
+#include <stdio.h>
+
 
 #define DEBUG_INTERRUPT 0
 
@@ -35,7 +37,7 @@ void CAN0_Handler( void )
 	char can_sr = CAN0->CAN_SR; 
 	
 	//RX interrupt
-	if(can_sr & (CAN_SR_MB1 | CAN_SR_MB2) ) // Mailbox 1 and 2 specified for receiving
+	if(can_sr & (CAN_SR_MB1 | CAN_SR_MB2)) // Mailbox 1 and 2 specified for receiving
 	{
 		CAN_MESSAGE message;
 		if(can_sr & CAN_SR_MB1)  // Mailbox 1 event
@@ -55,13 +57,19 @@ void CAN0_Handler( void )
         switch(message.id) {
             case 1:
                 // run servo
-                servo_set_position(message.data[0]);
+                // printf("(x, y) = (%d, %d) \r\n", joystick_scale_x(message.data[0]), joystick_scale_y(message.data[1]));
+                servo_set_position(joystick_scale_x(message.data[0]));
 
                 // run motor
-                motor_run_slider(message.data[3]);
+                // printf("(s_l, s_r) = (%d, %d) \r\n", slider_scale_left(message.data[2]), slider_scale_right(message.data[3]));
+                motor_run_slider(slider_scale_right(message.data[3]));
 
                 // poll button for solenoid
+                // printf("(b_l, b_r) = (%d, %d) \r\n\n", message.data[4], message.data[5]);
                 solenoid_run_button(message.data[5]);
+
+            case 2:
+                fsm_transition_to(message.data[0]);
 
             default:
                 break;

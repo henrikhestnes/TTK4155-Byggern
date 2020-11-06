@@ -8,8 +8,8 @@
  * the PI-regulator parameters
  */
 typedef struct {
-    int K_p;
-    int K_i;
+    float K_p;
+    float K_i;
     int sum_error;
     double T;
     int max_u;
