@@ -3,9 +3,12 @@
 
 #include <stdint.h>
 
+<<<<<<< HEAD
 /**
  * @brief Enum that describes the tilting of the accelerometer.
  */
+=======
+>>>>>>> master
 
 typedef enum{
     middle,
@@ -13,13 +16,17 @@ typedef enum{
     right
 } dir_t;
 
+<<<<<<< HEAD
 /**
  * @brief Set the pins(0-2) on the microbit to output.
  */
+=======
+>>>>>>> master
 
 void controller_init_pins(void);
 
 
+<<<<<<< HEAD
 /**
  * @brief Read the accelerometer values in X, Y, and Z directions.
  *
@@ -55,6 +62,17 @@ void controller_send_dir(int16_t* x_pt);
  * @brief Read the accelerometer values in X, Y, and Z directions.
  */
 
+=======
+const dir_t controller_get_dir(const int16_t* x_pt);
+
+
+void controller_set_pin_high(dir_t* dir);
+
+
+void controller_send_dir(int16_t* x_pt);
+
+
+>>>>>>> master
 void controller_send_button_pressed(void);
 
 
