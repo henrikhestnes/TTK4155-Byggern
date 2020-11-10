@@ -198,10 +198,6 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define PROPAG  2
 #define PS1     6
 #define PS2     7
-#define SJW     4
-#define BTLMODE 1
-#define SAM     0
-#define WAKFIL  0
 
 
 /**

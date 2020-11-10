@@ -55,6 +55,43 @@ void start_new_game() {
 }
 
 
+void menu_timer_init() {
+    TCCR1A = 0;
+    TCCR1B = 0;
+    TCNT1 = 0;
+
+    // set compare match register for 60 hz
+    OCR1A = 39;
+
+    // set to CTC mode
+    TCCR1B |= (1 << WGM12);
+
+    // set prescaler 1024
+    TCCR1B |= (1 << CS12) | (1 << CS10);
+
+    // enable timer compare interrupt
+    TIMSK |= (1 << OCIE1A);
+}
+
+
+void menu_timer_enable() {
+    cli();
+
+    TIMSK |= (1 << OCIE1A);
+
+    sei();
+}
+
+
+void menu_timer_disable() {
+    cli();
+
+    TIMSK &= ~(1 << OCIE1A);
+
+    sei();
+}
+
+
 void menu_init() {
     menu_t* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH);
     menu_t* settings_menu = menu_new(content_settings, SETTINGS_LENGTH);
@@ -100,6 +137,8 @@ void menu_init() {
     state = 0;
     oled_clear();
     menu_print();
+
+    menu_timer_init();
 }
 
 
@@ -187,9 +226,7 @@ void menu_print() {
 }
 
 
-ISR(TIMER1_COMPA_vect) {
-    // PORTB ^= (1 << PB3);
-    
+ISR(TIMER1_COMPA_vect) {   
     if (!state_changed) {
         return;
     }

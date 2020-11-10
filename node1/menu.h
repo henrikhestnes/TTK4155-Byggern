@@ -82,6 +82,12 @@ void menu_print();
 void menu_run();
 
 
+void menu_timer_enable();
+
+
+void menu_timer_disable();
+
+
 // void menu_write_to_sram();
 
 

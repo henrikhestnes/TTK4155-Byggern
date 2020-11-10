@@ -84,4 +84,10 @@ button_t user_input_buttons(void);
 void user_input_transmit(void);
 
 
+void user_input_timer_enable();
+
+
+void user_input_timer_disable();
+
+
 #endif

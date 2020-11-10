@@ -10,13 +10,15 @@
 typedef struct {
     float K_p;
     float K_i;
+    float K_d;
     int sum_error;
+    int prev_error;
     double T;
     int max_u;
-} PI_data_t;
+} PID_DATA_t;
 
 
-int pi_controller(PI_data_t* PI, int ref, int current_value);
+int pid_controller(PID_DATA_t* PID, int ref, int current_value);
 
 
 #endif

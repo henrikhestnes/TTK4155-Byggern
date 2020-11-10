@@ -17,7 +17,8 @@ typedef struct {
 
 
 typedef enum {
-    USER_INPUT = 1
+    USER_INPUT_ID = 1,
+    FSM_STATE_ID
 } CAN_MESSAGE_ID;
 
 

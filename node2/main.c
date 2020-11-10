@@ -18,6 +18,8 @@
 #include "timer.h"
 #include "solenoid.h"
 #include "fsm.h"
+#include "music_driver.h"
+
 
 #define CAN_JOYSTICK 1
 
@@ -47,41 +49,49 @@ int main()
     // MOTOR
         motor_init();
 
-    // TIMER
-        timer_init();
+    // GAME
+        game_init();
 
     // SOLENOID
         solenoid_init();
 
+    // SysTick
+    // SysTick_init_us(1);
 
-    fsm_current_state = MENU;
-    while (1) {
-        switch(fsm_current_state) {
-            case MENU:
-            {
-                break;
-            }
-            case PLAYING:
-            {
-                // count score and send to can
-                break;
-            }
-            case POSTGAME:
-            {
-                dac_write(0);
-                break;
-            }
-            default:
-                break;
-        }
-    }
+
+    //fsm_transition_to(MENU);
+    //while (1) {
+        // switch(fsm_current_state) {
+        //     case MENU:
+        //     {
+        //         break;
+        //     }
+        //     case PLAYING:
+        //     {
+        //         // count score and send to can
+        //         break;
+        //     }
+        //     case POSTGAME:
+        //     {
+        //         break;
+        //     }
+        //     default:
+        //         break;
+        // }
+    //}
 
 
     // TESTING
         // PIOA->PIO_PER |= PIO_PA23;
         // PIOA->PIO_OER |= PIO_PA23;
+       
 
-        // while (1) {
+        while (1) {
+            // for (int i = 0; i < 10000; i += 1000) {
+            //     music_buzz(i, 10000);
+            // }
+        
+    
         //     solenoid_shoot();
         //     timer_delay_us(1000000);
 
@@ -106,10 +116,10 @@ int main()
         //         printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
         //     }
             
-        //     PIOA->PIO_SODR = PIO_PA23;
-        //     timer_delay_us(20);
-        //     PIOA->PIO_CODR = PIO_PA23;
-        //     timer_delay_us(20);
-        // }
+            // PIOA->PIO_SODR = PIO_PA23;
+            // _delay_us(2000);
+            // PIOA->PIO_CODR = PIO_PA23;
+            // _delay_us(1000);
+        }
 
 }

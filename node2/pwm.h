@@ -12,4 +12,7 @@ void pwm_init(void);
 void pwm_set_duty_cycle(float duty_cycle, unsigned int channel);
 
 
+void pwm_set_frequency(int freq, unsigned int channel);
+
+
 #endif

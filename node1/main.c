@@ -23,10 +23,9 @@
 #define CAN_JOYSTICK 1
 
 
-enum FSM_STATE fsm_current_state = INIT;
-
-
 int main() {
+        cli();
+
     // UART
         UART_init(UBRR);
         UART_link_printf();
@@ -37,6 +36,7 @@ int main() {
 
     // USER INPUT
         user_input_init();
+        user_input_timer_disable();
 
     // OLED
         oled_init();
@@ -48,31 +48,27 @@ int main() {
         can_init(MODE_NORMAL);
 
 
-    // INTERRUPT
-        interrupt_joystick_init();
-        interrupt_oled_timer_init();
-        interrupt_can_recieve_init();
+        sei();
 
     // Testing
-        // DDRB |= (1 >> PB3);
+        // while (1) {
+            // user_input_transmit();
 
-        // while (1){
-        //     // user_input_transmit();
+            // if (can_get_recieve_flag()) {
+            //     message_t message = can_recieve();
+            //     printf("message id: %d\n\r", message.id);
+            //     printf("message data length: %d\n\r", message.length);
+            //     printf("message data: %s\n\r", message.data);
+            // }
 
-        //     // if (can_get_recieve_flag()) {
-        //     //     message_t message = can_recieve();
-        //     //     printf("message id: %d\n\r", message.id);
-        //     //     printf("message data length: %d\n\r", message.length);
-        //     //     printf("message data: %s\n\r", message.data);
-        //     // }
-
-        //     // menu_run();
+            // menu_run();
         // }
 
-
-    fsm_current_state = MENU;
+    fsm_set_state(MENU);
+    
     while (1) {
-        switch (fsm_current_state) {
+    enum FSM_STATE state = fsm_get_state();
+        switch (state) {
             case MENU:
             {
                 menu_run();
@@ -80,14 +76,11 @@ int main() {
             }
             case PLAYING:
             {
-                user_input_transmit();
-
                 if (user_input_buttons().left) {
                     fsm_transition_to(POSTGAME);
                     _delay_ms(1000);
                 }
 
-                _delay_ms(1);
                 break;
             }
             case POSTGAME:
@@ -120,3 +113,14 @@ ISR(INT0_vect) {
     mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF | MCP_RX1IF, 0);
 }
 
+
+ISR(TIMER3_COMPA_vect) {
+    cli();
+
+    user_input_transmit();
+
+    sei();
+}
+
+
+ISR(BADISR_vect){}

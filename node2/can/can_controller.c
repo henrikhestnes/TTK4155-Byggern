@@ -12,7 +12,7 @@
 #include "../sam/sam3x/include/sam.h"
 #include "../uart_and_printf/printf-stdarg.h"
 
-
+#define IRQ_CAN0_priority 1
 
 /**
  * \brief Initialize can bus with predefined number of rx and tx mailboxes, 
@@ -109,6 +109,8 @@ uint8_t can_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb)
 
 	//Enable interrupt in NVIC 
 	NVIC_EnableIRQ(ID_CAN0);
+    NVIC_SetPriority(CAN0_IRQn, IRQ_CAN0_priority);
+
 
 	//enable CAN
 	CAN0->CAN_MR |= CAN_MR_CANEN;

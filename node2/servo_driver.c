@@ -14,6 +14,7 @@
 
 void servo_init() {
     pwm_init();
+    servo_set_position(0);
 }
 
 

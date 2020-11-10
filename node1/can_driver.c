@@ -9,6 +9,19 @@
 static char recieved_flag = 0;
 
 
+void interrupt_can_recieve_init() {
+    // set INT0 as input
+    DDRD &= ~(1 << PD2);
+
+    // enable INT0 interrupt vector
+    GICR |= (1 << INT0);
+
+    // interrupt on falling edge
+    MCUCR |= (1 << ISC01);
+    MCUCR &= ~(1 << ISC00);
+}
+
+
 int can_init(uint8_t mode) {
     if (mcp2515_init()) {
         return 1;
@@ -22,6 +35,8 @@ int can_init(uint8_t mode) {
 
     // enable interrupt generation for successful reception
     mcp2515_bit_modify(MCP_CANINTE, MCP_RX1IF | MCP_RX0IF, 0xFF);
+
+    interrupt_can_recieve_init();
 
     return 0;
 }

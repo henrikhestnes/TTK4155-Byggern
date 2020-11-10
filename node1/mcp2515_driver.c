@@ -3,7 +3,7 @@
 #include <avr/io.h> 
 
 
-#define F_OSC 16000000
+#define F_CPU 16000000
 #include <util/delay.h> 
 
 
@@ -30,11 +30,11 @@ int mcp2515_init() {
     }
 
     // set CAN bitrate
-    uint8_t BRP = F_OSC / (2 * NUMBER_OF_TQ * BAUDRATE);
+    uint8_t BRP = F_CPU / (2 * NUMBER_OF_TQ * BAUDRATE);
 
-    mcp2515_write(MCP_CNF1, ((SJW - 1) << 6) | (BRP - 1));
-    mcp2515_write(MCP_CNF2, (BTLMODE << 7) | (SAM << 6) | ((PS1 - 1) << 3) | (PROPAG - 1));
-    mcp2515_write(MCP_CNF3, (WAKFIL << 6) | (PS2 - 1));
+    mcp2515_write(MCP_CNF1, SJW4 | (BRP - 1));
+    mcp2515_write(MCP_CNF2, BTLMODE | SAMPLE_3X | ((PS1 - 1) << 3) | (PROPAG - 1));
+    mcp2515_write(MCP_CNF3, WAKFIL_DISABLE | (PS2 - 1));
 
     return 0;
 }    

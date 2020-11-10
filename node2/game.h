@@ -2,13 +2,19 @@
 #define GAME_H
 
 
-#define IR_TRESHOLD     1000
-
-
 void game_init(void);
 
 
 void game_count_score(void);
+
+
+void game_set_user_data(char* data);
+
+
+void game_timer_enable();
+
+
+void game_timer_disable();
 
 
 #endif

@@ -3,6 +3,7 @@
 #include "can_driver.h"
 #include <math.h>
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 
 #define X_CHANNEL               0
@@ -13,6 +14,37 @@
 #define RIGHT_BUTTON_PIN        PB1
 #define LEFT_BUTTON_PIN         PB2
 
+
+static void interrupt_joystick_init() {
+    // set INT1 as input
+    DDRD &= ~(1 << PD3);
+
+    // enable INT1 interrupt vector
+    GICR |= (1 << INT1);
+
+    // interrupt on falling edge
+    MCUCR |= (1 << ISC11);
+    MCUCR &= ~(1 << ISC10);
+}
+
+
+static void interrupt_can_timer_init() {
+    TCCR3A = 0;
+    TCCR3B = 0;
+    TCNT3 = 0;
+
+    // set compare match register for 10 Hz
+    OCR3A = 239;
+
+    // set to CTC mode
+    TCCR3B |= (1 << WGM32);
+
+    // set prescaler 1024
+    TCCR3B |= (1 << CS32) | (1 << CS30);
+
+    // enable timer compare interrupt
+    ETIMSK |= (1 << OCIE3A);
+}
 
 
 int joystick_scale_value(uint8_t value, int offset) {
@@ -38,6 +70,9 @@ void user_input_init(void) {
 
     // set button pins to input
     DDRB &= ~(1 << RIGHT_BUTTON_PIN) & ~(1 << LEFT_BUTTON_PIN);
+
+    interrupt_joystick_init();
+    interrupt_can_timer_init();
 }
 
 
@@ -102,10 +137,30 @@ void user_input_transmit() {
     button_t button = user_input_buttons();
 
     message_t m = {
-        .id = USER_INPUT,
+        .id = USER_INPUT_ID,
         .length = 6,
         .data = {joystick.x, joystick.y, slider.left, slider.right, button.left, button.right}
     };
 
     can_transmit(&m);
 }
+
+
+void user_input_timer_enable() {
+    cli();
+
+    ETIMSK |= (1 << OCIE3A);
+
+    sei();
+}
+
+
+void user_input_timer_disable() {
+    cli();
+
+    ETIMSK &= ~(1 << OCIE3A);
+
+    sei();
+}
+
+

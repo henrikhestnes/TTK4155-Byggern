@@ -1,63 +1,43 @@
 #include "timer.h"
 #include "sam/sam3x/include/sam.h"
 #include "sam/interrupt.h"
+#include "sam/interrupt/interrupt_sam_nvic.h"
 #include <time.h>
 
 
-#define F_OSC       84E6
-#define TC0_CLK0    F_OSC / 2
-#define TC1_CLK0    F_OSC / 128
-#define FREQ        100
+#define IRQ_SysTick_priority    0
 
 
-void timer_init() {
-    // initiate TC0 channel 0
-    // enable clock for TC0:    DIV = 0 (clk = MCK), CMD = 0 (read), PID = 27 (TC0)
-    PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_TC0 << PMC_PCR_PID_Pos);
-    PMC->PMC_PCER0 |= 1 << (ID_TC0);
+volatile uint32_t wait_ticks = 0;
+#define F_CPU 84000000
 
-    // enable timer counter channel
-    TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKEN | TC_CCR_SWTRG;
-
-    // set clock to MCK/2 = 42 MHz, capture mode with reset trigger on compare match with RC
-    TC0->TC_CHANNEL[0].TC_CMR = TC_CMR_TCCLKS_TIMER_CLOCK1 | TC_CMR_CPCTRG;
-
-    // set match frequency to 100 Hz
-    TC0->TC_CHANNEL[0].TC_RC = TC0_CLK0 / FREQ;
-
-    // enable RC compare match interrupt
-    TC0->TC_CHANNEL[0].TC_IER = TC_IER_CPCS;
-
-    // enable NVIC interrupt
-    NVIC_EnableIRQ(ID_TC0);
-
-    // TESTING FREQUENCY
-    PIOA->PIO_PER |= PIO_PA16;
-    PIOA->PIO_OER |= PIO_PA16;
-
-
-
-    // initiate TC1 channel 0
-    // // enable clock for TC1:    DIV = 0 (clk = MCK), CMD = 0 (read), PID = 28 (TC1)
-    // PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_TC1 << PMC_PCR_PID_Pos);
-    // PMC->PMC_PCER0 |= 1 << (ID_TC1);
-
-    // // enable timer counter channel
-    // TC1->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKEN;
-
-    // // set clock to MCK/128 = 656250 Hz, capture mode
-    // TC1->TC_CHANNEL[0].TC_CMR = TC_CMR_TCCLKS_TIMER_CLOCK4; 
+void _delay_us(uint16_t us){
+    wait_ticks = us;
+    SysTick_init_us(1);
+    while(wait_ticks !=0);
 }
 
+void SysTick_init_us(int period){
+    // set SysTick reload value
+    SysTick->LOAD = ((int)(period*84) & SysTick_LOAD_RELOAD_Msk)-1;
 
-void timer_delay_us(int us) {
-    // TC1->TC_CHANNEL[0].TC_CCR |= TC_CCR_SWTRG;
-    // while (TC1->TC_CHANNEL[0].TC_CV < TC1_CLK0 * ms * 1e-3) {
-    //     printf("counter value: %d \n\r", TC1->TC_CHANNEL[0].TC_CV);
-    // }
-    // TC1->TC_CHANNEL[0].TC_CCR &= ~TC_CCR_SWTRG;
+    // reset SysTick counter value
+    SysTick->VAL = 0;
 
-    // NOT A GOOD SOLUTION. USE TIMER.
-    volatile int i;
-    for (i = 0; i < 4*us; ++i) {}
+    // set SysTick interrupt priority
+    NVIC_SetPriority(SysTick_IRQn, IRQ_SysTick_priority);
+
+    // set SysTick timer to MCK, enable interrupt and timer
+    SysTick->CTRL  = (1 << SysTick_CTRL_CLKSOURCE_Pos) & SysTick_CTRL_CLKSOURCE_Msk;
+    SysTick->CTRL |= (1 << SysTick_CTRL_TICKINT_Pos) & SysTick_CTRL_TICKINT_Msk;
+    SysTick->CTRL |= (1 << SysTick_CTRL_ENABLE_Pos) & SysTick_CTRL_ENABLE_Msk;
+}
+
+void SysTick_Handler(void){
+    if(wait_ticks!=0){
+        wait_ticks--;
+    }
+    else{
+        SysTick->CTRL = 0;
+    }
 }
