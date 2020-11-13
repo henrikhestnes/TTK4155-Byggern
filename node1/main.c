@@ -80,21 +80,30 @@ int main() {
                 break;
             }
             case PLAYING:
-            {
+            {   
+                // print number of lives left
+
                 if (user_input_buttons().left) {
-                    fsm_transition_to(POSTGAME);
+                    // print quit screen
+                    fsm_transition_to(IDLE);
                     _delay_ms(1000);
                 }
 
                 break;
             }
-            case POSTGAME:
+            case GAME_OVER:
+            {
+                // print game over screen with highscore
+                // update highscore
+                fsm_transition_to(IDLE);
+                break;
+            }
+            case IDLE:
             {
                 if (user_input_buttons().left) {
                     fsm_transition_to(MENU);
                     _delay_ms(1000);
                 }
-                break;
             }
             default:
                 break;
@@ -116,7 +125,7 @@ ISR(INT0_vect) {
                 // update oled with lives left
             }
             else {
-                fsm_transition_to(POSTGAME)
+                fsm_transition_to(GAME_OVER);
             }
         }
     }

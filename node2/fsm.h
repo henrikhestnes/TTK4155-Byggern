@@ -5,10 +5,10 @@
 #include "../common/fsm_state.h"
 
 
-extern enum FSM_STATE fsm_current_state;
-
-
 void fsm_transition_to(enum FSM_STATE state);
+
+
+enum FSM_STATE fsm_get_state();
 
 
 #endif

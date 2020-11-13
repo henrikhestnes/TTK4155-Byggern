@@ -4,11 +4,8 @@
 typedef enum {
     MII_THEME,
     MARIO,
-    SIMPSON,
+    SIMPSON
 } SONG;
-
-
-void music_buzz(int freq, int length);
 
 
 void music_play(SONG song);

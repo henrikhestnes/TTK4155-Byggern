@@ -24,9 +24,6 @@
 #define CAN_JOYSTICK 1
 
 
-enum FSM_STATE fsm_current_state = INIT;
-
-
 int main()
 {
     SystemInit();
@@ -56,58 +53,63 @@ int main()
         solenoid_init();
 
 
-    //fsm_transition_to(MENU);
-    //while (1) {
-        // switch(fsm_current_state) {
-        //     case MENU:
-        //     {
-        //         break;
-        //     }
-        //     case PLAYING:
-        //     {
-        //         // count score and send to can
-        //         break;
-        //     }
-        //     case POSTGAME:
-        //     {
-        //         break;
-        //     }
-        //     default:
-        //         break;
-        // }
-    //}
+    // fsm_transition_to(MENU);
+    // while (1) {
+    // enum FSM_STATE state = fsm_get_state();
+    //     switch(state) {
+    //         case MENU:
+    //         {
+    //             break;
+    //         }
+    //         case PLAYING:
+    //         {
+    //             // count score and send to can
+    //             break;
+    //         }
+    //         case GAME_OVER:
+    //         {
+    //             break;
+    //         }
+    //         case IDLE:
+    //         {
+    //             break;
+    //         }
+    //         default:
+    //             break;
+    //     }
+    // }
 
 
     // TESTING
-        PIOA->PIO_PER |= PIO_PA23;
-        PIOA->PIO_OER |= PIO_PA23;
+        // PIOA->PIO_PER |= PIO_PA23;
+        // PIOA->PIO_OER |= PIO_PA23;
 
-        music_play(MII_THEME);
+        music_play(GAME_OVER_THEME);
 
-        while (1) {
-            // solenoid_shoot();
-            // timer_delay_us(1000000);
+        // while (1) {
+        //     // solenoid_shoot();
+        //     // timer_delay_us(1000000);
 
-            // slider_t slider_pos = {0, 0};
-            // if (!slider_pos_recieve(&slider_pos)) {
-            //     printf("(left, right) = (%d, %d) \r\n", slider_pos.left, slider_pos.right);
-            // }
-            // motor_run_slider(slider_pos.right);
+        //     // slider_t slider_pos = {0, 0};
+        //     // if (!slider_pos_recieve(&slider_pos)) {
+        //     //     printf("(left, right) = (%d, %d) \r\n", slider_pos.left, slider_pos.right);
+        //     // }
+        //     // motor_run_slider(slider_pos.right);
 
-            // servo_set_position();
+        //     // servo_set_position();
 
-            // game_count_score();
+        //     // game_count_score();
 
 
-            // int button_status = 0;
-            // if (!(buttons_status_recieve(&button_status))) {
-            //     printf("button status = %d \r\n", button_status);
-            // }
+        //     // int button_status = 0;
+        //     // if (!(buttons_status_recieve(&button_status))) {
+        //     //     printf("button status = %d \r\n", button_status);
+        //     // }
 
-            // pos_t pos = {0,0};
-            // if (!(joystick_pos_recieve(&pos))) {
-            //     printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
-            // }
-        }
+        //     // pos_t pos = {0,0};
+        //     // if (!(joystick_pos_recieve(&pos))) {
+        //     //     printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
+        //     // }
+        // }
 
 }

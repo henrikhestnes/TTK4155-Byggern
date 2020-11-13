@@ -3,11 +3,19 @@
 #include "game.h"
 
 
+static enum FSM_STATE current_state = INIT;
+
+
+enum FSM_STATE fsm_get_state() {
+    return current_state;
+}
+
+
 void fsm_transition_to(enum FSM_STATE state) {
     switch (state) {
         case MENU:
         {
-            fsm_current_state = MENU;
+            current_state = MENU;
             printf("Transitioning to MENU");
             break;
         }
@@ -15,17 +23,22 @@ void fsm_transition_to(enum FSM_STATE state) {
         {
             motor_enable();
             game_timer_enable();
-            fsm_current_state = PLAYING;
+            current_state = PLAYING;
             printf("Transitioning to PLAYING");
             break;
         }
-        case POSTGAME: 
+        case GAME_OVER: 
+        {
+            current_state = GAME_OVER;
+            printf("Transitioning to GAME_OVER");
+            break;
+        }
+        case IDLE:
         {
             motor_disable();
             game_timer_disable();
-            fsm_current_state = POSTGAME;
-            printf("Transitioning to POSTGAME");
-            break;
+            current_state = IDLE;
+            printf("Transitioning to IDLE");
         }
         default:
             break;

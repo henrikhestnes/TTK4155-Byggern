@@ -7,7 +7,7 @@ enum FSM_STATE {
     MENU,
     PLAYING,
     GAME_OVER,
-    POSTGAME
+    IDLE
 };
 
 
