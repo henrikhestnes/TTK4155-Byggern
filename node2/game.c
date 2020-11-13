@@ -84,8 +84,9 @@ int game_count_fails() {
 
     else if (ir_level > IR_TRESHOLD) {
         counting_flag = 0;
-        return 0;
     }
+
+    return 0;
 }
 
 
@@ -100,39 +101,45 @@ void game_get_user_data(char* data) {
 
 
 static void game_run() {
-    switch (controller_select) {
-        case SLIDER_POS_CTRL:
-        {
-            motor_run_slider(user_data.slider_right);
-            servo_set_position(user_data.joystick_x);
-            solenoid_run_button(user_data.button_right);
-            break;
-        }
-        case MICROBIT_SPEED_CTRL:
-        {   
-            motor_run_microbit();
-            servo_set_position(0);
+    // switch (controller_select) {
+    //     case SLIDER_POS_CTRL:
+    //     {
+    //         motor_run_slider(user_data.slider_right);
+    //         servo_set_position(user_data.joystick_x);
+    //         solenoid_run_button(user_data.button_right);
+    //         break;
+    //     }
+    //     case MICROBIT_SPEED_CTRL:
+    //     {   
+    //         motor_run_microbit();
+    //         servo_set_position(0);
 
-            char button_pressed = user_input_microbit_button();
-            printf("button: %d \r\n", button_pressed);
-            solenoid_run_button(button_pressed);
-            break;
-        }
-        default:
-            break;
-    }
+    //         char button_pressed = user_input_microbit_button();
+    //         printf("button: %d \r\n", button_pressed);
+    //         solenoid_run_button(button_pressed);
+    //         break;
+    //     }
+    //     default:
+    //         break;
+    // }
 
-    if (game_count_fails()) {
-        CAN_MESSAGE m = {
-            .id = GAME_LIVES_LEFT_ID,
-            .data_length = 1,
-            .data = lives_left
-        };
 
-        can_send(&m, 0);
-    }
+    motor_run_slider(user_data.slider_right);
+    servo_set_position(user_data.joystick_x);
+    solenoid_run_button(user_data.button_right);
+    
 
-    ++score;
+    // if (game_count_fails()) {
+    //     CAN_MESSAGE m = {
+    //         .id = GAME_LIVES_LEFT_ID,
+    //         .data_length = 1,
+    //         .data = lives_left
+    //     };
+
+    //     can_send(&m, 0);
+    // }
+
+    // ++score;
 }
 
 
