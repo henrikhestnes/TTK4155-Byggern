@@ -5,6 +5,9 @@
 void game_init(void);
 
 
+void game_set_controller(unsigned int controller);
+
+
 void game_count_score(void);
 
 

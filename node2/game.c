@@ -6,6 +6,7 @@
 #include "solenoid.h"
 #include "sam/sam3x/include/sam.h"
 #include <stdint.h>
+#include "../node1/user_input.h"
 
 
 #define F_OSC           84E6
@@ -19,6 +20,7 @@
 
 static unsigned int score;
 static unsigned int counting_flag;
+unsigned int controller_select = 0;
 
 
 static struct user_input_data {
@@ -66,6 +68,11 @@ void game_init() {
 }
 
 
+void game_set_controller(unsigned int controller){
+    controller_select = controller;
+}
+
+
 void game_count_score() {
     uint16_t ir_level = adc_read();
 
@@ -94,10 +101,17 @@ void game_set_user_data(char* data) {
 
 static void game_run() {
     printf("x: %d \r\n", user_data.joystick_x);
-
-    motor_run_slider(user_data.slider_right);
-    servo_set_position(user_data.joystick_x);
-    solenoid_run_button(user_data.button_right);
+    if(controller_select == USE_JOYSTICK){
+        motor_run_slider(user_data.slider_right);
+        servo_set_position(user_data.joystick_x);
+        solenoid_run_button(user_data.button_right);
+    }
+    else if(controller_select == USE_MICROBIT_CONTROLLER){
+        const button_pressed = user_input_microbit_button_pressed();
+        motor_run_microbit();
+        servo_set_position(0);
+        solenoid_run_button(button_pressed);
+    }
 }
 
 
@@ -105,7 +119,7 @@ void game_timer_enable(){
     TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKEN | TC_CCR_SWTRG;
 }
 
-
+void solenoid_run_microbit_button();
 void game_timer_disable(){
     TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKDIS;
 }

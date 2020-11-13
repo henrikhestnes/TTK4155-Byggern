@@ -1,6 +1,6 @@
 #include "user_input.h"
 #include "../node1/user_input.h"
-#include "sam/sam3x/include/pio/pio_sam3x8e.h"
+#include "sam/sam3x/include/sam.h"
 
 #define A8          27
 #define A9          2
@@ -9,6 +9,9 @@
 #define MB_LEFT_PIN    A8
 #define MB_RIGHT_PIN   A9
 #define MB_BUTTON_PIN  A10
+
+#define BUTTON_PRESSED      1
+#define BUTTON_NOT_PRESSED  0
 
 
 int joystick_scale_x(uint8_t value) {
@@ -76,6 +79,26 @@ void microbit_user_input_init(){
 }
 
 
-acc_dir_t acc_get_dir(){
+const acc_dir_t user_input_microbit_get_dir(){
+    char left_dir   = (PIOA->PIO_PDSR & (1 << MB_LEFT_PIN));
+    char right_dir  = (PIOA->PIO_PDSR & (1 << MB_RIGHT_PIN));
 
+    if(left_dir == 0 && right_dir == 0){
+        return ACC_MIDDLE;
+    }
+    else if(left_dir == (1 << MB_LEFT_PIN)){
+        return ACC_LEFT;
+    }
+    else{
+        return ACC_RIGHT;
+    }
+    return ACC_MIDDLE;
+}
+
+
+const char user_input_microbit_button_pressed(){
+    if((PIOA->PIO_PDSR & (1 << MB_BUTTON_PIN)) == (1 << MB_BUTTON_PIN)){
+        return BUTTON_PRESSED;
+    }
+    return BUTTON_NOT_PRESSED;
 }

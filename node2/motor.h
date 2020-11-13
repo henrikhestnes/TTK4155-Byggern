@@ -29,4 +29,6 @@ void motor_run_slider(int reference);
 int motor_read_encoder(void);
 
 
+void motor_run_microbit();
+
 #endif

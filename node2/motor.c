@@ -6,6 +6,7 @@
 #include "sam/sam3x/include/sam.h"
 #include "sam/interrupt.h"
 #include <math.h>
+#include "user_input.h"
 
 
 #define ENCODER_DATA_MASK   (0xFF << DO0_IDX)
@@ -21,13 +22,15 @@
 #define T                   1.0 / 50
 #define MAX_MOTOR_SPEED     0x4FF
 
+#define MICROBIT_CONTROLLER_MOTOR_SPEED 0x0FF
+
 
 static int scale_encoder_value(int value) {
     return SLIDER_MAX * value / (MAX_ENCODER_VALUE - MIN_ENCODER_VALUE);
 }
 
 
-static PID_DATA_t PID = {    
+static PID_DATA_t PID = {
     K_P,
     K_I,
     K_D,
@@ -40,7 +43,7 @@ static PID_DATA_t PID = {
 
 enum motor_direction {
    LEFT,
-   RIGHT 
+   RIGHT
 };
 
 
@@ -62,7 +65,7 @@ static void motor_set_direction(enum motor_direction d) {
 void motor_init() {
     // initiate dac
     dac_init();
-   
+
     // enable PIOD pins to motor box as output
     PIOD->PIO_PER |= DIR | EN | SEL | NOT_RST | NOT_OE;
     PIOD->PIO_OER |= DIR | EN | SEL | NOT_RST | NOT_OE;
@@ -137,7 +140,7 @@ void motor_run_slider(int reference) {
     //         // moving left, clear direction pin
     //         PIOD->PIO_CODR = DIR;
     //     }
-        
+
     //     // set motor speed
     //     uint16_t speed = (uint16_t) (0x4FF * abs(pos.x) / 100);
     //     printf("speed = %X \n\n\r", speed);
@@ -158,4 +161,25 @@ void motor_run_slider(int reference) {
     }
 
     motor_set_speed(abs(u));
+}
+
+
+void motor_run_microbit(){
+    acc_dir_t microbit_dir = user_input_microbit_get_dir();
+
+    switch(microbit_dir){
+        case(ACC_LEFT):
+            motor_set_direction(LEFT);
+            motor_set_speed(MICROBIT_CONTROLLER_MOTOR_SPEED);
+            break;
+        case(ACC_RIGHT):
+            motor_set_direction(RIGHT);
+            motor_set_speed(MICROBIT_CONTROLLER_MOTOR_SPEED);
+            break;
+        case(ACC_MIDDLE):
+            motor_set_speed(0);
+            break;
+        default:
+            motor_set_speed(0);
+    }
 }

@@ -9,12 +9,13 @@
 
 
 #define F_CPU 4.9152E6
-#include <util/delay.h> 
+#include <util/delay.h>
 
 
-#define MAIN_MENU_LENGTH 4
-#define SETTINGS_LENGTH 4
-#define HIGHSCORE_LENGTH 2
+#define MAIN_MENU_LENGTH    4
+#define SETTINGS_LENGTH     5
+#define HIGHSCORE_LENGTH    2
+#define CONTROLLER_LENGTH   3
 
 
 static menu_node_t* current;
@@ -31,8 +32,13 @@ PGM_P const content_main_menu[] PROGMEM = {text_new_game, text_settings, text_hi
 const char text_difficulty[] PROGMEM = "Set difficulty";
 const char text_brightness[] PROGMEM = "Set brightness";
 const char text_music[] PROGMEM = "Select music";
+const char text_controller[] PROGMEM = "Select controller";
 const char text_return[] PROGMEM = "Return";
-PGM_P const content_settings[] PROGMEM = {text_difficulty, text_brightness, text_music, text_return};
+PGM_P const content_settings[] PROGMEM = {text_difficulty, text_brightness, text_music, text_controller,text_return};
+
+const char text_joystick_controller[] PROGMEM = "Select joystick";
+const char text_microbit_controller[] PROGMEM = "Select motion controller";
+PGM_P const content_controller_settings[] PROGMEM = {text_joystick_controller, text_microbit_controller};
 
 const char text_reset[] PROGMEM = "Reset";
 PGM_P const content_highscore[] PROGMEM = {text_reset, text_return};
@@ -96,6 +102,7 @@ void menu_init() {
     menu_t* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH);
     menu_t* settings_menu = menu_new(content_settings, SETTINGS_LENGTH);
     menu_t* highscore_menu = menu_new(content_highscore, HIGHSCORE_LENGTH);
+    menu_t* controller_menu = menu_new(content_controller_settings, CONTROLLER_LENGTH);
 
     // main menu linked list
     menu_node_t* new_game_node = menu_new_node(NULL, main_menu, NULL, start_new_game);
@@ -114,11 +121,13 @@ void menu_init() {
     menu_node_t* difficulty_node = menu_new_node(main_menu, settings_menu, NULL, NULL);
     menu_node_t* brightness_node = menu_new_node(main_menu, settings_menu, NULL, NULL);
     menu_node_t* music_node = menu_new_node(main_menu, settings_menu, NULL, NULL);
+    menu_node_t* controller_node = menu_new_node(main_menu, settings_menu, , controller_menu, go_to_child);
     menu_node_t* settings_return_node = menu_new_node(main_menu, settings_menu, NULL, go_to_parent);
 
     menu_link_nodes(difficulty_node, brightness_node);
     menu_link_nodes(brightness_node, music_node);
-    menu_link_nodes(music_node, settings_return_node);
+    menu_link_nodes(music_node, controller_node);
+    menu_link_nodes(controller_node, settings_return_node);
     menu_link_nodes(settings_return_node, difficulty_node);
 
     settings_menu->head = difficulty_node;
@@ -131,6 +140,17 @@ void menu_init() {
     menu_link_nodes(highscore_return_node, reset_node);
 
     highscore_menu->head = reset_node;
+
+    // select controller menu linked list
+    menu_node_t* joy_stick_node = menu_new_node(settings_menu, controller_menu, NULL, user_input_select_controller_joystick);
+    menu_node_t* microbit_node = menu_new_node(settings_menu, controller_menu, NULL, user_input_select_controller_microbit);
+    menu_node_t* controller_return_node = menu_new_node(settings_menu, controller_menu, NULL, go_to_parent);
+
+    menu_link_nodes(joy_stick_node, microbit_node);
+    menu_link_nodes(microbit_node, controller_return_node);
+    menu_link_nodes(controller_return_node, joy_stick_node);
+
+    controller_menu->head = joy_stick_node;
 
     // init the current state node
     current = new_game_node;
@@ -203,7 +223,7 @@ void menu_run() {
         default:
             break;
     }
-    
+
     _delay_ms(150);
 }
 
@@ -226,7 +246,7 @@ void menu_print() {
 }
 
 
-ISR(TIMER1_COMPA_vect) {   
+ISR(TIMER1_COMPA_vect) {
     if (!state_changed) {
         return;
     }
@@ -248,7 +268,7 @@ ISR(INT1_vect) {
 //     char word[20];
 //     menu_t* current_menu = current->own_menu;
 
-//     for (int p = 0; p < NUMBER_OF_PAGES; p++) {       
+//     for (int p = 0; p < NUMBER_OF_PAGES; p++) {
 //         for (int i = 0; i < 20; ++i) {
 //             uint16_t address = p * sizeof(word) + i * sizeof(char);
 

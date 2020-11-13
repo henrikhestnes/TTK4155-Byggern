@@ -24,4 +24,7 @@ void microbit_user_input_init(void);
 acc_dir_t acc_get_dir();
 
 
+const char user_input_microbit_button_pressed();
+
+
 #endif

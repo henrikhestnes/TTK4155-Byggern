@@ -15,6 +15,10 @@
 #define SLIDER_MAX              100
 #define SLIDER_MIN              0
 
+#define USE_JOYSTICK            0
+#define USE_MICROBIT_CONTROLLER 1
+
+
 
 /**
  * @brief Data structure to be used to represent the joystick position.
@@ -38,7 +42,7 @@ typedef enum {
 
 
 /**
- * @brief Data structure to be used to represent 
+ * @brief Data structure to be used to represent
  * the position of the two sliders.
  */
 typedef struct {
@@ -59,7 +63,7 @@ void user_input_init(void);
 /**
  * @brief Reads the joystick position through the ADC. Returns a position
  * with x and y values in the interval [0, 255].
- * 
+ *
  * @return The scaled joystick position.
  */
 pos_t user_input_joystick_pos(void);
@@ -69,7 +73,7 @@ pos_t user_input_joystick_pos(void);
 /**
  * @brief Calculates the joystick's direction from it's postiton. Reads
  * the joystick position using @c joystick_pos_read().
- * 
+ *
  * @return The direction the joystick is pointing.
  */
 dir_t user_input_joystick_dir(void);
@@ -88,6 +92,12 @@ void user_input_timer_enable();
 
 
 void user_input_timer_disable();
+
+
+void user_input_select_controller_microbit(void);
+
+
+void user_input_select_controller_joystick(void);
 
 
 #endif

@@ -6,6 +6,7 @@
 #include <avr/interrupt.h>
 
 
+
 #define X_CHANNEL               0
 #define Y_CHANNEL               1
 #define RIGHT_SLIDER_CHANNEL    2
@@ -48,7 +49,7 @@ static void interrupt_can_timer_init() {
 
 
 int joystick_scale_value(uint8_t value, int offset) {
-    // scale to values between min and max 
+    // scale to values between min and max
     int scaled_value = (int)(value - 128)*(JOYSTICK_MAX - JOYSTICK_MIN)/256;
 
     // correct offset and nonlinear scaling
@@ -104,7 +105,7 @@ dir_t user_input_joystick_dir(void) {
 
     else if (pos.y < -DIRECTION_TRESHOLD && abs(pos.x) <= abs(pos.y)){
         return DOWN;
-    } 
+    }
 
     else {
         return NEUTRAL;
@@ -164,3 +165,23 @@ void user_input_timer_disable() {
 }
 
 
+user_input_select_controller_joystick(){
+    message_t m = {
+        .id = CONTROLLER_ID
+        .length = 1,
+        .data = {USE_JOYSTICK}
+    };
+
+    can_transmit(&m);
+}
+
+
+void user_input_select_controller_microbit(){
+    message_t m = {
+        .id = CONTROLLER_ID
+        .length = 1,
+        .data = {USE_MICROBIT_CONTROLLER}
+    };
+
+    can_transmit(&m);
+}

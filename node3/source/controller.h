@@ -9,9 +9,9 @@
  */
 
 typedef enum{
-    middle,
-    left,
-    right
+    ACC_MIDDLE = 1,
+    ACC_LEFT,
+    ACC_RIGHT
 } acc_dir_t;
 
 
