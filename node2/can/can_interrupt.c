@@ -11,7 +11,7 @@
 #include "can_interrupt.h"
 #include "can_controller.h"
 #include "../uart_and_printf/printf-stdarg.h"
-#include "sam.h"
+#include "../sam/sam3x/include/sam.h"
 
 #include "../game.h"
 #include "../fsm.h"
@@ -53,7 +53,7 @@ void CAN0_Handler( void )
 
         switch(message.id) {
             case 1:
-                game_set_user_data(message.data);
+                game_get_user_data(message.data);
                 // run servo
                 // printf("(x, y) = (%d, %d) \r\n", joystick_scale_x(message.data[0]), joystick_scale_y(message.data[1]));
                 // servo_set_position(joystick_scale_x(message.data[0]));

@@ -2,12 +2,7 @@
 #define NODE1_FSM_H
 
 
-enum FSM_STATE {
-    INIT,
-    MENU,
-    PLAYING,
-    POSTGAME
-};
+#include "../common/fsm_state.h"
 
 
 enum FSM_STATE fsm_get_state(void);

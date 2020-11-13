@@ -9,6 +9,7 @@
 #include "mcp2515_driver.h"
 #include "can_driver.h"
 #include "fsm.h"
+#include "../common/can_id.h"
 #include <avr/interrupt.h>
 
 
@@ -50,6 +51,8 @@ int main() {
 
         sei();
 
+        DDRB |= (1 << PB3);
+
     // Testing
         // while (1) {
             // user_input_transmit();
@@ -62,6 +65,8 @@ int main() {
             // }
 
             // menu_run();
+            // PORTB ^= (1 << PB3);
+
         // }
 
     fsm_set_state(MENU);
@@ -101,14 +106,21 @@ int main() {
 
 
 ISR(INT0_vect) {
-    message_t message = can_recieve();
+    message_t m = can_recieve();
 
-    if (message.id == 1) {
+    switch (m.id) {
+        case GAME_LIVES_LEFT_ID: {
+            int lives_left = = m.data[0];
 
+            if (lives_left) {
+                // update oled with lives left
+            }
+            else {
+                fsm_transition_to(POSTGAME)
+            }
+        }
     }
-    else if (message.id == 2) {
-        
-    }
+    
 
     mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF | MCP_RX1IF, 0);
 }

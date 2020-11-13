@@ -3,6 +3,7 @@
 #include "oled.h"
 #include "menu.h"
 #include "can_driver.h"
+#include "../common/can_id.h"
 #include "user_input.h"
 
 #define F_CPU 4.9152E6

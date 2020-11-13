@@ -5,16 +5,22 @@
 void game_init(void);
 
 
-void game_count_score(void);
+int game_count_fails(void);
 
 
-void game_set_user_data(char* data);
+void game_get_user_data(char* data);
 
 
 void game_timer_enable();
 
 
 void game_timer_disable();
+
+
+int game_get_score();
+
+
+void game_reset_score();
 
 
 #endif

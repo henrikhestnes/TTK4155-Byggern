@@ -16,12 +16,6 @@ typedef struct {
 } message_t;
 
 
-typedef enum {
-    USER_INPUT_ID = 1,
-    FSM_STATE_ID
-} CAN_MESSAGE_ID;
-
-
 /**
  * @brief Initiates the CAN interface, by setting the MCP2515
  * to the desired mode, and enabling interrupt on message reception.

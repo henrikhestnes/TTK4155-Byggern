@@ -13,6 +13,8 @@
 
 #define DO0_IDX     1
 
+#define MOTOR_TIMER_FREQ    50
+
 
 void motor_init(void);
 

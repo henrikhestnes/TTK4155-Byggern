@@ -19,7 +19,7 @@ void solenoid_run_button(int button_pressed) {
         shooting_flag = 1;
         // set a pulse on A0
         PIOA->PIO_CODR |= PIO_PA16;
-        _delay_us(100000);
+        _delay_ms(100);
         PIOA->PIO_SODR |= PIO_PA16;
     }
 

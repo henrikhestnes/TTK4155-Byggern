@@ -61,7 +61,7 @@ void menu_timer_init() {
     TCNT1 = 0;
 
     // set compare match register for 60 hz
-    OCR1A = 39;
+    OCR1A = 79;
 
     // set to CTC mode
     TCCR1B |= (1 << WGM12);
