@@ -55,9 +55,6 @@ int main()
     // SOLENOID
         solenoid_init();
 
-    // SysTick
-    // SysTick_init_us(1);
-
 
     //fsm_transition_to(MENU);
     //while (1) {
@@ -82,44 +79,35 @@ int main()
 
 
     // TESTING
-        // PIOA->PIO_PER |= PIO_PA23;
-        // PIOA->PIO_OER |= PIO_PA23;
-       
+        PIOA->PIO_PER |= PIO_PA23;
+        PIOA->PIO_OER |= PIO_PA23;
+
+        music_play(MII_THEME);
 
         while (1) {
-            // for (int i = 0; i < 10000; i += 1000) {
-            //     music_buzz(i, 10000);
+            // solenoid_shoot();
+            // timer_delay_us(1000000);
+
+            // slider_t slider_pos = {0, 0};
+            // if (!slider_pos_recieve(&slider_pos)) {
+            //     printf("(left, right) = (%d, %d) \r\n", slider_pos.left, slider_pos.right);
             // }
-        
-    
-        //     solenoid_shoot();
-        //     timer_delay_us(1000000);
+            // motor_run_slider(slider_pos.right);
 
-        //     slider_t slider_pos = {0, 0};
-        //     if (!slider_pos_recieve(&slider_pos)) {
-        //         printf("(left, right) = (%d, %d) \r\n", slider_pos.left, slider_pos.right);
-        //     }
-        //     motor_run_slider(slider_pos.right);
+            // servo_set_position();
 
-        //     servo_set_position();
-
-        //     game_count_score();
+            // game_count_score();
 
 
-        //     int button_status = 0;
-        //     if (!(buttons_status_recieve(&button_status))) {
-        //         printf("button status = %d \r\n", button_status);
-        //     }
+            // int button_status = 0;
+            // if (!(buttons_status_recieve(&button_status))) {
+            //     printf("button status = %d \r\n", button_status);
+            // }
 
-        //     pos_t pos = {0,0};
-        //     if (!(joystick_pos_recieve(&pos))) {
-        //         printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
-        //     }
-            
-            // PIOA->PIO_SODR = PIO_PA23;
-            // _delay_us(2000);
-            // PIOA->PIO_CODR = PIO_PA23;
-            // _delay_us(1000);
+            // pos_t pos = {0,0};
+            // if (!(joystick_pos_recieve(&pos))) {
+            //     printf("(x,y) = (%d,%d) \r\n", pos.x, pos.y);
+            // }
         }
 
 }

@@ -1,6 +1,7 @@
 #include "user_input.h"
 #include "adc.h"
 #include "can_driver.h"
+#include "../common/can_id.h"
 #include <math.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -14,6 +15,9 @@
 #define DIRECTION_TRESHOLD      50
 #define RIGHT_BUTTON_PIN        PB1
 #define LEFT_BUTTON_PIN         PB2
+
+#define CLKSEL_OFF_MASK         0xF8
+#define CLKSEL_PRESCALER_1024   ((1 << CS32) | (1 << CS30))
 
 
 static void interrupt_joystick_init() {
@@ -35,13 +39,13 @@ static void interrupt_can_timer_init() {
     TCNT3 = 0;
 
     // set compare match register for 10 Hz
-    OCR3A = 239;
+    OCR3A = 479;
 
     // set to CTC mode
     TCCR3B |= (1 << WGM32);
 
     // set prescaler 1024
-    TCCR3B |= (1 << CS32) | (1 << CS30);
+    TCCR3B |= CLKSEL_PRESCALER_1024;
 
     // enable timer compare interrupt
     ETIMSK |= (1 << OCIE3A);
@@ -150,7 +154,7 @@ void user_input_transmit() {
 void user_input_timer_enable() {
     cli();
 
-    ETIMSK |= (1 << OCIE3A);
+    TCCR3B |= CLKSEL_PRESCALER_1024;
 
     sei();
 }
@@ -159,7 +163,7 @@ void user_input_timer_enable() {
 void user_input_timer_disable() {
     cli();
 
-    ETIMSK &= ~(1 << OCIE3A);
+    TCCR3B &= CLKSEL_OFF_MASK;
 
     sei();
 }

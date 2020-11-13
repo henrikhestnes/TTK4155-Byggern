@@ -19,7 +19,7 @@
 #define K_P                 60
 #define K_I                 35
 #define K_D                 5
-#define T                   1.0 / 50
+#define T                   1.0 / MOTOR_TIMER_FREQ
 #define MAX_MOTOR_SPEED     0x4FF
 
 #define MICROBIT_CONTROLLER_MOTOR_SPEED 0x0FF

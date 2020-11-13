@@ -16,11 +16,20 @@ typedef struct {
 } message_t;
 
 
+
 typedef enum {
     USER_INPUT_ID = 1,
     FSM_STATE_ID,
     CONTROLLER_ID
 } CAN_MESSAGE_ID;
+
+
+
+typedef enum {
+    USER_INPUT_ID = 1,
+    FSM_STATE_ID
+} CAN_MESSAGE_ID;
+
 
 
 /**

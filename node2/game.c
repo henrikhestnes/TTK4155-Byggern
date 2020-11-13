@@ -4,21 +4,24 @@
 #include "motor.h"
 #include "servo_driver.h"
 #include "solenoid.h"
+#include "can/can_controller.h"
 #include "sam/sam3x/include/sam.h"
+#include "../common/can_id.h"
 #include <stdint.h>
 #include "../node1/user_input.h"
 
 
-#define F_OSC           84E6
-#define TC0_CLK0        F_OSC / 2
-#define FREQ            100
+#define F_CPU               84E6
+#define TC0_CLK0            F_CPU / 2
 
-#define IR_TRESHOLD     1000
+#define IR_TRESHOLD         1000
+#define NUMBER_OF_LIVES     3
 
-#define IRQ_TC0_priority 2
+#define IRQ_TC0_priority    2
 
 
 static unsigned int score;
+static unsigned int lives_left;
 static unsigned int counting_flag;
 unsigned int controller_select = 0;
 
@@ -39,14 +42,14 @@ void game_timer_init() {
     PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_TC0 << PMC_PCR_PID_Pos);
     PMC->PMC_PCER0 |= 1 << (ID_TC0);
 
-    // enable timer counter channel
-    TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKEN | TC_CCR_SWTRG;
+    // disable timer counter channel
+    TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKDIS;
 
     // set clock to MCK/2 = 42 MHz, capture mode with reset trigger on compare match with RC
     TC0->TC_CHANNEL[0].TC_CMR = TC_CMR_TCCLKS_TIMER_CLOCK1 | TC_CMR_CPCTRG;
 
-    // set match frequency to 100 Hz
-    TC0->TC_CHANNEL[0].TC_RC = TC0_CLK0 / FREQ;
+    // set match frequency to 50 Hz
+    TC0->TC_CHANNEL[0].TC_RC = TC0_CLK0 / MOTOR_TIMER_FREQ;
 
     // enable RC compare match interrupt
     TC0->TC_CHANNEL[0].TC_IER = TC_IER_CPCS;
@@ -54,18 +57,15 @@ void game_timer_init() {
     // enable NVIC interrupt
     NVIC_EnableIRQ(ID_TC0);
     NVIC_SetPriority(TC0_IRQn, IRQ_TC0_priority);
-
-    // TESTING FREQUENCY
-    PIOA->PIO_PER |= PIO_PA16;
-    PIOA->PIO_OER |= PIO_PA16;
 }
 
 
 void game_init() {
     score = 0;
+    lives_left = NUMBER_OF_LIVES;
     game_timer_init();
-    game_timer_disable();
 }
+
 
 
 void game_set_controller(unsigned int controller){
@@ -73,23 +73,24 @@ void game_set_controller(unsigned int controller){
 }
 
 
-void game_count_score() {
+int game_count_fails() {
+
     uint16_t ir_level = adc_read();
 
     if ((ir_level < IR_TRESHOLD) && !counting_flag) {
-        ++score;
+        --lives_left;
         counting_flag = 1;
+        return 1;
     }
 
     else if (ir_level > IR_TRESHOLD) {
         counting_flag = 0;
+        return 0;
     }
-
-    printf("Current score: %d \r\n", score);
 }
 
 
-void game_set_user_data(char* data) {
+void game_get_user_data(char* data) {
     user_data.joystick_x = joystick_scale_x(data[0]);
     user_data.joystick_y = joystick_scale_y(data[1]);
     user_data.slider_left = slider_scale_left(data[2]);
@@ -100,11 +101,24 @@ void game_set_user_data(char* data) {
 
 
 static void game_run() {
+
     printf("x: %d \r\n", user_data.joystick_x);
     if(controller_select == USE_JOYSTICK){
         motor_run_slider(user_data.slider_right);
         servo_set_position(user_data.joystick_x);
         solenoid_run_button(user_data.button_right);
+
+        if (game_count_fails()) {
+            CAN_MESSAGE m = {
+                .id = GAME_LIVES_LEFT_ID,
+                .data_length = 1,
+                .data = lives_left
+            };
+
+            can_send(&m, 0);
+        }
+
+        ++score;
     }
     else if(controller_select == USE_MICROBIT_CONTROLLER){
         const button_pressed = user_input_microbit_button_pressed();
@@ -112,6 +126,11 @@ static void game_run() {
         servo_set_position(0);
         solenoid_run_button(button_pressed);
     }
+
+
+
+
+
 }
 
 
@@ -122,6 +141,16 @@ void game_timer_enable(){
 void solenoid_run_microbit_button();
 void game_timer_disable(){
     TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKDIS;
+}
+
+
+int game_get_score() {
+    return score;
+}
+
+
+void game_reset_score() {
+    score = 0;
 }
 
 
