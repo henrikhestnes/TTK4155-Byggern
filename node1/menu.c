@@ -1,20 +1,25 @@
 #include "menu.h"
 #include "oled.h"
+#include "fonts.h"
 #include "sram.h"
 #include "user_input.h"
 #include "fsm.h"
+#include "can_driver.h"
+#include "../common/can_id.h"
+#include "../common/controller_select.h"
 #include <stdlib.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 
 
 #define F_CPU 4.9152E6
-#include <util/delay.h> 
+#include <util/delay.h>
 
 
-#define MAIN_MENU_LENGTH 4
-#define SETTINGS_LENGTH 4
-#define HIGHSCORE_LENGTH 2
+#define MAIN_MENU_LENGTH    4
+#define SETTINGS_LENGTH     5
+#define HIGHSCORE_LENGTH    2
+#define CONTROLLER_LENGTH   4
 
 
 static menu_node_t* current;
@@ -30,9 +35,15 @@ PGM_P const content_main_menu[] PROGMEM = {text_new_game, text_settings, text_hi
 
 const char text_difficulty[] PROGMEM = "Set difficulty";
 const char text_brightness[] PROGMEM = "Set brightness";
-const char text_music[] PROGMEM = "Select music";
+const char text_music[] PROGMEM = "Set music";
+const char text_controller[] PROGMEM = "Set controller";
 const char text_return[] PROGMEM = "Return";
-PGM_P const content_settings[] PROGMEM = {text_difficulty, text_brightness, text_music, text_return};
+PGM_P const content_settings[] PROGMEM = {text_difficulty, text_brightness, text_music, text_controller,text_return};
+
+const char text_slider_controller[] PROGMEM = "Slider";
+const char text_joystick_controller[] PROGMEM = "Joystick";
+const char text_microbit_controller[] PROGMEM = "Microbit";
+PGM_P const content_controller_settings[] PROGMEM = {text_slider_controller, text_joystick_controller, text_microbit_controller, text_return};
 
 const char text_reset[] PROGMEM = "Reset";
 PGM_P const content_highscore[] PROGMEM = {text_reset, text_return};
@@ -55,13 +66,49 @@ void start_new_game() {
 }
 
 
+void select_controller_slider() {
+    message_t m = {
+        .id = CONTROLLER_ID,
+        .length = 1,
+        .data = {SLIDER_POS_CTRL}
+    };
+
+    can_transmit(&m);
+    go_to_parent();
+}
+
+
+void select_controller_joystick() {
+    message_t m = {
+        .id = CONTROLLER_ID,
+        .length = 1,
+        .data = {JOYSTICK_SPEED_CTRL}
+    };
+
+    can_transmit(&m);
+    go_to_parent();
+}
+
+
+void select_controller_microbit() {
+    message_t m = {
+        .id = CONTROLLER_ID,
+        .length = 1,
+        .data = {MICROBIT_SPEED_CTRL}
+    };
+
+    can_transmit(&m);
+    go_to_parent();
+}
+
+
 void menu_timer_init() {
     TCCR1A = 0;
     TCCR1B = 0;
     TCNT1 = 0;
 
-    // set compare match register for 60 hz
-    OCR1A = 79;
+    // set compare match register for 30 hz
+    OCR1A = 159;
 
     // set to CTC mode
     TCCR1B |= (1 << WGM12);
@@ -96,6 +143,7 @@ void menu_init() {
     menu_t* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH);
     menu_t* settings_menu = menu_new(content_settings, SETTINGS_LENGTH);
     menu_t* highscore_menu = menu_new(content_highscore, HIGHSCORE_LENGTH);
+    menu_t* controller_menu = menu_new(content_controller_settings, CONTROLLER_LENGTH);
 
     // main menu linked list
     menu_node_t* new_game_node = menu_new_node(NULL, main_menu, NULL, start_new_game);
@@ -114,11 +162,13 @@ void menu_init() {
     menu_node_t* difficulty_node = menu_new_node(main_menu, settings_menu, NULL, NULL);
     menu_node_t* brightness_node = menu_new_node(main_menu, settings_menu, NULL, NULL);
     menu_node_t* music_node = menu_new_node(main_menu, settings_menu, NULL, NULL);
+    menu_node_t* controller_node = menu_new_node(main_menu, settings_menu, controller_menu, go_to_child);
     menu_node_t* settings_return_node = menu_new_node(main_menu, settings_menu, NULL, go_to_parent);
 
     menu_link_nodes(difficulty_node, brightness_node);
     menu_link_nodes(brightness_node, music_node);
-    menu_link_nodes(music_node, settings_return_node);
+    menu_link_nodes(music_node, controller_node);
+    menu_link_nodes(controller_node, settings_return_node);
     menu_link_nodes(settings_return_node, difficulty_node);
 
     settings_menu->head = difficulty_node;
@@ -132,12 +182,24 @@ void menu_init() {
 
     highscore_menu->head = reset_node;
 
+    // select controller menu linked list
+    menu_node_t* slider_node = menu_new_node(settings_menu, controller_menu, NULL, select_controller_slider);
+    menu_node_t* joystick_node = menu_new_node(settings_menu, controller_menu, NULL, select_controller_joystick);
+    menu_node_t* microbit_node = menu_new_node(settings_menu, controller_menu, NULL, select_controller_microbit);
+    menu_node_t* controller_return_node = menu_new_node(settings_menu, controller_menu, NULL, go_to_parent);
+
+    menu_link_nodes(slider_node, joystick_node);
+    menu_link_nodes(joystick_node, microbit_node);
+    menu_link_nodes(microbit_node, controller_return_node);
+    menu_link_nodes(controller_return_node, slider_node);
+
+    controller_menu->head = slider_node;
+
     // init the current state node
     current = new_game_node;
     state = 0;
     oled_clear();
-    menu_print();
-
+    menu_write_to_sram();
     menu_timer_init();
 }
 
@@ -203,8 +265,11 @@ void menu_run() {
         default:
             break;
     }
-    
-    _delay_ms(150);
+
+    if (state_changed) {
+        menu_write_to_sram();
+    }
+    _delay_ms(100);
 }
 
 
@@ -226,29 +291,110 @@ void menu_print() {
 }
 
 
-ISR(TIMER1_COMPA_vect) {   
-    if (!state_changed) {
-        return;
+void sram_write_char(char c, int line, int index, int inverted) {
+    for (int i = 0; i < FONT_LENGTH; i++) {
+        uint8_t column = pgm_read_byte(&(font8[c - ASCII_OFFSET][i]));
+        if (inverted) {
+            sram_write(~column, line*NUMBER_OF_COLUMNS + index*FONT_LENGTH + i);
+        }
+        else {
+            sram_write(column, line*NUMBER_OF_COLUMNS + index*FONT_LENGTH + i);
+        }
+    } 
+}
+
+
+void sram_write_line(char* word, int line, int inverted) {
+    int i = 0;
+    while(word[i] != '\0') {
+        sram_write_char(word[i], line, i, inverted);
+        ++i;
     }
 
-    state_changed = 0;
-    menu_print();
+    while (i < NUMBER_OF_COLUMNS / FONT_LENGTH) {
+        sram_write_char(' ', line, i, inverted);
+        ++i;
+    }
+}
+
+
+void menu_write_to_sram() { 
+    char word[16];
+    menu_t* current_menu = current->own_menu;
+
+    // reserve top line
+    sram_write_line("\0", 0, 0);
+
+    for (int line = 0; line < NUMBER_OF_PAGES; line++) {
+        if (line < current_menu->length) {
+            strcpy_P(word, (PGM_P) pgm_read_word(&(current_menu->text_display[line])));
+            if (line == state) {
+                sram_write_line(word, line + 1, 1);
+            }
+            else {
+                sram_write_line(word, line + 1, 0);
+            }
+        }
+        else {
+            sram_write_line("\0", line + 1, 0);
+        }
+
+        // for (int col = 0; col < (NUMBER_OF_COLUMNS / FONT_LENGTH); col++) {
+        //     for (int i = 0; i < FONT_LENGTH; i++) {
+        //         if (line == 0) {
+        //             sram_write(0, col*FONT_LENGTH + i);
+        //         }
+        //         else if (line <= current_menu->length && word[col] != '\0'){                    
+        //             uint8_t character = pgm_read_byte(&(font8[word[col] - ASCII_OFFSET][i]));
+        //             if (line == state){
+        //                 sram_write(~character, line*NUMBER_OF_COLUMNS + col*FONT_LENGTH+i);
+        //             }
+        //             else{
+        //                 sram_write(character, line*NUMBER_OF_COLUMNS + col*FONT_LENGTH+i);
+        //             }
+        //         }
+        //         else if (word[col] == '\0') {
+        //             while(i<FONT_LENGTH){
+        //                 sram_write(0, line*NUMBER_OF_COLUMNS + col*FONT_LENGTH +i );
+        //                 i++;
+        //             }
+        //         }
+        //     }
+        // }
+
+    }
+}
+
+
+ISR(TIMER1_COMPA_vect) {
+    // if (!state_changed) {
+    //     return;
+    // }
+
+    // state_changed = 0;
+    // menu_print();
+
+
+    oled_print_from_sram();
 }
 
 
 ISR(INT1_vect) {
     if (current->action_function) {
-        state_changed = 1;
+        // state_changed = 1;
         current->action_function();
     }
 }
+
+
+
 
 
 // void menu_write_to_sram() {
 //     char word[20];
 //     menu_t* current_menu = current->own_menu;
 
-//     for (int p = 0; p < NUMBER_OF_PAGES; p++) {       
+//     for (int p = 0; p < NUMBER_OF_PAGES; p++) {
 //         for (int i = 0; i < 20; ++i) {
 //             uint16_t address = p * sizeof(word) + i * sizeof(char);
 

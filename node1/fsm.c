@@ -10,7 +10,6 @@
 #include <util/delay.h>
 
 
-
 static enum FSM_STATE current_state = INIT;
 
 
@@ -22,6 +21,11 @@ static void fsm_transmit_state(enum FSM_STATE state) {
 
 enum FSM_STATE fsm_get_state(void) {
     return current_state;
+}
+
+
+void fsm_set_state(enum FSM_STATE state) {
+    current_state = state;
 }
 
 
@@ -37,35 +41,25 @@ void fsm_transition_to(enum FSM_STATE state) {
         {
             menu_timer_disable();
             user_input_timer_enable();
-
             oled_clear();
-            oled_set_pos(1, 8);
-            oled_print_string("PLAYING!");
-            oled_set_pos(3, 8);
-            oled_print_string("Quit the game");
-            oled_set_pos(4, 8);
-            oled_print_string("by pushing the");
-            oled_set_pos(5, 8);
-            oled_print_string("left button");
 
             current_state = PLAYING;
             break;
         }
-        case POSTGAME: 
+        case GAME_OVER: 
         {
             user_input_timer_disable();
-            
             oled_clear();
-            oled_set_pos(1, 8);
-            oled_print_string("GAME ENDED!");
-            oled_set_pos(3, 8);
-            oled_print_string("Return to main");
-            oled_set_pos(4, 8);
-            oled_print_string("menu by pushing");
-            oled_set_pos(5, 8);
-            oled_print_string("the left button");
+            oled_print_game_over_screen(0);
 
-            current_state = POSTGAME;
+            current_state = GAME_OVER;
+            break;
+        }
+        case IDLE:
+        {   
+            oled_clear();
+            oled_print_quit_screen();
+            current_state = IDLE;
             break;
         }
         default:

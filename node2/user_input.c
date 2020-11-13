@@ -1,5 +1,11 @@
 #include "user_input.h"
 #include "../node1/user_input.h"
+#include "sam/sam3x/include/sam.h"
+
+
+#define MB_LEFT_PIN         PIO_PB17
+#define MB_RIGHT_PIN        PIO_PB18
+#define MB_BUTTON_PIN       PIO_PB19
 
 
 int joystick_scale_x(uint8_t value) {
@@ -53,4 +59,36 @@ int slider_scale_left(uint8_t value) {
     }
 
     return scaled_value;
+}
+
+
+void user_input_microbit_init() {
+    // enables the PIO to control the corresponding pins
+    PIOB->PIO_PER |= MB_LEFT_PIN | MB_RIGHT_PIN | MB_BUTTON_PIN;
+
+    PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_PIOB << PMC_PCR_PID_Pos);
+    PMC->PMC_PCER0 |= 1 << (ID_PIOB);
+}
+
+
+const acc_dir_t user_input_microbit_dir() {
+    char left_dir = (PIOB->PIO_PDSR & MB_LEFT_PIN);
+    char right_dir = (PIOB->PIO_PDSR & MB_RIGHT_PIN);
+
+    if (left_dir) {
+        return ACC_LEFT;
+    }
+    else if (right_dir) {
+        return ACC_RIGHT;
+    }
+    
+    return ACC_MIDDLE;
+}
+
+
+const char user_input_microbit_button() {
+    if (PIOB->PIO_PDSR & MB_BUTTON_PIN) {
+        return 1;
+    }
+    return 0;
 }

@@ -6,7 +6,7 @@
  * For use in TTK4155 Embedded and Industrial Computer Systems Design
  * NTNU - Norwegian University of Science and Technology
  *
- */ 
+ */
 
 #include "can_interrupt.h"
 #include "can_controller.h"
@@ -15,6 +15,8 @@
 
 #include "../game.h"
 #include "../fsm.h"
+#include "../user_input.h"
+#include "../../common/can_id.h"
 
 #include <stdio.h>
 
@@ -26,13 +28,13 @@
  *
  * \param void
  *
- * \retval 
+ * \retval
  */
 void CAN0_Handler( void )
 {
 	if(DEBUG_INTERRUPT)printf("CAN0 interrupt\n\r");
-	char can_sr = CAN0->CAN_SR; 
-	
+	char can_sr = CAN0->CAN_SR;
+
 	//RX interrupt
 	if(can_sr & (CAN_SR_MB1 | CAN_SR_MB2)) // Mailbox 1 and 2 specified for receiving
 	{
@@ -52,23 +54,21 @@ void CAN0_Handler( void )
 
 
         switch(message.id) {
-            case 1:
+            case USER_INPUT_ID:
+            {
                 game_get_user_data(message.data);
-                // run servo
-                // printf("(x, y) = (%d, %d) \r\n", joystick_scale_x(message.data[0]), joystick_scale_y(message.data[1]));
-                // servo_set_position(joystick_scale_x(message.data[0]));
-
-                // run motor
-                // printf("(s_l, s_r) = (%d, %d) \r\n", slider_scale_left(message.data[2]), slider_scale_right(message.data[3]));
-                // motor_run_slider(slider_scale_right(message.data[3]));
-
-                // poll button for solenoid
-                // printf("(b_l, b_r) = (%d, %d) \r\n\n", message.data[4], message.data[5]);
-                // solenoid_run_button(message.data[5]);
-
-            case 2:
+                break;
+            }
+            case FSM_STATE_ID:
+            {
                 fsm_transition_to(message.data[0]);
-
+                break;
+            }
+			case CONTROLLER_ID:
+            {
+                printf("controller: %d", message.data[0]);
+				game_set_controller(message.data[0]);
+            }
             default:
                 break;
         }
@@ -83,11 +83,11 @@ void CAN0_Handler( void )
 
 		if(DEBUG_INTERRUPT)printf("\n\n\r");
 	}
-	
+
 	if(can_sr & CAN_SR_MB0)
 	{
 		if(DEBUG_INTERRUPT) printf("CAN0 MB0 ready to send \n\r");
-		
+
 	//Disable interrupt
 		CAN0->CAN_IDR = CAN_IER_MB0;
 
@@ -103,7 +103,7 @@ void CAN0_Handler( void )
 		if(DEBUG_INTERRUPT)printf("CAN0 timer overflow\n\r");
 
 	}
-	
+
 	NVIC_ClearPendingIRQ(ID_CAN0);
 	//sei();*/
 }

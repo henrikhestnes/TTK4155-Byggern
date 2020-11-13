@@ -1,7 +1,22 @@
 #include "pid_controller.h"
 
 
-int pid_controller(PID_DATA_t* PID, int ref, int current_value) {
+static PID_DATA_t* PID;
+
+
+void pid_controller_init(float k_p, float k_i, float k_d, float T, int max_u) {
+    
+}
+
+
+void pid_controller_set_parameters(float k_p, float k_i, float k_d) {
+    PID->K_p = k_p;
+    PID->K_i = k_i;
+    PID->K_d = k_d;
+}
+
+
+int pid_controller(int ref, int current_value) {
     int error = ref - current_value;
     PID->sum_error += error;
 

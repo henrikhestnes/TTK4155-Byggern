@@ -37,6 +37,7 @@ void fsm_transition_to(enum FSM_STATE state) {
         {
             motor_disable();
             game_timer_disable();
+            game_reset_score();
             current_state = IDLE;
             printf("Transitioning to IDLE");
         }

@@ -3,30 +3,25 @@
 
 #include <stdint.h>
 
-<<<<<<< HEAD
+
 /**
  * @brief Enum that describes the tilting of the accelerometer.
  */
-=======
->>>>>>> master
 
 typedef enum{
-    middle,
-    left,
-    right
-} dir_t;
+    ACC_MIDDLE = 1,
+    ACC_LEFT,
+    ACC_RIGHT
+} acc_dir_t;
 
-<<<<<<< HEAD
+
 /**
  * @brief Set the pins(0-2) on the microbit to output.
  */
-=======
->>>>>>> master
 
 void controller_init_pins(void);
 
 
-<<<<<<< HEAD
 /**
  * @brief Read the accelerometer values in X, Y, and Z directions.
  *
@@ -37,16 +32,16 @@ void controller_init_pins(void);
  *  middle if the accelerometer is horizontal.
  */
 
-const dir_t controller_get_dir(const int16_t* x_pt);
+const acc_dir_t controller_get_dir(const int16_t* x_pt);
 
 
 /**
- * @brief Set the pins(0-1) high, depending on dir. 
+ * @brief Set the pins(0-1) high, depending on dir.
  *
  * @param dir Pointer to dir of type dir_t.
  */
 
-void controller_set_pin_high(dir_t* dir);
+void controller_set_pin_high(acc_dir_t* dir);
 
 
 /**
@@ -59,20 +54,9 @@ void controller_send_dir(int16_t* x_pt);
 
 
 /**
- * @brief Read the accelerometer values in X, Y, and Z directions.
+ * @brief Set pin high while button B is pressed.
  */
 
-=======
-const dir_t controller_get_dir(const int16_t* x_pt);
-
-
-void controller_set_pin_high(dir_t* dir);
-
-
-void controller_send_dir(int16_t* x_pt);
-
-
->>>>>>> master
 void controller_send_button_pressed(void);
 
 

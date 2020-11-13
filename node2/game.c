@@ -8,6 +8,7 @@
 #include "sam/sam3x/include/sam.h"
 #include "../common/can_id.h"
 #include <stdint.h>
+#include "../node1/user_input.h"
 
 
 #define F_CPU               84E6
@@ -22,6 +23,7 @@
 static unsigned int score;
 static unsigned int lives_left;
 static unsigned int counting_flag;
+static enum CONTROLLER_SEL controller_select = SLIDER_POS_CTRL;
 
 
 static struct user_input_data {
@@ -65,7 +67,13 @@ void game_init() {
 }
 
 
+void game_set_controller(enum CONTROLLER_SEL controller){
+    controller_select = controller;
+}
+
+
 int game_count_fails() {
+
     uint16_t ir_level = adc_read();
 
     if ((ir_level < IR_TRESHOLD) && !counting_flag) {
@@ -92,9 +100,27 @@ void game_get_user_data(char* data) {
 
 
 static void game_run() {
-    motor_run_slider(user_data.slider_right);
-    servo_set_position(user_data.joystick_x);
-    solenoid_run_button(user_data.button_right);
+    switch (controller_select) {
+        case SLIDER_POS_CTRL:
+        {
+            motor_run_slider(user_data.slider_right);
+            servo_set_position(user_data.joystick_x);
+            solenoid_run_button(user_data.button_right);
+            break;
+        }
+        case MICROBIT_SPEED_CTRL:
+        {   
+            motor_run_microbit();
+            servo_set_position(0);
+
+            char button_pressed = user_input_microbit_button();
+            printf("button: %d \r\n", button_pressed);
+            solenoid_run_button(button_pressed);
+            break;
+        }
+        default:
+            break;
+    }
 
     if (game_count_fails()) {
         CAN_MESSAGE m = {

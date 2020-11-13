@@ -6,6 +6,7 @@
 #include "can/can_controller.h"
 #include "can/can_interrupt.h"
 #include "sam/sam3x/include/sam.h"
+#include "../common/can_id.h"
 
 
 #include "led.h"
@@ -53,38 +54,51 @@ int main()
         solenoid_init();
 
 
-    // fsm_transition_to(MENU);
-    // while (1) {
-    // enum FSM_STATE state = fsm_get_state();
-    //     switch(state) {
-    //         case MENU:
-    //         {
-    //             break;
-    //         }
-    //         case PLAYING:
-    //         {
-    //             // count score and send to can
-    //             break;
-    //         }
-    //         case GAME_OVER:
-    //         {
-    //             break;
-    //         }
-    //         case IDLE:
-    //         {
-    //             break;
-    //         }
-    //         default:
-    //             break;
-    //     }
-    // }
+    fsm_transition_to(MENU);
+    while (1) {
+    enum FSM_STATE state = fsm_get_state();
+        switch(state) {
+            case MENU:
+            {
+                break;
+            }
+            case PLAYING:
+            {
+                // count score and send to can
+                break;
+            }
+            case GAME_OVER:
+            {   
+                int score = game_get_score();
+                uint8_t msb = (score & 0xFF00) >> 8;
+                uint8_t lsb = (score & 0x00FF);
+
+                CAN_MESSAGE m = {
+                    .id = GAME_SCORE_ID,
+                    .data_length = 2,
+                    .data = {msb, lsb}
+                };
+
+                can_send(&m, 0);
+
+                fsm_transition_to(IDLE);
+                break;
+            }
+            case IDLE:
+            {
+                break;
+            }
+            default:
+                break;
+        }
+    }
 
 
     // TESTING
         // PIOA->PIO_PER |= PIO_PA23;
         // PIOA->PIO_OER |= PIO_PA23;
 
-        music_play(GAME_OVER_THEME);
+        // music_play(GAME_OVER_THEME);
 
         // while (1) {
         //     // solenoid_shoot();
@@ -112,4 +126,5 @@ int main()
         //     // }
         // }
 
+//     return 0;
 }

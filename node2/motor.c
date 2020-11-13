@@ -6,6 +6,7 @@
 #include "sam/sam3x/include/sam.h"
 #include "sam/interrupt.h"
 #include <math.h>
+#include "user_input.h"
 
 
 #define ENCODER_DATA_MASK   (0xFF << DO0_IDX)
@@ -21,26 +22,17 @@
 #define T                   1.0 / MOTOR_TIMER_FREQ
 #define MAX_MOTOR_SPEED     0x4FF
 
+#define MICROBIT_CONTROLLER_MOTOR_SPEED 0x0FF
+
 
 static int scale_encoder_value(int value) {
     return SLIDER_MAX * value / (MAX_ENCODER_VALUE - MIN_ENCODER_VALUE);
 }
 
 
-static PID_DATA_t PID = {    
-    K_P,
-    K_I,
-    K_D,
-    0,
-    0,
-    T,
-    MAX_MOTOR_SPEED
-};
-
-
 enum motor_direction {
    LEFT,
-   RIGHT 
+   RIGHT
 };
 
 
@@ -62,7 +54,7 @@ static void motor_set_direction(enum motor_direction d) {
 void motor_init() {
     // initiate dac
     dac_init();
-   
+
     // enable PIOD pins to motor box as output
     PIOD->PIO_PER |= DIR | EN | SEL | NOT_RST | NOT_OE;
     PIOD->PIO_OER |= DIR | EN | SEL | NOT_RST | NOT_OE;
@@ -87,9 +79,9 @@ void motor_disable() {
 
 
 void motor_enable() {
-    PIOD->PIO_SODR = EN;
-    PID.sum_error = 0;
-    PID.prev_error = 0;
+//     PIOD->PIO_SODR = EN;
+//     PID.sum_error = 0;
+//     PID.prev_error = 0;
 }
 
 
@@ -137,7 +129,7 @@ void motor_run_slider(int reference) {
     //         // moving left, clear direction pin
     //         PIOD->PIO_CODR = DIR;
     //     }
-        
+
     //     // set motor speed
     //     uint16_t speed = (uint16_t) (0x4FF * abs(pos.x) / 100);
     //     printf("speed = %X \n\n\r", speed);
@@ -147,15 +139,45 @@ void motor_run_slider(int reference) {
     int encoder_value = motor_read_encoder();
     int current_position = scale_encoder_value(encoder_value);
     // printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
-    int u = pid_controller(&PID, reference, current_position);
+    //int u = pid_controller(&PID, reference, current_position);
     // printf("pådrag: %d \r\n", u);
 
-    if (u > 0) {
-        motor_set_direction(RIGHT);
-    }
-    else {
-        motor_set_direction(LEFT);
-    }
+    // if (u > 0) {
+    //     motor_set_direction(RIGHT);
+    // }
+    // else {
+    //     motor_set_direction(LEFT);
+    // }
 
-    motor_set_speed(abs(u));
+    // motor_set_speed(abs(u));
+}
+
+
+void motor_run_microbit(){
+    acc_dir_t microbit_dir = user_input_microbit_dir();
+
+    switch(microbit_dir){
+        case(ACC_LEFT):
+        {
+            motor_set_direction(LEFT);
+            motor_set_speed(MICROBIT_CONTROLLER_MOTOR_SPEED);
+            break;
+        }
+        case(ACC_RIGHT):
+        {
+            motor_set_direction(RIGHT);
+            motor_set_speed(MICROBIT_CONTROLLER_MOTOR_SPEED);
+            break;
+        }
+        case(ACC_MIDDLE):
+        {
+            motor_set_speed(0);
+            break;
+        }
+        default:
+        {
+            motor_set_speed(0);
+            break;
+        }
+    }
 }

@@ -16,32 +16,32 @@ void controller_init_pins(){
 }
 
 
-const dir_t controller_get_dir(const int16_t* x_pt){
+const acc_dir_t controller_get_dir(const int16_t* x_pt){
     if(*x_pt > -THRESHOLD){
-        return left;
+        return ACC_LEFT;
     }
     if(*x_pt < THRESHOLD){
-        return right;
+        return ACC_RIGHT;
     }
     else{
-        return middle;
+        return ACC_MIDDLE;
     }
 }
 
 
-void controller_set_pin_high(dir_t* dir){
-    switch(*dir){
-        case(left):
+void controller_set_pin_high(acc_dir_t* acc_dir){
+    switch(*acc_dir){
+        case(ACC_LEFT):
             GPIO->OUTSET = (1 << PIN_0);
             GPIO->OUTCLR = (1 << PIN_1);
             break;
 
-        case(right):
+        case(ACC_RIGHT):
             GPIO->OUTSET = (1 << PIN_1);
             GPIO->OUTCLR = (1 << PIN_0);
             break;
 
-        case(middle):
+        case(ACC_MIDDLE):
             GPIO->OUTCLR = (1 << PIN_1);
             GPIO->OUTCLR = (1 << PIN_0);
             break;
@@ -52,9 +52,9 @@ void controller_set_pin_high(dir_t* dir){
 
 void controller_send_dir(int16_t* x_pt){
 
-    dir_t dir = controller_get_dir(x_pt);
+    acc_dir_t acc_dir = controller_get_dir(x_pt);
 
-    controller_set_pin_high(&dir);
+    controller_set_pin_high(&acc_dir);
 }
 
 

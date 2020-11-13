@@ -8,6 +8,9 @@
 enum FSM_STATE fsm_get_state(void);
 
 
+void fsm_set_state(enum FSM_STATE state);
+
+
 void fsm_transition_to(enum FSM_STATE state);
 
 

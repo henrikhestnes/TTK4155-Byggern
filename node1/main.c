@@ -16,12 +16,11 @@
 #define F_CPU 4.9152E6
 #include <util/delay.h> 
 
-
-#define FOSC 4915200
 #define BAUD 9600
-#define UBRR FOSC / 16 / BAUD - 1
+#define UBRR F_CPU / 16 / BAUD - 1
 
-#define CAN_JOYSTICK 1
+
+static unsigned int lives_left = 3;
 
 
 int main() {
@@ -48,10 +47,7 @@ int main() {
     // CAN
         can_init(MODE_NORMAL);
 
-
         sei();
-
-        DDRB |= (1 << PB3);
 
     // Testing
         // while (1) {
@@ -65,8 +61,6 @@ int main() {
             // }
 
             // menu_run();
-            // PORTB ^= (1 << PB3);
-
         // }
 
     fsm_set_state(MENU);
@@ -81,10 +75,14 @@ int main() {
             }
             case PLAYING:
             {   
-                // print number of lives left
+                if (lives_left) {
+                    oled_print_playing_screen(lives_left);
+                }
+                else {
+                    fsm_transition_to(GAME_OVER);
+                }
 
                 if (user_input_buttons().left) {
-                    // print quit screen
                     fsm_transition_to(IDLE);
                     _delay_ms(1000);
                 }
@@ -93,13 +91,11 @@ int main() {
             }
             case GAME_OVER:
             {
-                // print game over screen with highscore
-                // update highscore
                 fsm_transition_to(IDLE);
                 break;
             }
             case IDLE:
-            {
+            {   
                 if (user_input_buttons().left) {
                     fsm_transition_to(MENU);
                     _delay_ms(1000);
@@ -118,19 +114,20 @@ ISR(INT0_vect) {
     message_t m = can_recieve();
 
     switch (m.id) {
-        case GAME_LIVES_LEFT_ID: {
-            int lives_left = = m.data[0];
+        case GAME_LIVES_LEFT_ID: 
+        {
+            int lives_left = m.data[0];
+        }
+        case GAME_SCORE_ID:
+        {
+            uint8_t msb = m.data[0];
+            uint8_t lsb = m.data[1];
 
-            if (lives_left) {
-                // update oled with lives left
-            }
-            else {
-                fsm_transition_to(GAME_OVER);
-            }
+            int score = (msb << 8) + lsb;
+            printf("gamescore: %d", score);
         }
     }
     
-
     mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF | MCP_RX1IF, 0);
 }
 
