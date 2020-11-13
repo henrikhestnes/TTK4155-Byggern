@@ -71,8 +71,8 @@ void microbit_user_input_init(){
     PIOA->PIO_PER |= (1 << MB_RIGHT_PIN);
     PIOA->PIO_PER |= (1 << MB_BUTTON_PIN);
 
-    //PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_PIOA << PMC_PCR_PID_Pos);
-    //PMC->PMC_PCER0 |= 1 << (ID_PIOA);
+    PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_PIOA << PMC_PCR_PID_Pos);
+    PMC->PMC_PCER0 |= 1 << (ID_PIOA);
 }
 
 
