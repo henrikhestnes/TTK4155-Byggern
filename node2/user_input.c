@@ -1,5 +1,14 @@
 #include "user_input.h"
 #include "../node1/user_input.h"
+#include "sam/sam3x/include/pio/pio_sam3x8e.h"
+
+#define A8          27
+#define A9          2
+#define A10         3
+
+#define MB_LEFT_PIN    A8
+#define MB_RIGHT_PIN   A9
+#define MB_BUTTON_PIN  A10
 
 
 int joystick_scale_x(uint8_t value) {
@@ -53,4 +62,20 @@ int slider_scale_left(uint8_t value) {
     }
 
     return scaled_value;
+}
+
+
+void microbit_user_input_init(){
+    // enables the PIO to control the corresponding pins
+    PIOA->PIO_PER |= (1 << MB_LEFT_PIN);
+    PIOA->PIO_PER |= (1 << MB_RIGHT_PIN);
+    PIOA->PIO_PER |= (1 << MB_BUTTON_PIN);
+
+    //PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_PIOA << PMC_PCR_PID_Pos);
+    //PMC->PMC_PCER0 |= 1 << (ID_PIOA);
+}
+
+
+acc_dir_t acc_get_dir(){
+
 }

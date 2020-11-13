@@ -1,9 +1,5 @@
 # You only need to edit this line
-<<<<<<< HEAD
 SOURCES := main.c twi.c accelerometer.c controller.c button.c
-=======
-SOURCES := main.c twi.c accelerometer.c print.c controller.c button.c
->>>>>>> master
 
 # You can safely ignore everything south of this line if it intimidates you
 SOURCE_DIR := source
