@@ -1,6 +1,6 @@
 # For use in TTK4155 Embedded and Industrial Computer Systems Design
-# 
-# 
+#
+#
 # G.Often, E.Jølsgard
 # Department of Engineering Cybernetics
 # NTNU - Norwegian Univerity of Science and Technology
@@ -14,7 +14,8 @@
 *.o
 *.ko
 *.obj
-#*.elf
+*.elf
+#
 
 # Linker output
 *.ilk
@@ -43,7 +44,7 @@
 *.app
 *.i*86
 *.x86_64
-#*.hex		
+#*.hex
 
 # Debug files
 *.dSYM/
