@@ -4,6 +4,7 @@
 #include "motor.h"
 #include "servo_driver.h"
 #include "solenoid.h"
+#include "pid_controller.h"
 #include "can/can_controller.h"
 #include "sam/sam3x/include/sam.h"
 #include "../common/can_id.h"
@@ -16,6 +17,12 @@
 
 #define IR_TRESHOLD         1000
 #define NUMBER_OF_LIVES     3
+
+#define K_P                 40
+#define K_I                 25
+#define K_D                 1
+#define T                   1.0 / MOTOR_TIMER_FREQ
+#define MAX_MOTOR_SPEED     0x4FF
 
 #define IRQ_TC0_priority    2
 
@@ -64,6 +71,7 @@ void game_init() {
     score = 0;
     lives_left = NUMBER_OF_LIVES;
     game_timer_init();
+    pid_controller_init(K_P, K_I, K_D, T, MAX_MOTOR_SPEED);
 }
 
 
@@ -99,8 +107,13 @@ void game_get_user_data(char* data) {
     user_data.button_right = data[5];
 }
 
-
 static void game_run() {
+
+    motor_run_slider(user_data.slider_right);
+    // servo_set_position(user_data.joystick_x);
+    // solenoid_run_button(user_data.button_right);
+
+
     // switch (controller_select) {
     //     case SLIDER_POS_CTRL:
     //     {
@@ -122,11 +135,6 @@ static void game_run() {
     //     default:
     //         break;
     // }
-
-
-    motor_run_slider(user_data.slider_right);
-    servo_set_position(user_data.joystick_x);
-    solenoid_run_button(user_data.button_right);
     
 
     // if (game_count_fails()) {

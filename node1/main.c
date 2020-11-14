@@ -42,7 +42,8 @@ int main() {
         oled_init();
 
     // Menu
-        menu_init(); 
+        menu_init();
+        menu_timer_disable();
 
     // CAN
         can_init(MODE_NORMAL);
@@ -50,8 +51,8 @@ int main() {
         sei();
 
     // Testing
-        // while (1) {
-            // user_input_transmit();
+        while (1) {
+            user_input_transmit();
 
             // if (can_get_recieve_flag()) {
             //     message_t message = can_recieve();
@@ -61,50 +62,50 @@ int main() {
             // }
 
             // menu_run();
-        // }
-
-    fsm_set_state(MENU);
-    
-    while (1) {
-    enum FSM_STATE state = fsm_get_state();
-        switch (state) {
-            case MENU:
-            {
-                menu_run();
-                break;
-            }
-            case PLAYING:
-            {   
-                if (lives_left) {
-                    oled_print_playing_screen(lives_left);
-                }
-                else {
-                    fsm_transition_to(GAME_OVER);
-                }
-
-                if (user_input_buttons().left) {
-                    fsm_transition_to(IDLE);
-                    _delay_ms(1000);
-                }
-
-                break;
-            }
-            case GAME_OVER:
-            {
-                fsm_transition_to(IDLE);
-                break;
-            }
-            case IDLE:
-            {   
-                if (user_input_buttons().left) {
-                    fsm_transition_to(MENU);
-                    _delay_ms(1000);
-                }
-            }
-            default:
-                break;
         }
-    }
+
+    // fsm_set_state(MENU);
+    
+    // while (1) {
+    // enum FSM_STATE state = fsm_get_state();
+    //     switch (state) {
+    //         case MENU:
+    //         {
+    //             menu_run();
+    //             break;
+    //         }
+    //         case PLAYING:
+    //         {   
+    //             if (lives_left) {
+    //                 oled_print_playing_screen(lives_left);
+    //             }
+    //             else {
+    //                 fsm_transition_to(GAME_OVER);
+    //             }
+
+    //             if (user_input_buttons().left) {
+    //                 fsm_transition_to(IDLE);
+    //                 _delay_ms(1000);
+    //             }
+
+    //             break;
+    //         }
+    //         case GAME_OVER:
+    //         {
+    //             fsm_transition_to(IDLE);
+    //             break;
+    //         }
+    //         case IDLE:
+    //         {   
+    //             if (user_input_buttons().left) {
+    //                 fsm_transition_to(MENU);
+    //                 _delay_ms(1000);
+    //             }
+    //         }
+    //         default:
+    //             break;
+    //     }
+    // }
 
     return 0;
 }

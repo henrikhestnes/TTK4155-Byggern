@@ -16,12 +16,6 @@
 #define SLIDER_MAX          100
 
 
-#define K_P                 60
-#define K_I                 35
-#define K_D                 5
-#define T                   1.0 / MOTOR_TIMER_FREQ
-#define MAX_MOTOR_SPEED     0x4FF
-
 #define MICROBIT_CONTROLLER_MOTOR_SPEED 0x0FF
 
 
@@ -79,9 +73,8 @@ void motor_disable() {
 
 
 void motor_enable() {
-//     PIOD->PIO_SODR = EN;
-//     PID.sum_error = 0;
-//     PID.prev_error = 0;
+    PIOD->PIO_SODR = EN;
+    pid_controller_reset_errors();
 }
 
 
@@ -138,18 +131,18 @@ void motor_run_slider(int reference) {
 
     int encoder_value = motor_read_encoder();
     int current_position = scale_encoder_value(encoder_value);
-    // printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
-    //int u = pid_controller(&PID, reference, current_position);
-    // printf("pådrag: %d \r\n", u);
+    printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
+    int u = pid_controller(reference, current_position);
+    printf("pådrag: %d \r\n", u);
 
-    // if (u > 0) {
-    //     motor_set_direction(RIGHT);
-    // }
-    // else {
-    //     motor_set_direction(LEFT);
-    // }
+    if (u > 0) {
+        motor_set_direction(RIGHT);
+    }
+    else {
+        motor_set_direction(LEFT);
+    }
 
-    // motor_set_speed(abs(u));
+    motor_set_speed(abs(u));
 }
 
 
