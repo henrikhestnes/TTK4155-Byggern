@@ -57,8 +57,10 @@ void fsm_transition_to(enum FSM_STATE state) {
         }
         case IDLE:
         {   
+            user_input_timer_disable();
             oled_clear();
             oled_print_quit_screen();
+            
             current_state = IDLE;
             break;
         }

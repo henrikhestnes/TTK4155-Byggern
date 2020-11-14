@@ -339,29 +339,6 @@ void menu_write_to_sram() {
             sram_write_line("\0", line + 1, 0);
         }
 
-        // for (int col = 0; col < (NUMBER_OF_COLUMNS / FONT_LENGTH); col++) {
-        //     for (int i = 0; i < FONT_LENGTH; i++) {
-        //         if (line == 0) {
-        //             sram_write(0, col*FONT_LENGTH + i);
-        //         }
-        //         else if (line <= current_menu->length && word[col] != '\0'){                    
-        //             uint8_t character = pgm_read_byte(&(font8[word[col] - ASCII_OFFSET][i]));
-        //             if (line == state){
-        //                 sram_write(~character, line*NUMBER_OF_COLUMNS + col*FONT_LENGTH+i);
-        //             }
-        //             else{
-        //                 sram_write(character, line*NUMBER_OF_COLUMNS + col*FONT_LENGTH+i);
-        //             }
-        //         }
-        //         else if (word[col] == '\0') {
-        //             while(i<FONT_LENGTH){
-        //                 sram_write(0, line*NUMBER_OF_COLUMNS + col*FONT_LENGTH +i );
-        //                 i++;
-        //             }
-        //         }
-        //     }
-        // }
-
     }
 }
 
@@ -374,7 +351,6 @@ ISR(TIMER1_COMPA_vect) {
     // state_changed = 0;
     // menu_print();
 
-
     oled_print_from_sram();
 }
 
@@ -385,52 +361,3 @@ ISR(INT1_vect) {
         current->action_function();
     }
 }
-
-
-
-
-
-// void menu_write_to_sram() {
-//     char word[20];
-//     menu_t* current_menu = current->own_menu;
-
-//     for (int p = 0; p < NUMBER_OF_PAGES; p++) {
-//         for (int i = 0; i < 20; ++i) {
-//             uint16_t address = p * sizeof(word) + i * sizeof(char);
-
-//             if (p >= current_menu->length) {
-//                 sram_write(0, address);
-//                 // avoid accessing text_display
-//                 continue;
-//             }
-
-//             strcpy_P(word, (PGM_P)pgm_read_word(&(current_menu->text_display[p])));
-//             if (p == state) {
-//                 sram_write(~(word[i]), address);
-//             }
-
-//             else {
-//                 sram_write(word[i], address);
-//             }
-//         }
-//     }
-// }
-
-
-// ISR(INT1_vect) {
-//     if (current->action_function) {
-//         state_changed = 1;
-//         current->action_function();
-//         menu_write_to_sram();
-//     }
-// }
-
-
-// ISR(TIMER1_COMPA_vect) {
-//     if (!state_changed) {
-//         return;
-//     }
-
-//     state_changed = 0;
-//     oled_print_from_sram();
-// }

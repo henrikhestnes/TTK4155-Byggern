@@ -110,8 +110,8 @@ void game_get_user_data(char* data) {
 static void game_run() {
 
     motor_run_slider(user_data.slider_right);
-    // servo_set_position(user_data.joystick_x);
-    // solenoid_run_button(user_data.button_right);
+    servo_set_position(user_data.joystick_x);
+    solenoid_run_button(user_data.button_right);
 
 
     // switch (controller_select) {
@@ -137,17 +137,17 @@ static void game_run() {
     // }
     
 
-    // if (game_count_fails()) {
-    //     CAN_MESSAGE m = {
-    //         .id = GAME_LIVES_LEFT_ID,
-    //         .data_length = 1,
-    //         .data = lives_left
-    //     };
+    if (game_count_fails()) {
+        CAN_MESSAGE m = {
+            .id = GAME_LIVES_LEFT_ID,
+            .data_length = 1,
+            .data = lives_left
+        };
 
-    //     can_send(&m, 0);
-    // }
+        can_send(&m, 0);
+    }
 
-    // ++score;
+    ++score;
 }
 
 

@@ -51,61 +51,63 @@ int main() {
         sei();
 
     // Testing
-        while (1) {
-            user_input_transmit();
+        // while (1) {
+        //     user_input_transmit();
 
-            // if (can_get_recieve_flag()) {
-            //     message_t message = can_recieve();
-            //     printf("message id: %d\n\r", message.id);
-            //     printf("message data length: %d\n\r", message.length);
-            //     printf("message data: %s\n\r", message.data);
-            // }
+        //     if (can_get_recieve_flag()) {
+        //         message_t message = can_recieve();
+        //         printf("message id: %d\n\r", message.id);
+        //         printf("message data length: %d\n\r", message.length);
+        //         printf("message data: %s\n\r", message.data);
+        //     }
 
-            // menu_run();
-        }
+        //     menu_run();
+        // }
 
-    // fsm_set_state(MENU);
+
+    // Real code :DDD
+    fsm_transition_to(MENU);
     
-    // while (1) {
-    // enum FSM_STATE state = fsm_get_state();
-    //     switch (state) {
-    //         case MENU:
-    //         {
-    //             menu_run();
-    //             break;
-    //         }
-    //         case PLAYING:
-    //         {   
-    //             if (lives_left) {
-    //                 oled_print_playing_screen(lives_left);
-    //             }
-    //             else {
-    //                 fsm_transition_to(GAME_OVER);
-    //             }
+    while (1) {
+    enum FSM_STATE state = fsm_get_state();
+        switch (state) {
+            case MENU:
+            {
+                menu_run();
+                break;
+            }
+            case PLAYING:
+            {   
+                if (lives_left) {
+                    oled_print_playing_screen(lives_left);
+                }
+                else {
+                    fsm_transition_to(GAME_OVER);
+                }
 
-    //             if (user_input_buttons().left) {
-    //                 fsm_transition_to(IDLE);
-    //                 _delay_ms(1000);
-    //             }
+                if (user_input_buttons().left) {
+                    fsm_transition_to(IDLE);
+                    _delay_ms(1000);
+                }
 
-    //             break;
-    //         }
-    //         case GAME_OVER:
-    //         {
-    //             fsm_transition_to(IDLE);
-    //             break;
-    //         }
-    //         case IDLE:
-    //         {   
-    //             if (user_input_buttons().left) {
-    //                 fsm_transition_to(MENU);
-    //                 _delay_ms(1000);
-    //             }
-    //         }
-    //         default:
-    //             break;
-    //     }
-    // }
+                break;
+            }
+            case GAME_OVER:
+            {
+                fsm_transition_to(IDLE);
+                break;
+            }
+            case IDLE:
+            {   
+                if (user_input_buttons().left) {
+                    fsm_transition_to(MENU);
+                    _delay_ms(1000);
+                }
+            }
+            default:
+                break;
+        }
+    }
 
     return 0;
 }
@@ -118,6 +120,7 @@ ISR(INT0_vect) {
         case GAME_LIVES_LEFT_ID: 
         {
             int lives_left = m.data[0];
+            printf("Lives left: %d", lives_left);
         }
         case GAME_SCORE_ID:
         {
@@ -125,7 +128,7 @@ ISR(INT0_vect) {
             uint8_t lsb = m.data[1];
 
             int score = (msb << 8) + lsb;
-            printf("gamescore: %d", score);
+            printf("Final score: %d", score);
         }
     }
     
