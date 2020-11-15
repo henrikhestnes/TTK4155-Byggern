@@ -58,7 +58,6 @@ void fsm_transition_to(enum FSM_STATE state) {
         case GAME_OVER: 
         {
             user_input_timer_disable();
-            oled_clear();
 
             current_state = GAME_OVER;
             printf("Transitioning to GAME_OVER \n\r");

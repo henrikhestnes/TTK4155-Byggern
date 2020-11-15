@@ -1,8 +1,6 @@
 #include "highscore.h"
 #include "eeprom_driver.h"
 
-#define HIGHSCORE_LIST_LENGTH 3
-
 
 static uint16_t current_highscores[HIGHSCORE_LIST_LENGTH] = {0,0,0};
 static uint16_t new_score = 0;

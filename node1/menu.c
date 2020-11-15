@@ -73,6 +73,10 @@ void go_to_parent() {
 }
 
 
+void reset_highscore_menu() {
+    
+}
+
 void start_new_game() {
     fsm_transition_to(PLAYING);
 }
@@ -156,6 +160,40 @@ void sram_write_line(char* word, int line, int inverted) {
         sram_write_char(' ', line, i, inverted);
         ++i;
     }
+}
+
+
+char is_in_highscore_menu() {
+    return current->own_menu->text_display == content_highscore;
+}
+
+
+void highscore_menu_write_to_sram() {
+    sram_write_line("\0", 0, 0);
+    sram_write_line("Highscores:", 1, 0);
+
+    uint16_t* highscores = highscore_get();
+    for (int i = 0; i < HIGHSCORE_LIST_LENGTH; i++) {
+        char string[16];
+        sprintf(string, "   %d. %d", i + 1, highscores[i]);
+        sram_write_line(string, i + 2, 0);
+    }
+
+    sram_write_line("\0", 5, 0);
+    
+    char word[16];
+    menu_t* current_menu = current->own_menu;
+    for (int line = 0; line < HIGHSCORE_MENU_LENGTH; line++) {
+        strcpy_P(word, (PGM_P) pgm_read_word(&(current_menu->text_display[line])));
+        if (line == state) {
+            sram_write_line(word, line + 6, 1);
+        }
+        else {
+            sram_write_line(word, line + 6, 0);
+        }
+    }
+    
+    sram_write_line("\0", 8, 0);
 }
 
 
@@ -383,9 +421,15 @@ void menu_run() {
         default:
             break;
     }
+    
 
     if (state_changed) {
-        menu_write_to_sram();
+        if (is_in_highscore_menu()) {
+            highscore_menu_write_to_sram();
+        }
+        else {
+            menu_write_to_sram();
+        }
     }
 }
 

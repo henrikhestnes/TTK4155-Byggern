@@ -98,6 +98,7 @@ int main() {
             }
             case GAME_OVER:
             {
+                _delay_ms(100);
                 fsm_transition_to(IDLE);
                 break;
             }
