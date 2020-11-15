@@ -6,8 +6,10 @@
 #include "fsm.h"
 #include "can_driver.h"
 #include "highscore.h"
+#include "menu_action_functions.h"
 #include "../common/can_id.h"
 #include "../common/controller_select.h"
+#include "../common/songs.h"
 #include <stdlib.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
@@ -19,10 +21,11 @@
 
 
 #define MAIN_MENU_LENGTH        3
-#define SETTINGS_MENU_LENGTH    5
+#define SETTINGS_MENU_LENGTH    3
 #define HIGHSCORE_MENU_LENGTH   2
-#define CONTROLLER_MENU_LENGTH  4
-#define BRIGHTNESS_MENU_LENGTH  4
+// #define CONTROLLER_MENU_LENGTH  4
+// #define BRIGHTNESS_MENU_LENGTH  4
+#define MUSIC_MENU_LENGTH       5
 
 
 static menu_node_t* current;
@@ -40,99 +43,41 @@ const char text_highscore[] PROGMEM = "Highscore";
 PGM_P const content_main_menu[] PROGMEM = {text_new_game, text_settings, text_highscore};
 
 const char text_difficulty[] PROGMEM = "Set difficulty";
-const char text_brightness[] PROGMEM = "Set brightness";
-const char text_music[] PROGMEM = "Set music";
-const char text_controller[] PROGMEM = "Set controller";
+// const char text_brightness[] PROGMEM = "Set brightness";
+const char text_music[] PROGMEM = "Play music";
+// const char text_controller[] PROGMEM = "Set controller";
 const char text_return[] PROGMEM = "Return";
-PGM_P const content_settings[] PROGMEM = {text_difficulty, text_brightness, text_music, text_controller,text_return};
+PGM_P const content_settings[] PROGMEM = {text_difficulty, text_music,text_return};
 
-const char text_brightness_high[] PROGMEM = "High contrast";
-const char text_brightness_medium[] PROGMEM = "Medium contrast";
-const char text_brightness_low[] PROGMEM = "Low contrast";
-PGM_P const content_brightness[] PROGMEM = {text_brightness_high, text_brightness_medium, text_brightness_low, text_return};
+// const char text_brightness_high[] PROGMEM = "High contrast";
+// const char text_brightness_medium[] PROGMEM = "Medium contrast";
+// const char text_brightness_low[] PROGMEM = "Low contrast";
+// PGM_P const content_brightness[] PROGMEM = {text_brightness_high, text_brightness_medium, text_brightness_low, text_return};
 
-const char text_slider_controller[] PROGMEM = "Slider";
-const char text_joystick_controller[] PROGMEM = "Joystick";
-const char text_microbit_controller[] PROGMEM = "Microbit";
-PGM_P const content_controller[] PROGMEM = {text_slider_controller, text_joystick_controller, text_microbit_controller, text_return};
+// const char text_slider_controller[] PROGMEM = "Slider";
+// const char text_joystick_controller[] PROGMEM = "Joystick";
+// const char text_microbit_controller[] PROGMEM = "Microbit";
+// PGM_P const content_controller[] PROGMEM = {text_slider_controller, text_joystick_controller, text_microbit_controller, text_return};
+
+const char text_song_mii_theme[] PROGMEM = "Mii Theme";
+const char text_song_mario[] PROGMEM = "Super Mario";
+const char text_song_harry_potter[] PROGMEM = "Harry Potter";
+const char text_song_savage_love[] PROGMEM = "Savage Love";
+PGM_P const content_music[] PROGMEM = {text_song_mii_theme, text_song_mario, text_song_harry_potter, text_song_savage_love, text_return};
 
 const char text_reset[] PROGMEM = "Reset";
 PGM_P const content_highscore[] PROGMEM = {text_reset, text_return};
 
 
-
-void go_to_child() {
+void menu_go_to_child() {
     current = current->child_menu->head;
     state = 0;
 }
 
 
-void go_to_parent() {
+void menu_go_to_parent() {
     current = current->parent_menu->head;
     state = 0;
-}
-
-
-void reset_highscore_menu() {
-    
-}
-
-void start_new_game() {
-    fsm_transition_to(PLAYING);
-}
-
-
-void select_controller_slider() {
-    message_t m = {
-        .id = CONTROLLER_ID,
-        .length = 1,
-        .data = {SLIDER_POS_CTRL}
-    };
-
-    can_transmit(&m);
-    go_to_parent();
-}
-
-
-void select_controller_joystick() {
-    message_t m = {
-        .id = CONTROLLER_ID,
-        .length = 1,
-        .data = {JOYSTICK_SPEED_CTRL}
-    };
-
-    can_transmit(&m);
-    go_to_parent();
-}
-
-
-void select_controller_microbit() {
-    message_t m = {
-        .id = CONTROLLER_ID,
-        .length = 1,
-        .data = {MICROBIT_SPEED_CTRL}
-    };
-
-    can_transmit(&m);
-    go_to_parent();
-}
-
-
-void set_high_oled_brightness() {
-    oled_set_brightness(0xff);
-    go_to_parent();
-}
-
-
-void set_medium_oled_brightness() {
-    oled_set_brightness(0x7f);
-    go_to_parent();
-}
-
-
-void set_low_oled_brightness() {
-    oled_set_brightness(0x0f);
-    go_to_parent();
 }
 
 
@@ -263,13 +208,14 @@ void menu_init() {
     menu_t* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH);
     menu_t* settings_menu = menu_new(content_settings, SETTINGS_MENU_LENGTH);
     menu_t* highscore_menu = menu_new(content_highscore, HIGHSCORE_MENU_LENGTH);
-    menu_t* controller_menu = menu_new(content_controller, CONTROLLER_MENU_LENGTH);
-    menu_t* brightness_menu = menu_new(content_brightness, CONTROLLER_MENU_LENGTH);
+    // menu_t* controller_menu = menu_new(content_controller, CONTROLLER_MENU_LENGTH);
+    // menu_t* brightness_menu = menu_new(content_brightness, BRIGHTNESS_MENU_LENGTH);
+    menu_t* music_menu = menu_new(content_music, MUSIC_MENU_LENGTH);
 
     // main menu linked list
     menu_node_t* new_game_node = menu_new_node(NULL, main_menu, NULL, start_new_game);
-    menu_node_t* settings_node = menu_new_node(NULL, main_menu, settings_menu, go_to_child);
-    menu_node_t* highscore_node = menu_new_node(NULL, main_menu, highscore_menu, go_to_child);
+    menu_node_t* settings_node = menu_new_node(NULL, main_menu, settings_menu, menu_go_to_child);
+    menu_node_t* highscore_node = menu_new_node(NULL, main_menu, highscore_menu, menu_go_to_child);
 
     menu_link_nodes(new_game_node, settings_node);
     menu_link_nodes(settings_node, highscore_node);
@@ -279,22 +225,20 @@ void menu_init() {
 
     // settings menu linked list
     menu_node_t* difficulty_node = menu_new_node(main_menu, settings_menu, NULL, NULL);
-    menu_node_t* brightness_node = menu_new_node(main_menu, settings_menu, brightness_menu, go_to_child);
-    menu_node_t* music_node = menu_new_node(main_menu, settings_menu, NULL, NULL);
-    menu_node_t* controller_node = menu_new_node(main_menu, settings_menu, controller_menu, go_to_child);
-    menu_node_t* settings_return_node = menu_new_node(main_menu, settings_menu, NULL, go_to_parent);
+    // menu_node_t* brightness_node = menu_new_node(main_menu, settings_menu, brightness_menu, menu_go_to_child);
+    menu_node_t* music_node = menu_new_node(main_menu, settings_menu, music_menu, menu_go_to_child);
+    // menu_node_t* controller_node = menu_new_node(main_menu, settings_menu, controller_menu, menu_go_to_child);
+    menu_node_t* settings_return_node = menu_new_node(main_menu, settings_menu, NULL, menu_go_to_parent);
 
-    menu_link_nodes(difficulty_node, brightness_node);
-    menu_link_nodes(brightness_node, music_node);
-    menu_link_nodes(music_node, controller_node);
-    menu_link_nodes(controller_node, settings_return_node);
+    menu_link_nodes(difficulty_node, music_node);
+    menu_link_nodes(music_node, settings_return_node);
     menu_link_nodes(settings_return_node, difficulty_node);
 
     settings_menu->head = difficulty_node;
 
     // highscore menu linked list
     menu_node_t* reset_node = menu_new_node(main_menu, highscore_menu, NULL, highscore_reset);
-    menu_node_t* highscore_return_node = menu_new_node(main_menu, highscore_menu, NULL, go_to_parent);
+    menu_node_t* highscore_return_node = menu_new_node(main_menu, highscore_menu, NULL, menu_go_to_parent);
 
     menu_link_nodes(reset_node, highscore_return_node);
     menu_link_nodes(highscore_return_node, reset_node);
@@ -302,30 +246,45 @@ void menu_init() {
     highscore_menu->head = reset_node;
 
     // brightness menu linked list
-    menu_node_t* high_node = menu_new_node(settings_menu, brightness_menu, NULL, set_high_oled_brightness);
-    menu_node_t* medium_node = menu_new_node(settings_menu, brightness_menu, NULL, set_medium_oled_brightness);
-    menu_node_t* low_node = menu_new_node(settings_menu, brightness_menu, NULL, set_low_oled_brightness);
-    menu_node_t* brightness_return_node = menu_new_node(settings_menu, brightness_menu, NULL, go_to_parent);
+    // menu_node_t* high_node = menu_new_node(settings_menu, brightness_menu, NULL, set_high_oled_brightness);
+    // menu_node_t* medium_node = menu_new_node(settings_menu, brightness_menu, NULL, set_medium_oled_brightness);
+    // menu_node_t* low_node = menu_new_node(settings_menu, brightness_menu, NULL, set_low_oled_brightness);
+    // menu_node_t* brightness_return_node = menu_new_node(settings_menu, brightness_menu, NULL, menu_go_to_parent);
 
-    menu_link_nodes(high_node, medium_node);
-    menu_link_nodes(medium_node, low_node);
-    menu_link_nodes(low_node, brightness_return_node);
-    menu_link_nodes(brightness_return_node, high_node);
+    // menu_link_nodes(high_node, medium_node);
+    // menu_link_nodes(medium_node, low_node);
+    // menu_link_nodes(low_node, brightness_return_node);
+    // menu_link_nodes(brightness_return_node, high_node);
 
-    brightness_menu->head = high_node;
+    // brightness_menu->head = high_node;
+
+    // music menu linked list
+    menu_node_t* mii_theme_node = menu_new_node(settings_menu, music_menu, NULL, select_song_mii_theme);
+    menu_node_t* mario_node = menu_new_node(settings_menu, music_menu, NULL, select_song_mario);
+    menu_node_t* harry_potter_node = menu_new_node(settings_menu, music_menu, NULL, select_song_harry_potter);
+    menu_node_t* savage_love_node = menu_new_node(settings_menu, music_menu, NULL, select_song_savage_love);
+    menu_node_t* music_return_node = menu_new_node(settings_menu, music_menu, NULL, stop_music);
+
+    menu_link_nodes(mii_theme_node, mario_node);
+    menu_link_nodes(mario_node, harry_potter_node);
+    menu_link_nodes(harry_potter_node, savage_love_node);
+    menu_link_nodes(savage_love_node, music_return_node);
+    menu_link_nodes(music_return_node, mii_theme_node);
+
+    music_menu->head = mii_theme_node;
 
     // controller menu linked list
-    menu_node_t* slider_node = menu_new_node(settings_menu, controller_menu, NULL, select_controller_slider);
-    menu_node_t* joystick_node = menu_new_node(settings_menu, controller_menu, NULL, select_controller_joystick);
-    menu_node_t* microbit_node = menu_new_node(settings_menu, controller_menu, NULL, select_controller_microbit);
-    menu_node_t* controller_return_node = menu_new_node(settings_menu, controller_menu, NULL, go_to_parent);
+    // menu_node_t* slider_node = menu_new_node(settings_menu, controller_menu, NULL, select_controller_slider);
+    // menu_node_t* joystick_node = menu_new_node(settings_menu, controller_menu, NULL, select_controller_joystick);
+    // menu_node_t* microbit_node = menu_new_node(settings_menu, controller_menu, NULL, select_controller_microbit);
+    // menu_node_t* controller_return_node = menu_new_node(settings_menu, controller_menu, NULL, menu_go_to_parent);
 
-    menu_link_nodes(slider_node, joystick_node);
-    menu_link_nodes(joystick_node, microbit_node);
-    menu_link_nodes(microbit_node, controller_return_node);
-    menu_link_nodes(controller_return_node, slider_node);
+    // menu_link_nodes(slider_node, joystick_node);
+    // menu_link_nodes(joystick_node, microbit_node);
+    // menu_link_nodes(microbit_node, controller_return_node);
+    // menu_link_nodes(controller_return_node, slider_node);
 
-    controller_menu->head = slider_node;
+    // controller_menu->head = slider_node;
 
     // init the current state node
     current = new_game_node;
@@ -348,6 +307,9 @@ menu_t* menu_new(const char* const* text_display, int length) {
 
 menu_node_t* menu_new_node(menu_t* parent_menu, menu_t* own_menu, menu_t* child_menu, void (*action_function)()) {
     menu_node_t* node = malloc(sizeof(menu_node_t));
+    if (!node) {
+        printf("FAILED TO ALLOCATE");
+    }
     node->parent_menu = parent_menu;
     node->own_menu = own_menu;
     node->child_menu = child_menu;
@@ -461,4 +423,17 @@ ISR(INT1_vect) {
 //             oled_print_string(word);
 //         }
 //     }
+// }
+
+
+
+// void settings_menu() {
+//     menu_init_settings();
+//     menu_run();
+// }
+
+
+// void main_menu() {
+//     menu_init_main();
+//     menu_run();
 // }

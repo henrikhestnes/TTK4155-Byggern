@@ -18,8 +18,8 @@
 #define IR_TRESHOLD         1000
 #define NUMBER_OF_LIVES     3
 
-#define K_P                 20
-#define K_I                 12
+#define K_P                 35
+#define K_I                 20
 #define K_D                 1
 #define T                   1.0 / MOTOR_TIMER_FREQ
 #define MAX_MOTOR_SPEED     0x4FF

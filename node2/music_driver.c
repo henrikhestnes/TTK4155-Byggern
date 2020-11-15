@@ -2,6 +2,8 @@
 #include "music_metadata.h"
 #include "pwm.h"
 #include "timer.h"
+#include "can/can_controller.h"
+#include "../common/songs.h"
 
 #define F_CPU 84000000
 
@@ -35,6 +37,14 @@ static void music_play_song(int* song, int song_size, int tempo, float pause_fra
     int note_pause = 0;
     
     for(int current_note = 0; current_note < song_size; current_note += 2){
+        CAN_MESSAGE m;
+        if (!can_receive(&m, 1)) {
+            if (m.data[0] == STOP) {
+                music_buzz(0,0);
+                return;
+            }
+        }
+
         divider = song[current_note + 1];
         if (divider < 0) { 
             // quarter note
@@ -79,12 +89,14 @@ void music_play(SONG song){
         {
             int size = sizeof(harry_potter_notes)/sizeof(int);
             music_play_song(harry_potter_notes, size, HARRY_POTTER_TEMPO, 0.1);
+            break;
         }
 
         case GAME_OVER_SOUND:
         {
             int size = sizeof(game_over_notes)/sizeof(int);
             music_play_song(game_over_notes, size, GAME_PVER_TEMPO, 0.1);
+            break;
         }
 
         default:

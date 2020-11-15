@@ -91,4 +91,9 @@ void menu_timer_disable();
 menu_node_t* menu_get_current();
 
 
+void menu_go_to_parent();
+
+
+void menu_go_to_child();
+
 #endif

@@ -16,6 +16,7 @@
 #include "../game.h"
 #include "../fsm.h"
 #include "../user_input.h"
+#include "../music_driver.h"
 #include "../../common/can_id.h"
 
 #include <stdio.h>
@@ -66,8 +67,11 @@ void CAN0_Handler( void )
             }
 			case CONTROLLER_ID:
             {
-                printf("controller: %d", message.data[0]);
 				game_set_controller(message.data[0]);
+            }
+            case MUSIC_SONG_ID:
+            {
+                music_play(message.data[0]);
             }
             default:
                 break;
