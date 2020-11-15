@@ -88,7 +88,7 @@ void menu_timer_enable();
 void menu_timer_disable();
 
 
-// void menu_write_to_sram();
+menu_node_t* menu_get_current();
 
 
 #endif

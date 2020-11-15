@@ -4,7 +4,9 @@
 typedef enum {
     MII_THEME,
     MARIO,
-    SAVAGE_LOVE
+    SAVAGE_LOVE,
+    HARRY_POTTER,
+    GAME_OVER_SOUND
 } SONG;
 
 

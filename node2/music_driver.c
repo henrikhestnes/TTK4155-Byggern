@@ -6,8 +6,11 @@
 #define F_CPU 84000000
 
 
-#define MII_THEME_TEMPO 114
-#define MARIO_TEMPO     200
+#define MII_THEME_TEMPO     114
+#define MARIO_TEMPO         200
+#define SAVAGE_LOVE_TEMPO   110
+#define HARRY_POTTER_TEMPO  144
+#define GAME_PVER_TEMPO     100
 
 
 static void music_set_tone(int freq){
@@ -65,9 +68,23 @@ void music_play(SONG song){
             break;
         }
 
-        case SIMPSON:
+        case SAVAGE_LOVE:
         {
+            int size = sizeof(savage_love_notes)/sizeof(int);
+            music_play_song(savage_love_notes, size, SAVAGE_LOVE_TEMPO, 0.1);
             break;
+        }
+
+        case HARRY_POTTER:
+        {
+            int size = sizeof(harry_potter_notes)/sizeof(int);
+            music_play_song(harry_potter_notes, size, HARRY_POTTER_TEMPO, 0.1);
+        }
+
+        case GAME_OVER_SOUND:
+        {
+            int size = sizeof(game_over_notes)/sizeof(int);
+            music_play_song(game_over_notes, size, GAME_PVER_TEMPO, 0.1);
         }
 
         default:

@@ -51,6 +51,8 @@ int main()
         solenoid_init();
 
 
+
+    
     fsm_transition_to(MENU);
     while (1) {
     enum FSM_STATE state = fsm_get_state();

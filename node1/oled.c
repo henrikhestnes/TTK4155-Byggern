@@ -3,9 +3,6 @@
 #include "fonts.h"
 
 
-
-
-
 void oled_init(){
     oled_write_command(0xae);
     oled_write_command(0xa1);
@@ -117,21 +114,6 @@ void oled_print_inverted_string(const char* string) {
 }
 
 
-// void oled_print_from_sram() {
-//     oled_clear();
-
-//     for (int p = 0; p < NUMBER_OF_PAGES; ++p) {
-//         char word[20];
-//         for (int i = 0; i < 20; ++i) {
-//             uint16_t address = p*sizeof(word) + i*sizeof(char);
-//             word[i] = sram_read(address);
-//         }
-//         oled_set_pos(p, 8);
-//         oled_print_string(word);
-//     }
-// }
-
-
 void oled_print_heart(char filled) {
     if (filled) {
         oled_write_data(0b00001110);
@@ -198,19 +180,26 @@ void oled_print_quit_screen() {
 }
 
 
-void oled_print_game_over_screen(int score) {
+void oled_print_game_over_screen(int score, char new_highscore) {
     oled_clear();
 
     oled_set_pos(1, 8);
-    oled_print_string("GAME OVER!");
-
-    // write score, congratulate new eventual highscore
-
-    oled_set_pos(3, 8);
-    oled_print_string("Return to main");
+    if (new_highscore) {
+        oled_print_string("NEW HIGHSCORE!!");
+    }
+    else
+    {
+        oled_print_string("GAME OVER!");
+    }
+    
+    oled_set_pos(2, 8);
+    oled_print_string("Score: ");
+    oled_print_int(score);
     oled_set_pos(4, 8);
-    oled_print_string("menu by pushing");
+    oled_print_string("Return to main");
     oled_set_pos(5, 8);
+    oled_print_string("menu by pushing");
+    oled_set_pos(6, 8);
     oled_print_string("the left button");
 }
 
@@ -224,3 +213,15 @@ void oled_print_from_sram() {
     }
 }
 
+
+void oled_set_brightness(uint8_t brightness) {
+    oled_write_command(0x81);
+    oled_write_command(brightness);
+}
+
+
+void oled_print_int(uint16_t number) {
+    char string[6];
+    sprintf(string, "%d", number);
+    oled_print_string(string);
+}

@@ -3,6 +3,7 @@
 #include "oled.h"
 #include "menu.h"
 #include "can_driver.h"
+#include "highscore.h"
 #include "../common/can_id.h"
 #include "user_input.h"
 
@@ -58,7 +59,6 @@ void fsm_transition_to(enum FSM_STATE state) {
         {
             user_input_timer_disable();
             oled_clear();
-            oled_print_game_over_screen(0);
 
             current_state = GAME_OVER;
             printf("Transitioning to GAME_OVER \n\r");
@@ -67,6 +67,7 @@ void fsm_transition_to(enum FSM_STATE state) {
         case IDLE:
         {   
             user_input_timer_disable();
+            highscore_update();
 
             current_state = IDLE;
             printf("Transitioning to IDLE \n\r");

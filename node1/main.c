@@ -9,6 +9,7 @@
 #include "mcp2515_driver.h"
 #include "can_driver.h"
 #include "fsm.h"
+#include "highscore.h"
 #include "../common/can_id.h"
 #include <avr/interrupt.h>
 
@@ -45,6 +46,9 @@ int main() {
     // CAN
         can_init(MODE_NORMAL);
 
+    // Highscore
+        highscore_init();
+
         sei();
 
     // Testing
@@ -78,7 +82,6 @@ int main() {
                 unsigned int lives_left = fsm_get_lives_left();
                 if (lives_left) {
                     oled_print_playing_screen(lives_left);
-                    printf("Lives left: %d \n\r", lives_left);
                 }
                 else {
                     fsm_transition_to(GAME_OVER);
@@ -126,9 +129,12 @@ ISR(INT0_vect) {
         {
             uint8_t msb = m.data[0];
             uint8_t lsb = m.data[1];
-
             int score = (msb << 8) + lsb;
-            printf("Final score: %d \n\r", score);
+            highscore_set_new_score(score);
+
+            uint16_t* highscores = highscore_get();
+            char new_highscore = score > highscores[0];
+            oled_print_game_over_screen(score, new_highscore);
             break;
         }
         default:
