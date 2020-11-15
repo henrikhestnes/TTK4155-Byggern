@@ -18,8 +18,8 @@
 #define IR_TRESHOLD         1000
 #define NUMBER_OF_LIVES     3
 
-#define K_P                 40
-#define K_I                 25
+#define K_P                 20
+#define K_I                 12
 #define K_D                 1
 #define T                   1.0 / MOTOR_TIMER_FREQ
 #define MAX_MOTOR_SPEED     0x4FF
@@ -41,6 +41,11 @@ static struct user_input_data {
     int button_left;
     int button_right;
 } user_data;
+
+
+void game_reset_lives_left() {
+    lives_left = INITIAL_LIVES;
+}
 
 
 void game_timer_init() {
@@ -138,6 +143,8 @@ static void game_run() {
     
 
     if (game_count_fails()) {
+        printf("Lives left: %d \n\r", lives_left);
+
         CAN_MESSAGE m = {
             .id = GAME_LIVES_LEFT_ID,
             .data_length = 1,

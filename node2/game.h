@@ -5,6 +5,9 @@
 #include "../common/controller_select.h"
 
 
+#define INITIAL_LIVES       3
+
+
 void game_init(void);
 
 
@@ -27,6 +30,9 @@ int game_get_score();
 
 
 void game_reset_score();
+
+
+void game_reset_lives_left();
 
 
 #endif

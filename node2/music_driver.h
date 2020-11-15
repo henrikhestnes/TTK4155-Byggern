@@ -4,7 +4,7 @@
 typedef enum {
     MII_THEME,
     MARIO,
-    SIMPSON
+    SAVAGE_LOVE
 } SONG;
 
 

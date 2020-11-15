@@ -206,7 +206,6 @@ void oled_print_game_over_screen(int score) {
 
     // write score, congratulate new eventual highscore
 
-
     oled_set_pos(3, 8);
     oled_print_string("Return to main");
     oled_set_pos(4, 8);

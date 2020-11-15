@@ -11,6 +11,7 @@
 
 
 static enum FSM_STATE current_state = INIT;
+static unsigned int lives_left;
 
 
 static void fsm_transmit_state(enum FSM_STATE state) {
@@ -24,8 +25,13 @@ enum FSM_STATE fsm_get_state(void) {
 }
 
 
-void fsm_set_state(enum FSM_STATE state) {
-    current_state = state;
+unsigned int fsm_get_lives_left() {
+    return lives_left;
+}
+
+
+void fsm_set_lives_left(unsigned int lives) {
+    lives_left = lives;
 }
 
 
@@ -35,6 +41,7 @@ void fsm_transition_to(enum FSM_STATE state) {
         {
             menu_timer_enable();
             current_state = MENU;
+            printf("Transitioning to MENU \n\r");
             break;
         }
         case PLAYING:
@@ -44,6 +51,7 @@ void fsm_transition_to(enum FSM_STATE state) {
             oled_clear();
 
             current_state = PLAYING;
+            printf("Transitioning to PLAYING \n\r");
             break;
         }
         case GAME_OVER: 
@@ -53,15 +61,15 @@ void fsm_transition_to(enum FSM_STATE state) {
             oled_print_game_over_screen(0);
 
             current_state = GAME_OVER;
+            printf("Transitioning to GAME_OVER \n\r");
             break;
         }
         case IDLE:
         {   
             user_input_timer_disable();
-            oled_clear();
-            oled_print_quit_screen();
-            
+
             current_state = IDLE;
+            printf("Transitioning to IDLE \n\r");
             break;
         }
         default:

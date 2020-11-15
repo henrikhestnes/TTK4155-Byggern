@@ -251,5 +251,14 @@ static const int super_mario_notes[] = {
     NOTE_C5,8, NOTE_E4,4, NOTE_E4,8, NOTE_C4,2
 };
 
+static const int savage_love_notes[] = {
+  NOTE_B2, 8, NOTE_F1, 8, NOTE_E2, 0, REST, 8,
+  NOTE_G1, 12, NOTE_B2, 12, NOTE_B2, 12, NOTE_B2, 12, NOTE_G1, 12, NOTE_B2, 12, NOTE_B2, 12, NOTE_B2, 12,
+  NOTE_B2, 8, NOTE_F1, 8, NOTE_E2, 0, REST, 8,
+  NOTE_G1, 12, NOTE_B2, 12, NOTE_B2, 12, NOTE_B2, 12, NOTE_G1, 12, NOTE_B2, 12, NOTE_B2, 12, NOTE_B2, 12,
+  NOTE_B2, 8, NOTE_F1, 8, NOTE_E2, 0, REST, 8,
+  NOTE_G1, 12, NOTE_B2, 12, NOTE_B2, 12, NOTE_B2, 12, NOTE_G1, 12, NOTE_B2, 12, NOTE_B2, 12, NOTE_B2, 12,   
+  NOTE_C1, 8, NOTE_F1, 8, NOTE_E2, 8, NOTE_F1, 8, NOTE_G1, 8, NOTE_B2, 8, NOTE_B2, 8, NOTE_B2, 8, NOTE_B2, 8 
+};
 
 #endif

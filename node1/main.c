@@ -20,9 +20,6 @@
 #define UBRR F_CPU / 16 / BAUD - 1
 
 
-static unsigned int lives_left = 3;
-
-
 int main() {
         cli();
 
@@ -78,14 +75,18 @@ int main() {
             }
             case PLAYING:
             {   
+                unsigned int lives_left = fsm_get_lives_left();
                 if (lives_left) {
                     oled_print_playing_screen(lives_left);
+                    printf("Lives left: %d \n\r", lives_left);
                 }
                 else {
                     fsm_transition_to(GAME_OVER);
                 }
 
                 if (user_input_buttons().left) {
+                    oled_clear();
+                    oled_print_quit_screen();
                     fsm_transition_to(IDLE);
                     _delay_ms(1000);
                 }
@@ -101,7 +102,6 @@ int main() {
             {   
                 if (user_input_buttons().left) {
                     fsm_transition_to(MENU);
-                    _delay_ms(1000);
                 }
             }
             default:
@@ -119,8 +119,8 @@ ISR(INT0_vect) {
     switch (m.id) {
         case GAME_LIVES_LEFT_ID: 
         {
-            int lives_left = m.data[0];
-            printf("Lives left: %d", lives_left);
+            fsm_set_lives_left(m.data[0]);
+            break;
         }
         case GAME_SCORE_ID:
         {
@@ -128,8 +128,11 @@ ISR(INT0_vect) {
             uint8_t lsb = m.data[1];
 
             int score = (msb << 8) + lsb;
-            printf("Final score: %d", score);
+            printf("Final score: %d \n\r", score);
+            break;
         }
+        default:
+            break;
     }
     
     mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF | MCP_RX1IF, 0);

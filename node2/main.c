@@ -66,19 +66,6 @@ int main()
             }
             case GAME_OVER:
             {   
-                int score = game_get_score();
-                uint8_t msb = (score & 0xFF00) >> 8;
-                uint8_t lsb = (score & 0x00FF);
-
-                CAN_MESSAGE m = {
-                    .id = GAME_SCORE_ID,
-                    .data_length = 2,
-                    .data = {msb, lsb}
-                };
-
-                can_send(&m, 0);
-
-                fsm_transition_to(IDLE);
                 break;
             }
             case IDLE:

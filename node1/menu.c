@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
+#include <avr/io.h>
 
 
 #define F_CPU 4.9152E6
@@ -23,8 +24,10 @@
 
 
 static menu_node_t* current;
-static char state_changed;
+static char state_changed = 0;
 static int state;
+static char joystick_pushed = 0;
+static char joystick_centered = 1;
 
 
 const char text_new_game[] PROGMEM = "New game";
@@ -235,8 +238,23 @@ void menu_link_nodes(menu_node_t* first, menu_node_t* second) {
 
 
 void menu_run() {
+    int joystick_button = user_input_buttons().joystick;
+    if (joystick_button && !joystick_pushed) {
+        joystick_pushed = 1;
+        if (current->action_function) {
+            current->action_function();
+        }
+    }
+    else if (!joystick_button) {
+        joystick_pushed = 0;
+    }
+
     switch (user_input_joystick_dir()) {
         case UP:
+            if (!joystick_centered) {
+                break;
+            }
+
             current = current->prev;
 
             if (state == 0) {
@@ -247,9 +265,14 @@ void menu_run() {
             }
 
             state_changed = 1;
+            joystick_centered = 0;
             break;
 
         case DOWN:
+            if (!joystick_centered) {
+                break;
+            }
+
             current = current->next;
 
             if (state == current->own_menu->length - 1) {
@@ -260,7 +283,11 @@ void menu_run() {
             }
 
             state_changed = 1;
+            joystick_centered = 0;
             break;
+
+        case CENTER:
+            joystick_centered = 1;
 
         default:
             break;
@@ -269,7 +296,6 @@ void menu_run() {
     if (state_changed) {
         menu_write_to_sram();
     }
-    _delay_ms(100);
 }
 
 
@@ -357,7 +383,6 @@ ISR(TIMER1_COMPA_vect) {
 
 ISR(INT1_vect) {
     if (current->action_function) {
-        // state_changed = 1;
         current->action_function();
     }
 }

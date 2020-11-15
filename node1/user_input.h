@@ -33,6 +33,7 @@ typedef enum {
     DOWN,
     LEFT,
     RIGHT,
+    CENTER,
     NEUTRAL
 } dir_t;
 
@@ -48,8 +49,9 @@ typedef struct {
 
 
 typedef struct {
-    int left;
-    int right;
+    unsigned int left;
+    unsigned int right;
+    unsigned int joystick;
 } button_t;
 
 

@@ -131,9 +131,9 @@ void motor_run_slider(int reference) {
 
     int encoder_value = motor_read_encoder();
     int current_position = scale_encoder_value(encoder_value);
-    printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
+    //printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
     int u = pid_controller(reference, current_position);
-    printf("pådrag: %d \r\n", u);
+    //printf("pådrag: %d \r\n", u);
 
     if (u > 0) {
         motor_set_direction(RIGHT);

@@ -12,8 +12,10 @@
 #define RIGHT_SLIDER_CHANNEL    2
 #define LEFT_SLIDER_CHANNEL     3
 #define DIRECTION_TRESHOLD      50
+#define CENTER_TRESHOLD         10
 #define RIGHT_BUTTON_PIN        PB1
 #define LEFT_BUTTON_PIN         PB2
+#define JOYSTICK_BUTTON_PIN     PD3
 
 #define CLKSEL_OFF_MASK         0xF8
 #define CLKSEL_PRESCALER_1024   ((1 << CS32) | (1 << CS30))
@@ -74,8 +76,9 @@ void user_input_init(void) {
 
     // set button pins to input
     DDRB &= ~(1 << RIGHT_BUTTON_PIN) & ~(1 << LEFT_BUTTON_PIN);
+    DDRD &= ~(1 << JOYSTICK_BUTTON_PIN);
 
-    interrupt_joystick_init();
+    // interrupt_joystick_init();
     interrupt_can_timer_init();
 }
 
@@ -110,6 +113,10 @@ dir_t user_input_joystick_dir(void) {
         return DOWN;
     }
 
+    else if (abs(pos.x) < CENTER_TRESHOLD && abs(pos.y) < CENTER_TRESHOLD) {
+        return CENTER;
+    }
+
     else {
         return NEUTRAL;
     }
@@ -126,10 +133,11 @@ slider_t user_input_slider_pos(void) {
 
 
 button_t user_input_buttons(void) {
-    button_t status = {0, 0};
+    button_t status = {0, 0, 0};
 
     status.right = (PINB & (1 << RIGHT_BUTTON_PIN)) >> RIGHT_BUTTON_PIN;
     status.left = (PINB & (1 << LEFT_BUTTON_PIN)) >> LEFT_BUTTON_PIN;
+    status.joystick = !((PIND & (1 << JOYSTICK_BUTTON_PIN)) >> JOYSTICK_BUTTON_PIN);
 
     return status;
 }
