@@ -8,8 +8,8 @@
 #include "can/can_controller.h"
 #include "sam/sam3x/include/sam.h"
 #include "../common/can_id.h"
-#include <stdint.h>
 #include "../node1/user_input.h"
+#include <stdint.h>
 
 
 #define F_CPU               84E6
@@ -18,9 +18,16 @@
 #define IR_TRESHOLD         1000
 #define NUMBER_OF_LIVES     3
 
-#define K_P                 35
-#define K_I                 20
-#define K_D                 1
+#define K_P_HARD            35
+#define K_I_HARD            20
+#define K_D_HARD            1
+#define K_P_EXTREME         20
+#define K_I_EXTREME         10
+#define K_D_EXTREME         1
+#define K_P_IMPOSSIBLE      10
+#define K_I_IMPOSSIBLE      5
+#define K_D_IMPOSSIBLE      1
+
 #define T                   1.0 / MOTOR_TIMER_FREQ
 #define MAX_MOTOR_SPEED     0x4FF
 
@@ -71,7 +78,7 @@ void game_init() {
     score = 0;
     lives_left = NUMBER_OF_LIVES;
     game_timer_init();
-    pid_controller_init(K_P, K_I, K_D, T, MAX_MOTOR_SPEED);
+    pid_controller_init(K_P_HARD, K_I_HARD, K_D_HARD, T, MAX_MOTOR_SPEED);
 }
 
 
@@ -95,6 +102,36 @@ int game_count_fails() {
 
 void game_set_controller(CONTROLLER_SEL controller){
     controller_select = controller;
+    printf("New controller: %d \n\r", controller);
+}
+
+
+void game_set_difficulty(DIFFICULTY difficulty) {
+    switch (difficulty)
+    {
+    case HARD:
+    {
+        pid_controller_set_parameters(K_P_HARD, K_I_HARD, K_D_HARD);
+        printf("New parameters: \n\r K_p = %d \n\r K_i = %d \n\r K_d = %d \n\n\r", K_P_HARD, K_I_HARD, K_D_HARD);
+        break;
+    }
+    case EXTREME:
+    {
+        pid_controller_set_parameters(K_P_EXTREME, K_I_EXTREME, K_D_EXTREME);
+        printf("New parameters: \n\r K_p = %d \n\r K_i = %d \n\r K_d = %d \n\n\r", K_P_EXTREME, K_I_EXTREME, K_D_EXTREME);
+        break;
+    }
+    case IMPOSSIBLE:
+    {
+        pid_controller_set_parameters(K_P_IMPOSSIBLE, K_I_IMPOSSIBLE, K_D_IMPOSSIBLE);
+        printf("New parameters: \n\r K_p = %d \n\r K_i = %d \n\r K_d = %d \n\n\r", K_P_IMPOSSIBLE, K_I_IMPOSSIBLE, K_D_IMPOSSIBLE);
+        break;
+    }
+    default:
+        break;
+    }
+
+    
 }
 
 

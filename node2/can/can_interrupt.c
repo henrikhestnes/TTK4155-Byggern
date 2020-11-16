@@ -68,11 +68,18 @@ void CAN0_Handler( void )
 			case CONTROLLER_ID:
             {
 				game_set_controller(message.data[0]);
+				break;
             }
             case MUSIC_SONG_ID:
             {
                 music_play(message.data[0]);
+				break;
             }
+			case GAME_DIFFICULTY_ID:
+			{
+				game_set_difficulty(message.data[0]);
+				break;
+			}
             default:
                 break;
         }

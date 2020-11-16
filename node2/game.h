@@ -3,6 +3,7 @@
 
 
 #include "../common/controller_select.h"
+#include "../common/difficulty_select.h"
 
 
 #define INITIAL_LIVES       3
@@ -40,7 +41,16 @@ void game_set_user_data(char* data);
  * @param controller The controller option of data type @c CONTROLLER_SEL
  * to be used in the game.
  */
-void game_set_controller(enum CONTROLLER_SEL controller);
+void game_set_controller(CONTROLLER_SEL controller);
+
+
+/**
+ * @brief Selects the difficulty to be used in the game.
+ * 
+ * @param controller The difficulty option of data type @c DIFFICULTY
+ * to be used in the game.
+ */
+void game_set_difficulty(DIFFICULTY difficulty);
 
 
 /**
