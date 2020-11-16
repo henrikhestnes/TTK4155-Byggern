@@ -5,15 +5,15 @@
 #include "../common/can_id.h"
 
 
-static enum FSM_STATE current_state = INIT;
+static FSM_STATE current_state = INIT;
 
 
-enum FSM_STATE fsm_get_state() {
+FSM_STATE fsm_get_state() {
     return current_state;
 }
 
 
-void fsm_transition_to(enum FSM_STATE state) {
+void fsm_transition_to(FSM_STATE state) {
     switch (state) {
         case MENU:
         {

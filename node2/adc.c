@@ -2,7 +2,9 @@
 #include "sam/sam3x/include/sam.h"
 
 
-// We use ADC channel 0, which uses PIO pin PA2. This is located at pin A7.
+// The ADC used is channel 0, which uses PIO pin PA2. 
+// This is located at pin A7 on the shield.
+
 
 void adc_init() {
     // set ADC mode:    12-bit resolution, free run mode, no clock prescaler

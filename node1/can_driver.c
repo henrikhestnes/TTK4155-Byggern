@@ -9,7 +9,7 @@
 static char recieved_flag = 0;
 
 
-void interrupt_can_recieve_init() {
+static void interrupt_can_recieve_init() {
     // set INT0 as input
     DDRD &= ~(1 << PD2);
 
@@ -35,41 +35,37 @@ int can_init(uint8_t mode) {
 
     // enable interrupt generation for successful reception
     mcp2515_bit_modify(MCP_CANINTE, MCP_RX1IF | MCP_RX0IF, 0xFF);
-
     interrupt_can_recieve_init();
 
     return 0;
 }
 
 
-void can_transmit(message_t* message) {
+void can_send(message_t* message) {
     // write to buffers
     mcp2515_write(MCP_TXB0SIDH, message->id / 8);
     mcp2515_write(MCP_TXB0SIDL, (message->id % 8) << 5);
-    mcp2515_write(MCP_TXB0DLC, message->length);
+    mcp2515_write(MCP_TXB0DLC, message->data_length);
 
-    for (int m = 0; m < message->length; m++) {
+    for (int m = 0; m < message->data_length; m++) {
         mcp2515_write(MCP_TXB0D0 + m, message->data[m]);
     }
 
-    // send message
     mcp2515_request_to_send();
 }
 
 
-message_t can_recieve() {
-    message_t message = {};
-
+int can_recieve(message_t* message) {
     if (mcp2515_read(MCP_CANINTF) & MCP_RX0IF) {
         // read from buffers, shift to combine high and low bits
         uint8_t id_low_bits = mcp2515_read(MCP_RXB0SIDL);
         uint8_t id_high_bits = mcp2515_read(MCP_RXB0SIDH);
-        message.id = (id_low_bits >> 5) + (id_high_bits << 3);
+        message->id = (id_low_bits >> 5) + (id_high_bits << 3);
 
-        message.length = mcp2515_read(MCP_RXB0DLC);
+        message->data_length = mcp2515_read(MCP_RXB0DLC);
 
-        for (int m = 0; m < message.length; m++) {
-            message.data[m] = mcp2515_read(MCP_RXB0D0 + m);
+        for (int m = 0; m < message->data_length; m++) {
+            message->data[m] = mcp2515_read(MCP_RXB0D0 + m);
         }
     }
 
@@ -77,28 +73,18 @@ message_t can_recieve() {
         // read from buffers, shift to combine high and low bits
         uint8_t id_low_bits = mcp2515_read(MCP_RXB1SIDL);
         uint8_t id_high_bits = mcp2515_read(MCP_RXB1SIDH);
-        message.id = (id_low_bits >> 5) + (id_high_bits << 3);
+        message->id = (id_low_bits >> 5) + (id_high_bits << 3);
 
-        message.length = mcp2515_read(MCP_RXB1DLC);
+        message->data_length = mcp2515_read(MCP_RXB1DLC);
 
-        for (int m = 0; m < message.length; m++) {
-            message.data[m] = mcp2515_read(MCP_RXB1D0 + m);
+        for (int m = 0; m < message->data_length; m++) {
+            message->data[m] = mcp2515_read(MCP_RXB1D0 + m);
         }
+    }  
+
+    else {
+        return 1;
     }
 
-    // clear interrupt flag
-    // recieved_flag = 0;
-    // mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF | MCP_RX1IF, 0);
-
-    return message;    
-}
-
-
-// char can_get_recieved_flag() {
-//     return recieved_flag;
-// }
-
-
-// ISR(INT0_vect) {
-//     recieved_flag = 1;
-// }      
+    return 0;
+}    

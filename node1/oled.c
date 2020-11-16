@@ -205,9 +205,9 @@ void oled_print_game_over_screen(int score, char new_highscore) {
 
 
 void oled_print_from_sram() {
-    for (int line = 0; line < NUMBER_OF_PAGES; line++){
+    for (uint8_t line = 0; line < NUMBER_OF_PAGES; ++line){
         oled_set_pos(line, 0);
-        for (int col = 0; col < NUMBER_OF_COLUMNS; col++){
+        for (uint8_t col = 0; col < NUMBER_OF_COLUMNS; ++col){
             oled_write_data(sram_read(line*NUMBER_OF_COLUMNS + col));
         }
     }

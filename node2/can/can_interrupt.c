@@ -57,7 +57,7 @@ void CAN0_Handler( void )
         switch(message.id) {
             case USER_INPUT_ID:
             {
-                game_get_user_data(message.data);
+                game_set_user_data(message.data);
                 break;
             }
             case FSM_STATE_ID:

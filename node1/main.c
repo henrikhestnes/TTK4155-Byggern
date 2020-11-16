@@ -30,7 +30,6 @@ int main() {
 
     // SRAM
         sram_init();
-        sram_test();
 
     // USER INPUT
         user_input_init();
@@ -41,7 +40,7 @@ int main() {
 
     // Menu
         menu_init();
-        menu_timer_disable();
+        // menu_timer_disable();
 
     // CAN
         can_init(MODE_NORMAL);
@@ -118,7 +117,8 @@ int main() {
 
 
 ISR(INT0_vect) {
-    message_t m = can_recieve();
+    message_t m;
+    can_recieve(&m);
 
     switch (m.id) {
         case GAME_LIVES_LEFT_ID: 

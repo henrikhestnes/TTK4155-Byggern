@@ -30,7 +30,7 @@
 static unsigned int score;
 static unsigned int lives_left;
 static unsigned int counting_flag;
-static enum CONTROLLER_SEL controller_select = SLIDER_POS_CTRL;
+static CONTROLLER_SEL controller_select = SLIDER_POS_CTRL;
 
 
 static struct user_input_data {
@@ -41,11 +41,6 @@ static struct user_input_data {
     int button_left;
     int button_right;
 } user_data;
-
-
-void game_reset_lives_left() {
-    lives_left = INITIAL_LIVES;
-}
 
 
 void game_timer_init() {
@@ -80,11 +75,6 @@ void game_init() {
 }
 
 
-void game_set_controller(enum CONTROLLER_SEL controller){
-    controller_select = controller;
-}
-
-
 int game_count_fails() {
 
     uint16_t ir_level = adc_read();
@@ -103,7 +93,12 @@ int game_count_fails() {
 }
 
 
-void game_get_user_data(char* data) {
+void game_set_controller(CONTROLLER_SEL controller){
+    controller_select = controller;
+}
+
+
+void game_set_user_data(char* data) {
     user_data.joystick_x = joystick_scale_x(data[0]);
     user_data.joystick_y = joystick_scale_y(data[1]);
     user_data.slider_left = slider_scale_left(data[2]);
@@ -175,6 +170,11 @@ int game_get_score() {
 
 void game_reset_score() {
     score = 0;
+}
+
+
+void game_reset_lives_left() {
+    lives_left = INITIAL_LIVES;
 }
 
 

@@ -146,10 +146,10 @@ void motor_run_slider(int reference) {
 }
 
 
-void motor_run_microbit(){
+void motor_run_microbit() {
     acc_dir_t microbit_dir = user_input_microbit_dir();
 
-    switch(microbit_dir){
+    switch(microbit_dir) {
         case(ACC_LEFT):
         {
             motor_set_direction(LEFT);

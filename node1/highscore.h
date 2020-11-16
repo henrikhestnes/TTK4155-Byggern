@@ -8,18 +8,39 @@
 #define HIGHSCORE_LIST_LENGTH 3
 
 
-void highscore_init();
+/**
+ * @brief Initiates the highscore by reading the highscore table
+ * from the EEPROM memory.
+ */
+void highscore_init(void);
 
 
-void highscore_update();
+/**
+ * @brief Updates the highscore, by comparing any new set scores
+ * to the highscore table.
+ */
+void highscore_update(void);
 
 
-uint16_t* highscore_get();
+/**
+ * @brief Returns the highscore table.
+ * 
+ * @return The highscore table, as an array with three elements of
+ * type @c uint16_t.
+ */
+uint16_t* highscore_get(void);
 
 
-void highscore_reset();
+/**
+ * @brief Resets the highscore table, setting all highscores to 0.
+ */
+void highscore_reset(void);
 
 
+/**
+ * @brief Sets a new score, which is compared to the highscore table
+ * when @c highscore_update() is called.
+ */
 void highscore_set_new_score(uint16_t score);
 
 

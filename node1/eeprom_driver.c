@@ -3,9 +3,9 @@
 #include <avr/interrupt.h>
 
 
-void eeprom_write(unsigned int address, unsigned char data){
+void eeprom_write(unsigned int address, unsigned char data) {
     // wait for completion of previous write
-    while (EECR & (1<<EEWE));
+    while (EECR & (1 << EEWE));
     
     // set up address and data register
     EEAR = address;
@@ -25,7 +25,7 @@ void eeprom_write(unsigned int address, unsigned char data){
 }
 
 
-unsigned char eeprom_read(unsigned int address){
+unsigned char eeprom_read(unsigned int address) {
     // wait for completion of previous write
     while(EECR & (1 << EEWE));
 

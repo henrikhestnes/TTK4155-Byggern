@@ -11,17 +11,20 @@
 #include <util/delay.h>
 
 
-static enum FSM_STATE current_state = INIT;
+static FSM_STATE current_state = INIT;
 static unsigned int lives_left;
 
 
-static void fsm_transmit_state(enum FSM_STATE state) {
-    message_t m = {.id = FSM_STATE_ID, .length = 1, .data = state};
-    can_transmit(&m);
+static void fsm_transmit_state(FSM_STATE state) {
+    message_t m = {
+        .id = FSM_STATE_ID, 
+        .data_length = 1, 
+        .data = state};
+    can_send(&m);
 }
 
 
-enum FSM_STATE fsm_get_state(void) {
+FSM_STATE fsm_get_state(void) {
     return current_state;
 }
 
@@ -36,13 +39,13 @@ void fsm_set_lives_left(unsigned int lives) {
 }
 
 
-void fsm_transition_to(enum FSM_STATE state) {
+void fsm_transition_to(FSM_STATE state) {
     switch (state) {
         case MENU:
         {
             menu_timer_enable();
             current_state = MENU;
-            printf("Transitioning to MENU \n\r");
+            // printf("Transitioning to MENU \n\r");
             break;
         }
         case PLAYING:
@@ -52,7 +55,7 @@ void fsm_transition_to(enum FSM_STATE state) {
             oled_clear();
 
             current_state = PLAYING;
-            printf("Transitioning to PLAYING \n\r");
+            // printf("Transitioning to PLAYING \n\r");
             break;
         }
         case GAME_OVER: 
@@ -60,7 +63,7 @@ void fsm_transition_to(enum FSM_STATE state) {
             user_input_timer_disable();
 
             current_state = GAME_OVER;
-            printf("Transitioning to GAME_OVER \n\r");
+            // printf("Transitioning to GAME_OVER \n\r");
             break;
         }
         case IDLE:
@@ -69,7 +72,7 @@ void fsm_transition_to(enum FSM_STATE state) {
             highscore_update();
 
             current_state = IDLE;
-            printf("Transitioning to IDLE \n\r");
+            // printf("Transitioning to IDLE \n\r");
             break;
         }
         default:

@@ -11,7 +11,7 @@
  */
 typedef struct {
     uint16_t id;
-    char length;
+    char data_length;
     char data[8];
 } message_t;
 
@@ -33,24 +33,19 @@ int can_init(uint8_t mode);
  *
  * @param message Pointer to the message being sent.
  */
-void can_transmit(message_t* message);
+void can_send(message_t* message);
 
 
 /**
  * @brief Recieves a message of type @c message_t using the
  * CAN interface. Uses recieve buffer @c RXB0 or @c RBX1, depending
  * on the interrupt flag register of the MCP2515.
+ * 
+ * @param message Pointer to the message being recieved to.
+ * 
+ * @return 0 on success, 1 on failure.
  */
-message_t can_recieve();
-
-
-/**
- * @brief Returns the flag signaling a successfully recieved message.
- *
- * @return 0 if there are no pending recieved messages, 1 if there is
- * a recieved message to be read.
- */
-char can_get_recieved_flag();
+int can_recieve(message_t* message);
 
 
 #endif

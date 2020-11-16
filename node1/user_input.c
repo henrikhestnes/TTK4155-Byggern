@@ -21,19 +21,6 @@
 #define CLKSEL_PRESCALER_1024   ((1 << CS32) | (1 << CS30))
 
 
-static void interrupt_joystick_init() {
-    // set INT1 as input
-    DDRD &= ~(1 << PD3);
-
-    // enable INT1 interrupt vector
-    GICR |= (1 << INT1);
-
-    // interrupt on falling edge
-    MCUCR |= (1 << ISC11);
-    MCUCR &= ~(1 << ISC10);
-}
-
-
 static void interrupt_can_timer_init() {
     TCCR3A = 0;
     TCCR3B = 0;
@@ -50,24 +37,6 @@ static void interrupt_can_timer_init() {
 
     // enable timer compare interrupt
     ETIMSK |= (1 << OCIE3A);
-}
-
-
-int joystick_scale_value(uint8_t value, int offset) {
-    // scale to values between min and max
-    int scaled_value = (int)(value - 128)*(JOYSTICK_MAX - JOYSTICK_MIN)/256;
-
-    // correct offset and nonlinear scaling
-    // based on measurements we assume positive offset
-    if (scaled_value > offset) {
-        scaled_value -= (int)(offset*(JOYSTICK_MAX - scaled_value)/(JOYSTICK_MAX - offset));
-    }
-    else
-    {
-        scaled_value -= (int)(offset*(JOYSTICK_MIN - scaled_value)/(JOYSTICK_MIN - offset));
-    }
-
-    return scaled_value;
 }
 
 
@@ -89,6 +58,24 @@ pos_t user_input_joystick_pos(void) {
     pos.y = adc_read(Y_CHANNEL);
 
     return pos;
+}
+
+
+int joystick_scale_value(uint8_t value, int offset) {
+    // scale to values between min and max
+    int scaled_value = (int)(value - 128)*(JOYSTICK_MAX - JOYSTICK_MIN)/256;
+
+    // correct offset and nonlinear scaling
+    // based on measurements we assume positive offset
+    if (scaled_value > offset) {
+        scaled_value -= (int)(offset*(JOYSTICK_MAX - scaled_value)/(JOYSTICK_MAX - offset));
+    }
+    else
+    {
+        scaled_value -= (int)(offset*(JOYSTICK_MIN - scaled_value)/(JOYSTICK_MIN - offset));
+    }
+
+    return scaled_value;
 }
 
 
@@ -150,11 +137,11 @@ void user_input_transmit() {
 
     message_t m = {
         .id = USER_INPUT_ID,
-        .length = 6,
+        .data_length = 6,
         .data = {joystick.x, joystick.y, slider.left, slider.right, button.left, button.right}
     };
 
-    can_transmit(&m);
+    can_send(&m);
 }
 
 

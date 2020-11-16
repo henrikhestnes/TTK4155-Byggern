@@ -16,21 +16,47 @@
 #define MOTOR_TIMER_FREQ    50
 
 
+/**
+ * @brief Initiates the motor by initiating the DAC, and enabling
+ * the pins and clock used by the motor.
+ */
 void motor_init(void);
 
 
+/**
+ * @brief Disables the motor. Sets the speed to 0.
+ */
 void motor_disable(void);
 
 
+/**
+ * @brief Enables the motor. Resets the PID errors.
+ */
 void motor_enable(void);
 
 
-void motor_run_slider(int reference);
-
-
+/**
+ * @brief Reads the motor encoder.
+ * 
+ * @return The read encoder value.
+ */
 int motor_read_encoder(void);
 
 
+/**
+ * @brief Uses the PID controller to drive the motor, by comparing
+ * the encoder measurement to the input @c reference. 
+ * 
+ * @param reference The reference value input to the PID controller.
+ */
+void motor_run_slider(int reference);
+
+
+/**
+ * @brief Drives the motor by reading the accelerometer output
+ * from the microbit.
+ */
 void motor_run_microbit();
+
 
 #endif

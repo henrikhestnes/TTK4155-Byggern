@@ -1,22 +1,40 @@
-#ifndef NODE1_FSM_H
-#define NODE1_FSM_H
+#ifndef FSM_H
+#define FSM_H
 
 
 #include "../common/fsm_state.h"
 
 
-enum FSM_STATE fsm_get_state(void);
+/**
+ * @brief Returns the current FSM state.
+ * 
+ * @return The current FSM state, of data type @c FSM_STATE.
+ */
+FSM_STATE fsm_get_state(void);
 
 
-void fsm_set_state(enum FSM_STATE state);
+/**
+ * @brief Transitions the FSM to @c state by calling the state's
+ * entry actions, and updating the current state.
+ * 
+ * @param state The FSM state to be transitioned to, of data type @c FSM_STATE.
+ */
+void fsm_transition_to(FSM_STATE state);
 
 
-void fsm_transition_to(enum FSM_STATE state);
+/**
+ * @brief Returns the number of lives left in a game.
+ * 
+ * @return The number of lives left in a game.
+ */
+unsigned int fsm_get_lives_left(void);
 
 
-unsigned int fsm_get_lives_left();
-
-
+/**
+ * @brief Sets the number of lives left in a game.
+ * 
+ * @param lives_left The new number of lives left in a game.
+ */
 void fsm_set_lives_left(unsigned int lives);
 
 #endif

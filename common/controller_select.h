@@ -2,11 +2,11 @@
 #define COMMON_CONTROLLER_SELECT_H
 
 
-enum CONTROLLER_SEL {
+typedef enum {
     SLIDER_POS_CTRL,
     JOYSTICK_SPEED_CTRL,
     MICROBIT_SPEED_CTRL
-};
+} CONTROLLER_SEL;
 
 
 #endif

@@ -55,7 +55,7 @@ int main()
     
     fsm_transition_to(MENU);
     while (1) {
-    enum FSM_STATE state = fsm_get_state();
+    FSM_STATE state = fsm_get_state();
         switch(state) {
             case MENU:
             {
