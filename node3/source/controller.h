@@ -5,6 +5,12 @@
 
 
 /**
+* @file
+* @brief Module for controller-fuctionality
+*/
+
+
+/**
  * @brief Enum that describes the tilting of the accelerometer.
  */
 typedef enum{
@@ -25,9 +31,10 @@ void controller_init_pins(void);
  *
  * @param x_pt Pointer to x-value from accelerometer of type int16_t.
  *
- * @return left if the accelerometer is tilted left;
- *  right if the accelerometer is tilted right;
- *  middle if the accelerometer is horizontal.
+ * @return values of type @c acc_dir_t;
+ *  LEFT if the accelerometer is tilted left;
+ *  RIGHT if the accelerometer is tilted right;
+ *  MIDDLE if the accelerometer is horizontal.
  */
 const acc_dir_t controller_get_dir(const int16_t* x_pt);
 

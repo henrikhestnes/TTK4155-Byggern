@@ -4,6 +4,12 @@
 
 
 /**
+* @file
+* @brief Module for twi-fuctionality, 
+*/
+
+
+/**
  * @brief Initialize a TWI interface on the micro:bit
  * with parameters that work for the micro:bit hardware.
  * Must be called before @c twi_read and @c twi_write

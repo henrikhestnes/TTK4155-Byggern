@@ -4,6 +4,12 @@
 
 
 /**
+* @file
+* @brief Module for button-fuctionality
+*/
+
+
+/**
  * @brief Initialize the buttons on the micro:bit.
  * Must be called before @c button_a_pressed and
  * @c button_b_pressed are used.

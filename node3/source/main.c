@@ -3,6 +3,14 @@
 #include "controller.h"
 #include <stdint.h>
 
+
+/**
+* @file
+* @brief main module for node 3, based on microbit-task in
+* TTK4235. 
+*/
+
+
 int main(){
     button_init();
     accelerometer_init();
