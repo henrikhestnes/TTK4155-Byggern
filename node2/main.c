@@ -1,92 +1,35 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <unistd.h>
+/**
+ * @file 
+ * @brief Main program of node 2
+ */
+
+
+// #include <stdio.h>
+// #include <stdarg.h>
+// #include <unistd.h>
 #include "uart_and_printf/uart.h"
 #include "uart_and_printf/printf-stdarg.h"
 #include "can/can_controller.h"
-#include "can/can_interrupt.h"
 #include "sam/sam3x/include/sam.h"
 #include "../common/can_id.h"
 
 
-#include "led.h"
-#include "pwm.h"
-#include "servo_driver.h"
-#include "adc.h"
-#include "dac.h"
 #include "game.h"
-#include "motor.h"
-#include "timer.h"
-#include "solenoid.h"
 #include "fsm.h"
-#include "music_driver.h"
-#include "microbit.h"
 
 
 int main()
 {
     SystemInit();
-
     WDT->WDT_MR = WDT_MR_WDDIS; //Disable Watchdog Timer
 
-    // UART
-        configure_uart();
-        printf("Hello World\n\r");
+    configure_uart();
+    can_init_def_tx_rx_mb(ATSAM_CAN_BR);
+    //can_init(ATSAM_CAN_BR, 1, 3);
+    game_init();
 
-    // CAN
-        can_init(ATSAM_CAN_BR, 1, 3);
-
-    // ADC
-        adc_init();
-
-    // SERVO
-        servo_init();
-
-    // MOTOR
-        motor_init();
-
-    // GAME
-        game_init();
-
-    // SOLENOID
-        solenoid_init();
-
-    // MICROBIT
-        microbit_init();
-
-
-
-    
     fsm_transition_to(MENU);
-    while (1) {
-    FSM_STATE state = fsm_get_state();
-        switch(state) {
-            case MENU:
-            {
-                break;
-            }
-            case PLAYING:
-            {
-                // count score and send to can
-                break;
-            }
-            case GAME_OVER:
-            {   
-                break;
-            }
-            case IDLE:
-            {
-                break;
-            }
-            default:
-                break;
-        }
-    }
-
-
-    // TESTING
-        // game_timer_enable();
-        // motor_enable();
+    while (1);
 
     return 0;
 }
