@@ -17,11 +17,11 @@ void controller_init_pins(){
 
 
 const acc_dir_t controller_get_dir(const int16_t* x_pt){
-    if(*x_pt > -THRESHOLD){
-        return ACC_LEFT;
-    }
-    if(*x_pt < THRESHOLD){
+    if(*x_pt < -THRESHOLD){
         return ACC_RIGHT;
+    }
+    if(*x_pt > THRESHOLD){
+        return ACC_LEFT;
     }
     else{
         return ACC_MIDDLE;
