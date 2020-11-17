@@ -5,8 +5,9 @@
 /**
 * @file
 * @brief Module for accelerometer-fuctionality, based on microbit-task in
-* TTK4235. 
+* TTK4235.
 */
+
 
 /**
  * @brief Initialize the micro:bit on-board accelerometer. This
@@ -15,6 +16,7 @@
  * work for most use cases.
  */
 void accelerometer_init();
+
 
 /**
  * @brief Read the accelerometer values in X, Y, and Z directions.
