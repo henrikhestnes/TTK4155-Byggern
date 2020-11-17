@@ -2,7 +2,7 @@
 #include "motor.h"
 #include "game.h"
 #include "can/can_controller.h"
-#include "../common/can_id.h"
+#include "../common/can.h"
 
 
 static FSM_STATE current_state = INIT;

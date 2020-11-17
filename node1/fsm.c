@@ -1,11 +1,10 @@
 #include "fsm.h"
-#include "interrupt.h"
 #include "oled.h"
 #include "menu.h"
 #include "can_driver.h"
 #include "highscore.h"
-#include "../common/can_id.h"
 #include "user_input.h"
+#include "../common/can.h"
 
 #define F_CPU 4.9152E6
 #include <util/delay.h>
@@ -16,7 +15,7 @@ static unsigned int lives_left;
 
 
 static void fsm_transmit_state(FSM_STATE state) {
-    message_t m = {
+    CAN_MESSAGE m = {
         .id = FSM_STATE_ID, 
         .data_length = 1, 
         .data = state};

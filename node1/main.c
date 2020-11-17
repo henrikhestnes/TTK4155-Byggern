@@ -1,75 +1,47 @@
+/**
+ * @file
+ * @brief Main program of node 1. 
+ */
+
+
 #include "uart.h"
 #include "sram.h"
-#include "adc.h"
 #include "user_input.h"
 #include "oled.h"
 #include "menu.h"
-#include "interrupt.h"
-#include "spi_driver.h"
-#include "mcp2515_driver.h"
 #include "can_driver.h"
-#include "fsm.h"
 #include "highscore.h"
-#include "../common/can_id.h"
-#include <avr/interrupt.h>
+#include "fsm.h"
+#include "../common/can.h"
 
+#include <avr/interrupt.h>
 
 #define F_CPU 4.9152E6
 #include <util/delay.h> 
 
+
 #define BAUD 9600
 #define UBRR F_CPU / 16 / BAUD - 1
+#define NUMBER_OF_LIVES 3
 
 
 int main() {
-        cli();
+    cli();
 
-    // UART
-        UART_init(UBRR);
-        UART_link_printf();
+    uart_init(UBRR);
+    sram_init();
+    user_input_init();
+    user_input_timer_disable();
+    oled_init();
+    menu_init();
+    can_init(MODE_NORMAL);
+    highscore_init();
 
-    // SRAM
-        sram_init();
+    sei();
 
-    // USER INPUT
-        user_input_init();
-        user_input_timer_disable();
-
-    // OLED
-        oled_init();
-
-    // Menu
-        menu_init();
-        // menu_timer_disable();
-
-    // CAN
-        can_init(MODE_NORMAL);
-
-    // Highscore
-        highscore_init();
-
-        sei();
-
-    // Testing
-        // while (1) {
-        //     user_input_transmit();
-
-        //     if (can_get_recieve_flag()) {
-        //         message_t message = can_recieve();
-        //         printf("message id: %d\n\r", message.id);
-        //         printf("message data length: %d\n\r", message.length);
-        //         printf("message data: %s\n\r", message.data);
-        //     }
-
-        //     menu_run();
-        // }
-
-
-    // Real code :DDD
     fsm_transition_to(MENU);
-    
     while (1) {
-    enum FSM_STATE state = fsm_get_state();
+    FSM_STATE state = fsm_get_state();
         switch (state) {
             case MENU:
             {
@@ -80,7 +52,7 @@ int main() {
             {   
                 unsigned int lives_left = fsm_get_lives_left();
                 if (lives_left) {
-                    oled_print_playing_screen(lives_left);
+                    oled_print_playing_screen(lives_left, NUMBER_OF_LIVES);
                 }
                 else {
                     fsm_transition_to(GAME_OVER);
@@ -117,7 +89,7 @@ int main() {
 
 
 ISR(INT0_vect) {
-    message_t m;
+    CAN_MESSAGE m;
     can_recieve(&m);
 
     switch (m.id) {
@@ -146,12 +118,13 @@ ISR(INT0_vect) {
 }
 
 
+ISR(TIMER1_COMPA_vect) {
+    oled_print_from_sram();
+}
+
+
 ISR(TIMER3_COMPA_vect) {
-    cli();
-
     user_input_transmit();
-
-    sei();
 }
 
 

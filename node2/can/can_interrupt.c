@@ -16,7 +16,7 @@
 #include "../game.h"
 #include "../fsm.h"
 #include "../music_driver.h"
-#include "../../common/can_id.h"
+#include "../../common/can.h"
 
 #include <stdio.h>
 

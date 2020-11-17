@@ -1,7 +1,7 @@
 #include "user_input.h"
 #include "adc.h"
 #include "can_driver.h"
-#include "../common/can_id.h"
+#include "../common/can.h"
 #include "../common/user_input.h"
 #include <math.h>
 #include <avr/io.h>
@@ -63,7 +63,7 @@ pos_t user_input_joystick_pos(void) {
 
 
 int joystick_scale_value(uint8_t value, int offset) {
-    // scale to values between min and max
+    // scale to values in interval [JOYSTICK_MIN, JOYSTICK_MAX]
     int scaled_value = (int)(value - 128)*(JOYSTICK_MAX - JOYSTICK_MIN)/256;
 
     // correct offset and nonlinear scaling
@@ -136,7 +136,7 @@ void user_input_transmit() {
     slider_t slider = user_input_slider_pos();
     button_t button = user_input_buttons();
 
-    message_t m = {
+    CAN_MESSAGE m = {
         .id = USER_INPUT_ID,
         .data_length = 6,
         .data = {joystick.x, joystick.y, slider.left, slider.right, button.left, button.right}

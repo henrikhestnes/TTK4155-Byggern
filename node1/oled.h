@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief Module for controlling and printing to the OLED screen. 
+ */
+
+
 #ifndef OLED_H
 #define OLED_H
 
@@ -15,23 +21,6 @@
  * @brief Initiates the OLED, and clears the screen using @c oled_clear().
  */
 void oled_init();
-
-
-/**
- * @brief Writes a command to the OLED, by writing to its command memory space.
- * 
- * @param command Command to be written to the OLED.
- */
-void oled_write_command(uint8_t command);
-
-
-/**
- * @brief Writes data to the OLED screen, by writing to its data memory space.
- * The data is printed in the current position.
- * 
- * @param data Data to be printed on the OLED screen.
- */
-void oled_write_data(uint8_t data);
 
 
 /**
@@ -88,41 +77,51 @@ void oled_print_string(const char* string);
 
 
 /**
- * @brief Prints the bitwise inversion of a character @p c to the 
- * OLED screen in the position pointed to by the page and column pointers. 
- * Uses the large font given in @c fonts.h.
+ * @brief Prints an integer @p number to the OLED screen in the position pointed 
+ * to by the page and column pointers, by using @c oled_print_string().
  * 
- * @param c Character to be inverted and printed to the OLED screen.
+ * @param number Integer to be printed to the OLED screen.
  */
-void oled_print_inverted_char(char c);
+void oled_print_int(uint16_t number);
 
 
 /**
- * @brief Prints the bitwise inversion of a string @p string to the 
- * OLED screen in the position pointed to by the page and column pointers,
- * by using @c oled_print_inverted_char().
+ * @brief Prints the playing screen, showing lives left as filled hearts,
+ * and lives lost as empty hearts.
  * 
- * @param string String to be inverted and printed to the OLED screen.
+ * @param lives_left Amount of filled hearts.
+ * @param max_lives Number of hearts on screen.
  */
-void oled_print_inverted_string(const char* string);
+void oled_print_playing_screen(int lives_left, int max_lives);
 
 
-void oled_print_playing_screen(int lives_left);
-
-
+/**
+ * @brief Prints the quit screen.
+ */
 void oled_print_quit_screen(void);
 
 
+/**
+ * @brief Prints the game over screen, which displays @p score.
+ * 
+ * @param score Score to be displayed.
+ * @param new_highscore If 1, player is congratulated with achieving a new highscore.
+ */
 void oled_print_game_over_screen(int score, char new_highscore);
 
 
+/**
+ * @brief Prints the first 1024 bytes of the SRAM memory to the OLED screen.
+ */
 void oled_print_from_sram();
 
 
+/**
+ * @brief Adjusts the brightness of the OLED screen.
+ * 
+ * @param brightness Desired brightness.
+ */
 void oled_set_brightness(uint8_t brightness);
-
-
-void oled_print_int(uint16_t number);
 
 
 #endif

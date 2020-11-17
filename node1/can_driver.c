@@ -1,9 +1,5 @@
 #include "can_driver.h"
-#include "mcp2515_driver.h"
-#include "uart.h"
-#include "interrupt.h"
-#include <avr/interrupt.h>
-#include <stdint.h>
+#include <avr/io.h>
 
 
 static char recieved_flag = 0;
@@ -22,13 +18,9 @@ static void interrupt_can_recieve_init() {
 }
 
 
-int can_init(uint8_t mode) {
-    if (mcp2515_init()) {
-        return 1;
-    }
-    if (mcp2515_set_mode(mode)) {
-        return 1;
-    }
+void can_init(uint8_t mode) {
+    mcp2515_init();
+    mcp2515_set_mode(mode);
 
     // recieve all messages
     mcp2515_write(MCP_RXB0CTRL, MCP_RXM1 | MCP_RXM0);
@@ -36,12 +28,10 @@ int can_init(uint8_t mode) {
     // enable interrupt generation for successful reception
     mcp2515_bit_modify(MCP_CANINTE, MCP_RX1IF | MCP_RX0IF, 0xFF);
     interrupt_can_recieve_init();
-
-    return 0;
 }
 
 
-void can_send(message_t* message) {
+void can_send(CAN_MESSAGE* message) {
     // write to buffers
     mcp2515_write(MCP_TXB0SIDH, message->id / 8);
     mcp2515_write(MCP_TXB0SIDL, (message->id % 8) << 5);
@@ -55,7 +45,7 @@ void can_send(message_t* message) {
 }
 
 
-int can_recieve(message_t* message) {
+int can_recieve(CAN_MESSAGE* message) {
     if (mcp2515_read(MCP_CANINTF) & MCP_RX0IF) {
         // read from buffers, shift to combine high and low bits
         uint8_t id_low_bits = mcp2515_read(MCP_RXB0SIDL);

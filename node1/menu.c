@@ -3,34 +3,12 @@
 #include "fonts.h"
 #include "sram.h"
 #include "user_input.h"
-#include "fsm.h"
-#include "can_driver.h"
 #include "highscore.h"
 #include "menu_action_functions.h"
-#include "../common/can_id.h"
-#include "../common/controller_select.h"
-#include "../common/songs.h"
 #include <stdlib.h>
-#include <stdint.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 #include <avr/io.h>
-
-
-#define F_CPU 4.9152E6
-#include <util/delay.h>
-
-
-typedef struct menu {
-    const char* const* text_display;
-    uint8_t length;
-    struct menu* parent;
-    struct menu* submenus[5];
-    void (*action_functions[])();
-} menu_t;
-
-
-typedef void (*action_function)();
 
 
 #define MAIN_MENU_LENGTH        4
@@ -40,6 +18,9 @@ typedef void (*action_function)();
 #define BRIGHTNESS_MENU_LENGTH  4
 #define CONTROLLER_MENU_LENGTH  4
 #define DIFFICULTY_MENU_LENGTH  4
+
+
+typedef void (*action_function)();
 
 
 static menu_t* current;
@@ -88,7 +69,7 @@ const char text_difficulty_impossible[] PROGMEM = "Impossible";
 PGM_P const content_difficulty[] PROGMEM = {text_difficulty_hard, text_difficulty_extreme, text_difficulty_impossible, text_return};
 
 
-void menu_timer_init() {
+static void menu_timer_init() {
     TCCR1A = 0;
     TCCR1B = 0;
     TCNT1 = 0;
@@ -125,47 +106,48 @@ void menu_timer_disable() {
 }
 
 
-void menu_go_to_child() {
-    current = current->submenus[state];
-    state = 0;
-}
-
-
 void menu_go_to_parent() {
     current = current->parent;
     state = 0;
 }
 
 
-menu_t* menu_new(const char* const* text_display, uint8_t length, menu_t* parent) {
-    menu_t* menu = malloc(sizeof(menu_t) + length * sizeof(action_function) + 5 * sizeof(menu_t*));
-    if (menu) {
-        // printf("Successfully allocated menu \n\r");
-    }
-    else { 
-        //printf("ERROR: Failed to allocate menu \n\r"); 
-    }
-    
-    menu->text_display = text_display;
-    menu->length = length;
-    menu->parent = parent;
-
-    for (uint8_t i = 0; i < length; ++i) {
-        menu->submenus[i] = NULL;
-        menu->action_functions[i] = NULL;
-    }
-
-    return menu;
+void menu_go_to_child() {
+    current = current->submenus[state];
+    state = 0;
 }
 
 
-void menu_config_node(menu_t* menu, uint8_t node, menu_t* submenu, action_function func) {
+static menu_t* menu_new(const char* const* text_display, uint8_t length, menu_t* parent) {
+    menu_t* menu = malloc(sizeof(menu_t) + length * sizeof(action_function) + MAX_SUBMENU_NUMBER * sizeof(menu_t*));
+
+    // check for successful allocation
+    if (menu) {
+        menu->text_display = text_display;
+        menu->length = length;
+        menu->parent = parent;
+
+        for (uint8_t i = 0; i < length; ++i) {
+            menu->submenus[i] = NULL;
+            menu->action_functions[i] = NULL;
+        }
+
+        return menu;
+    }
+
+    else { 
+        return NULL;
+    }
+}
+
+
+static void menu_config_node(menu_t* menu, uint8_t node, menu_t* submenu, action_function func) {
     menu->submenus[node] = submenu;
     menu->action_functions[node] = func;
 }
 
 
-menu_t* menu_allocate() {
+static menu_t* menu_allocate() {
     // dynamically allocate menus
     menu_t* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH, NULL);
     menu_t* settings_menu = menu_new(content_settings, SETTINGS_MENU_LENGTH, main_menu);
@@ -220,42 +202,12 @@ menu_t* menu_allocate() {
 }
 
 
-void menu_free(menu_t* menu) {
-    free(menu->parent);
-    free(menu->submenus);
-    free(menu->action_functions);
-    free(menu);
-    menu = NULL;
-}
-
-
-void menu_deallocate() {
-    // navigate to main menu
-    while (current->parent) {
-        current = current->parent;
-    }
-
-    // free all allocated memory
-    for (uint8_t i = 0; i < MAIN_MENU_LENGTH; ++i) {
-        menu_t* submenu = current->submenus[i];
-        for (uint8_t j = 0; j < submenu->length; j++) {
-            menu_free(submenu->submenus[j]);
-        }  
-        menu_free(submenu);
-    }
-
-    menu_free(current);
-    current = NULL;
-}
-
-
-
-char is_in_highscore_menu() {
+static char is_in_highscore_menu() {
     return current->text_display == content_highscore;
 }
 
 
-void sram_write_char(char* c, uint8_t line, uint8_t index, uint8_t inverted) {
+static void sram_write_char(char* c, uint8_t line, uint8_t index, uint8_t inverted) {
     for (uint8_t i = 0; i < FONT_LENGTH; ++i) {
         uint8_t column = pgm_read_byte(&(font8[*c - ASCII_OFFSET][i]));
         if (inverted) {
@@ -268,7 +220,7 @@ void sram_write_char(char* c, uint8_t line, uint8_t index, uint8_t inverted) {
 }
 
 
-void sram_write_line(char* word, uint8_t line, uint8_t inverted) {
+static void sram_write_line(char* word, uint8_t line, uint8_t inverted) {
     uint8_t i = 0;
     while(word[i] != '\0') {
         sram_write_char(&word[i], line, i, inverted);
@@ -283,7 +235,7 @@ void sram_write_line(char* word, uint8_t line, uint8_t inverted) {
 }
 
 
-void menu_write_to_sram() { 
+static void menu_write_to_sram() { 
     // reserve top line
     sram_write_line("\0", 0, 0);
 
@@ -306,7 +258,7 @@ void menu_write_to_sram() {
 }
 
 
-void highscore_menu_write_to_sram() {
+static void highscore_menu_write_to_sram() {
     // reserve top line, write title
     sram_write_line("\0", 0, 0);
     sram_write_line("Highscores:", 1, 0);
@@ -345,12 +297,6 @@ void menu_init() {
     oled_clear();
     menu_write_to_sram();
     menu_timer_init();
-}
-
-
-void menu_disable() {
-    menu_timer_disable();
-    menu_deallocate();
 }
 
 
@@ -417,9 +363,4 @@ void menu_run() {
             menu_write_to_sram();
         }
     }
-}
-
-
-ISR(TIMER1_COMPA_vect) {
-    oled_print_from_sram();
 }

@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief Module for controlling the sending and receiving data over the CAN bus. 
+ */
+
+
 #ifndef MCP2515_H
 #define MCP2515_H
 
@@ -204,10 +210,8 @@ Copyright 2003 Kimberly Otten Software Consulting
  * @brief Initiates the MCP2515 driver by setting the CAN bitrate,
  * resetting it using @c mcp2515_reset(), and controlling 
  * that the MCP2515 is in configuration mode.
- * 
- * @return 0 on success, 1 if the MCP2515 is not in configuration mode.
  */
-int mcp2515_init(void);
+void mcp2515_init();
 
 
 /**

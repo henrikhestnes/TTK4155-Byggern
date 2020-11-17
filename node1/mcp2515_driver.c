@@ -1,7 +1,5 @@
 #include "mcp2515_driver.h"
-#include "uart.h"
 #include <avr/io.h> 
-
 
 #define F_CPU 16000000
 #include <util/delay.h> 
@@ -17,7 +15,7 @@ void set_cs(void) {
 }
 
 
-int mcp2515_init() {
+void mcp2515_init() {
     spi_init();
     mcp2515_reset();
 
@@ -25,8 +23,7 @@ int mcp2515_init() {
 
     uint8_t value = mcp2515_read(MCP_CANSTAT);
     if ((value & MODE_MASK) != MODE_CONFIG) {
-        printf("ERROR: MCP2515 not in configuration mode after reset. \r \n");
-        return 1;
+        printf("ERROR: MCP2515 not in configuration mode after reset. \r\n");
     }
 
     // set CAN bitrate
@@ -35,8 +32,6 @@ int mcp2515_init() {
     mcp2515_write(MCP_CNF1, SJW4 | (BRP - 1));
     mcp2515_write(MCP_CNF2, BTLMODE | SAMPLE_3X | ((PS1 - 1) << 3) | (PROPAG - 1));
     mcp2515_write(MCP_CNF3, WAKFIL_DISABLE | (PS2 - 1));
-
-    return 0;
 }    
 
 

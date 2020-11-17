@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief Module for sending and receiving messages over the SPI bus. 
+ */
+
+
 #ifndef SPI_H
 #define SPI_H
 

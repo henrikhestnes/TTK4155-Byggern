@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief Module for reading from and writing to the EEPROM of the ATMega162. 
+ */
+
+
 #ifndef EEPROM_DRIVER_H
 #define EEPROM_DRIVER_H
 

@@ -2,7 +2,7 @@
 #include <avr/io.h>
 
 
-void UART_init(unsigned int ubrr) {
+void uart_init(unsigned int ubrr) {
     // set baudrate
     UBRR0H = (unsigned char)(ubrr >> 8);
     UBRR0L = (unsigned char)ubrr;
@@ -12,10 +12,12 @@ void UART_init(unsigned int ubrr) {
 
     // set frame format
     UCSR0C = (1 << URSEL0) | (1 << USBS0) | (3 << UCSZ00);
+
+    uart_link_printf();
 }
 
 
-void UART_transmit(unsigned char data){
+void uart_transmit(unsigned char data){
     // wait for empty buffer
     while (!(UCSR0A & (1 << UDRE0)));
 
@@ -24,7 +26,7 @@ void UART_transmit(unsigned char data){
 }
 
 
-unsigned char UART_recieve() {
+unsigned char uart_recieve() {
     // wait for completed recieve
     while (!(UCSR0A & (1 << RXC0)));
 
@@ -33,6 +35,6 @@ unsigned char UART_recieve() {
 }
 
 
-void UART_link_printf() {    
-    fdevopen(&UART_transmit, &UART_recieve);
+void uart_link_printf() {    
+    fdevopen(&uart_transmit, &uart_recieve);
 }

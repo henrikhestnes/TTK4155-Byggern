@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief Module with action functions to be called in the menu system. 
+ */
+
+
 #ifndef MENU_ACTION_FUNCTIONS
 #define MENU_ACTION_FUNCTIONS
 
@@ -28,19 +34,19 @@ void select_controller_microbit();
 
 
 /**
- * @brief Selects the OLED screen brightness to high.
+ * @brief Sets the OLED screen brightness to high.
  */
 void set_high_oled_brightness();
 
 
 /**
- * @brief Selects the OLED screen brightness to medium.
+ * @brief Sets the OLED screen brightness to medium.
  */
 void set_medium_oled_brightness();
 
 
 /**
- * @brief Selects the OLED screen brightness to low.
+ * @brief Sets the OLED screen brightness to low.
  */
 void set_low_oled_brightness();
 
@@ -75,12 +81,21 @@ void select_song_savage_love();
 void stop_music();
 
 
+/**
+ * @brief Sets the game difficulty to hard.
+ */
 void set_difficulty_hard();
 
 
+/**
+ * @brief Sets the game difficulty to extreme.
+ */
 void set_difficulty_extreme();
 
 
+/**
+ * @brief Sets the game difficulty to impossible.
+ */
 void set_difficulty_impossible();
 
 

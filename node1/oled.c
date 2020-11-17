@@ -3,6 +3,18 @@
 #include "fonts.h"
 
 
+static void oled_write_command(uint8_t command){
+    volatile char* address = (char*) 0x1000;
+    address[0] = command;
+}
+
+
+static void oled_write_data(uint8_t data){
+    volatile char* address = (char*) 0x1200;
+    address[0] = data;
+}
+
+
 void oled_init(){
     oled_write_command(0xae);
     oled_write_command(0xa1);
@@ -27,18 +39,6 @@ void oled_init(){
     oled_write_command(0xa6);
     oled_write_command(0xaf);
     oled_clear();
-}
-
-
-void oled_write_command(uint8_t command){
-    volatile char* address = (char*) 0x1000;
-    address[0] = command;
-}
-
-
-void oled_write_data(uint8_t data){
-    volatile char* address = (char*) 0x1200;
-    address[0] = data;
 }
 
 
@@ -95,26 +95,14 @@ void oled_print_string(const char* string) {
 }
 
 
-void oled_print_inverted_char(char c) {
-    if (' ' <= c && c <= '~') {
-        for (int i = 0; i < FONT_LENGTH; i++) {
-            uint8_t character = pgm_read_byte(&(font8[c - ASCII_OFFSET][i]));
-            oled_write_data(~character);
-        }
-    }  
+void oled_print_int(uint16_t number) {
+    char string[6];
+    sprintf(string, "%d", number);
+    oled_print_string(string);
 }
 
 
-void oled_print_inverted_string(const char* string) {
-    int i = 0;
-    while (string[i] != '\0') {
-        oled_print_inverted_char(string[i]);
-        ++i;
-    }
-}
-
-
-void oled_print_heart(char filled) {
+static void oled_print_heart(char filled) {
     if (filled) {
         oled_write_data(0b00001110);
         oled_write_data(0b00011111);
@@ -140,23 +128,23 @@ void oled_print_heart(char filled) {
 }
 
 
-void oled_print_lives(int lives_left) {
+void oled_print_lives(int lives_left, int max_lives) {
     for (int i = 0; i < lives_left; ++i) {
         oled_print_heart(1);
         oled_print_char(' ');
     }
-    for (int i = 0; i < (3 - lives_left); ++i) {
+    for (int i = 0; i < (max_lives - lives_left); ++i) {
         oled_print_heart(0);
         oled_print_char(' ');
     }
 }
 
 
-void oled_print_playing_screen(int lives_left) {
+void oled_print_playing_screen(int lives_left, int max_lives) {
     oled_set_pos(1, 8);
     oled_print_string("Lives left:");
     oled_set_pos(3, 30);
-    oled_print_lives(lives_left);
+    oled_print_lives(lives_left, max_lives);
     oled_set_pos(5, 8);
     oled_print_string("Quit the game");
     oled_set_pos(6, 8);
@@ -217,11 +205,4 @@ void oled_print_from_sram() {
 void oled_set_brightness(uint8_t brightness) {
     oled_write_command(0x81);
     oled_write_command(brightness);
-}
-
-
-void oled_print_int(uint16_t number) {
-    char string[6];
-    sprintf(string, "%d", number);
-    oled_print_string(string);
 }

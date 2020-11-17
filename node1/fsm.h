@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief Module for running the system as a Finite State Machine. 
+ */
+
+
 #ifndef FSM_H
 #define FSM_H
 

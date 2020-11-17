@@ -13,20 +13,13 @@
 #define CAN_CONTROLLER_H_
 
 
+#include "../../common/can.h"
 #include <stdint.h>
 
 
 // baudrate of 250 kbits/s, sjw = 4 TQ, propag = 2 TQ, phase1 = 6 TQ, phase2 = 7 TQ
 #define ATSAM_CAN_BR 0x00143156
 // #define ATSAM_CAN_BR 0x00290165
-
-
-typedef struct can_message_t
-{
-	uint16_t id;
-	char data_length;
-	char data[8];
-} CAN_MESSAGE;
 
 
 uint8_t can_init_def_tx_rx_mb(uint32_t can_br);

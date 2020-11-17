@@ -1,7 +1,6 @@
 #include "adc.h"
 #include <avr/io.h>
 
-
 #define F_CPU 4.9152E6
 #include <util/delay.h>
 

@@ -6,7 +6,7 @@
 #include "can/can_controller.h"
 #include "can/can_interrupt.h"
 #include "sam/sam3x/include/sam.h"
-#include "../common/can_id.h"
+#include "../common/can.h"
 
 
 #include "led.h"

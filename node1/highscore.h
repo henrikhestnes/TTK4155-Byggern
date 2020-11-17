@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief Module for saving and updating highscores in the non-volatile EEPROM.
+ */
+
+
 #ifndef HIGHSCORE_H
 #define HIGHSCORE_H
 

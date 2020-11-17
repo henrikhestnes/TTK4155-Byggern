@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief Module for converting analog input signals to digital signals. 
+ */
+
+
 #ifndef ADC_H
 #define ADC_H
 

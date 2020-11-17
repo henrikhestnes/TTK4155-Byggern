@@ -3,7 +3,7 @@
 #include "oled.h"
 #include "fsm.h"
 #include "can_driver.h"
-#include "../common/can_id.h"
+#include "../common/can.h"
 #include "../common/controller_select.h"
 #include "../common/songs.h"
 #include "../common/difficulty_select.h"
@@ -15,29 +15,31 @@ void start_new_game() {
 
 
 static void select_controller(CONTROLLER_SEL controller) {
-    message_t m = {
+    CAN_MESSAGE m = {
         .id = CONTROLLER_ID,
         .data_length = 1,
         .data = {controller}
     };
 
     can_send(&m);
-    menu_go_to_parent();
 }
 
 
 void select_controller_slider() {
     select_controller(SLIDER_POS_CTRL);
+    menu_go_to_parent();
 }
 
 
 void select_controller_joystick() {
     select_controller(JOYSTICK_SPEED_CTRL);
+    menu_go_to_parent();
 }
 
 
 void select_controller_microbit() {
     select_controller(MICROBIT_SPEED_CTRL);
+    menu_go_to_parent();
 }
 
 
@@ -60,14 +62,14 @@ void set_low_oled_brightness() {
 
 
 static void select_song(SONG song) {
-    message_t stop_message = {
+    CAN_MESSAGE stop_message = {
         .id = MUSIC_SONG_ID,
         .data_length = 1,
         .data = {STOP}
     };
     can_send(&stop_message);   
 
-    message_t song_message = {
+    CAN_MESSAGE song_message = {
         .id = MUSIC_SONG_ID,
         .data_length = 1,
         .data = {song}
@@ -97,7 +99,7 @@ void select_song_savage_love() {
 
 
 void stop_music() {
-    message_t stop_message = {
+    CAN_MESSAGE stop_message = {
         .id = MUSIC_SONG_ID,
         .data_length = 1,
         .data = {STOP}
@@ -109,26 +111,28 @@ void stop_music() {
 
 
 static void select_difficulty(DIFFICULTY diff) {
-    message_t difficulty_message = {
+    CAN_MESSAGE difficulty_message = {
         .id = GAME_DIFFICULTY_ID,
         .data_length = 1,
         .data = {diff}
     };
     can_send(&difficulty_message);
-    menu_go_to_parent();
 }
 
 
 void set_difficulty_hard() {
     select_difficulty(HARD);
+    menu_go_to_parent();
 }
 
 
 void set_difficulty_extreme() {
     select_difficulty(EXTREME);
+    menu_go_to_parent();
 }
 
 
 void set_difficulty_impossible() {
     select_difficulty(IMPOSSIBLE);
+    menu_go_to_parent();
 }

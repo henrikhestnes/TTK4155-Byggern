@@ -2,6 +2,16 @@
 #define COMMON_CAN_ID_H
 
 
+#include <stdint.h>
+
+
+typedef struct can_message_t {
+	uint16_t id;
+	char data_length;
+	char data[8];
+} CAN_MESSAGE;
+
+
 typedef enum {
     USER_INPUT_ID = 1,
     FSM_STATE_ID,

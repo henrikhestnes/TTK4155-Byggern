@@ -1,9 +1,14 @@
+/**
+ * @file
+ * @brief Module for reading and transmitting user input data from the USB multifunction board.. 
+ */
+
+
 #ifndef NODE1_USER_INPUT_H
 #define NODE1_USER_INPUT_H
 
 
 #include <stdint.h>
-
 
 
 /**

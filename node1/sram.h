@@ -1,10 +1,14 @@
+/**
+ * @file
+ * @brief Module for reading from and writing to the SRAM. 
+ */
+
+
 #ifndef SRAM_H
 #define SRAM_H
 
 
 #include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 
 /**
@@ -37,6 +41,10 @@ void sram_write(uint8_t data, uint16_t addr);
 uint8_t sram_read(uint16_t addr);
 
 
+/**
+ * @brief Performs a SRAM test with random writes and consequent reads. 
+ * Prints the result using @c printf().
+ */
 void sram_test(void);
 
 
