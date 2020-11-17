@@ -1,0 +1,57 @@
+\hypertarget{dac_8h}{}\section{node2/dac.h File Reference}
+\label{dac_8h}\index{node2/dac.\+h@{node2/dac.\+h}}
+
+
+Module for dac-\/fuctionality.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for dac.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{dac_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{dac_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{dac_8h_a6e622fafee8436bf9cf9f6b120352e3c}\label{dac_8h_a6e622fafee8436bf9cf9f6b120352e3c}} 
+void \hyperlink{dac_8h_a6e622fafee8436bf9cf9f6b120352e3c}{dac\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initiates the D\+AC by setting its mode and clock source, choosing channel, and configuring its P\+MC settings. \end{DoxyCompactList}\item 
+void \hyperlink{dac_8h_ab3ef2c4027995e3909bdb08a23251af5}{dac\+\_\+write} (uint16\+\_\+t data)
+\begin{DoxyCompactList}\small\item\em Writes a value to be converted to an analog signal in the D\+AC. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for dac-\/fuctionality. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{dac_8h_ab3ef2c4027995e3909bdb08a23251af5}\label{dac_8h_ab3ef2c4027995e3909bdb08a23251af5}} 
+\index{dac.\+h@{dac.\+h}!dac\+\_\+write@{dac\+\_\+write}}
+\index{dac\+\_\+write@{dac\+\_\+write}!dac.\+h@{dac.\+h}}
+\subsubsection{\texorpdfstring{dac\+\_\+write()}{dac\_write()}}
+{\footnotesize\ttfamily void dac\+\_\+write (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{data }\end{DoxyParamCaption})}
+
+
+
+Writes a value to be converted to an analog signal in the D\+AC. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Data value to be converted to an analog signal. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 20 of file dac.\+c.
+

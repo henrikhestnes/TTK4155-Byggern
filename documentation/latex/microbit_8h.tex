@@ -1,0 +1,74 @@
+\hypertarget{microbit_8h}{}\section{node2/microbit.h File Reference}
+\label{microbit_8h}\index{node2/microbit.\+h@{node2/microbit.\+h}}
+
+
+Module for microbit functionality.  
+
+
+{\ttfamily \#include \char`\"{}../node3/source/controller.\+h\char`\"{}}\newline
+Include dependency graph for microbit.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{microbit_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{microbit_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{microbit_8h_a09e9f665d32bbfc6b7c0e0c5357b89ed}\label{microbit_8h_a09e9f665d32bbfc6b7c0e0c5357b89ed}} 
+void \hyperlink{microbit_8h_a09e9f665d32bbfc6b7c0e0c5357b89ed}{microbit\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initializes the microbit by enabling the P\+IO to control the corresponding pins. \end{DoxyCompactList}\item 
+const acc\+\_\+dir\+\_\+t \hyperlink{microbit_8h_aba863f04abafc073cc63668e99e783f9}{microbit\+\_\+dir} ()
+\begin{DoxyCompactList}\small\item\em Returns the microbit accelerometer output. \end{DoxyCompactList}\item 
+const char \hyperlink{microbit_8h_a07adcd1fa85aa0fabc77968ec697ec70}{microbit\+\_\+button} ()
+\begin{DoxyCompactList}\small\item\em Returns the microbit left button output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for microbit functionality. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{microbit_8h_a07adcd1fa85aa0fabc77968ec697ec70}\label{microbit_8h_a07adcd1fa85aa0fabc77968ec697ec70}} 
+\index{microbit.\+h@{microbit.\+h}!microbit\+\_\+button@{microbit\+\_\+button}}
+\index{microbit\+\_\+button@{microbit\+\_\+button}!microbit.\+h@{microbit.\+h}}
+\subsubsection{\texorpdfstring{microbit\+\_\+button()}{microbit\_button()}}
+{\footnotesize\ttfamily const char microbit\+\_\+button (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the microbit left button output. 
+
+\begin{DoxyReturn}{Returns}
+Returns 1 if pressed, 0 otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 31 of file microbit.\+c.
+
+\mbox{\Hypertarget{microbit_8h_aba863f04abafc073cc63668e99e783f9}\label{microbit_8h_aba863f04abafc073cc63668e99e783f9}} 
+\index{microbit.\+h@{microbit.\+h}!microbit\+\_\+dir@{microbit\+\_\+dir}}
+\index{microbit\+\_\+dir@{microbit\+\_\+dir}!microbit.\+h@{microbit.\+h}}
+\subsubsection{\texorpdfstring{microbit\+\_\+dir()}{microbit\_dir()}}
+{\footnotesize\ttfamily const acc\+\_\+dir\+\_\+t microbit\+\_\+dir (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the microbit accelerometer output. 
+
+\begin{DoxyReturn}{Returns}
+Returns either A\+C\+C\+\_\+\+L\+E\+FT, A\+C\+C\+\_\+\+M\+I\+D\+D\+LE, A\+C\+C\+\_\+\+R\+I\+G\+HT 
+\end{DoxyReturn}
+
+
+Definition at line 19 of file microbit.\+c.
+

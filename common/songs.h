@@ -1,3 +1,10 @@
+/**
+ * @file 
+ * @brief Enumeration for song selection common for node 1 and 2.
+ */
+
+
+
 #ifndef COMMON_SONGS_H
 #define COMMON_SONGS_H
 

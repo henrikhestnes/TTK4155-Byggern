@@ -1,0 +1,129 @@
+\hypertarget{user__input__scaling_8h}{}\section{node2/user\+\_\+input\+\_\+scaling.h File Reference}
+\label{user__input__scaling_8h}\index{node2/user\+\_\+input\+\_\+scaling.\+h@{node2/user\+\_\+input\+\_\+scaling.\+h}}
+
+
+Module for scaling user inputs.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for user\+\_\+input\+\_\+scaling.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=215pt]{user__input__scaling_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{user__input__scaling_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{user__input__scaling_8h_a93bcfb77772af33dac8a60e9cdf4e352}{joystick\+\_\+scale\+\_\+x} (uint8\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Scales x-\/value of joystick with regresion to interval \mbox{[}-\/100, 100\mbox{]}. \end{DoxyCompactList}\item 
+int \hyperlink{user__input__scaling_8h_a83e08ff5eb3bb237f4a54f12d8cd80ec}{joystick\+\_\+scale\+\_\+y} (uint8\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Scales y-\/value of joystick with regresion to interval \mbox{[}-\/100, 100\mbox{]}. \end{DoxyCompactList}\item 
+int \hyperlink{user__input__scaling_8h_a8a0889f03895abe20a1cb8135d8c45aa}{slider\+\_\+scale\+\_\+right} (uint8\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Scales right slider of multifunction board to interval \mbox{[}0, 100\mbox{]}. \end{DoxyCompactList}\item 
+int \hyperlink{user__input__scaling_8h_a0f6b662ae2667141607804cb6cc3ae7f}{slider\+\_\+scale\+\_\+left} (uint8\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Scales left slider of multifunction board to interval \mbox{[}0, 100\mbox{]}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for scaling user inputs. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{user__input__scaling_8h_a93bcfb77772af33dac8a60e9cdf4e352}\label{user__input__scaling_8h_a93bcfb77772af33dac8a60e9cdf4e352}} 
+\index{user\+\_\+input\+\_\+scaling.\+h@{user\+\_\+input\+\_\+scaling.\+h}!joystick\+\_\+scale\+\_\+x@{joystick\+\_\+scale\+\_\+x}}
+\index{joystick\+\_\+scale\+\_\+x@{joystick\+\_\+scale\+\_\+x}!user\+\_\+input\+\_\+scaling.\+h@{user\+\_\+input\+\_\+scaling.\+h}}
+\subsubsection{\texorpdfstring{joystick\+\_\+scale\+\_\+x()}{joystick\_scale\_x()}}
+{\footnotesize\ttfamily int joystick\+\_\+scale\+\_\+x (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{value }\end{DoxyParamCaption})}
+
+
+
+Scales x-\/value of joystick with regresion to interval \mbox{[}-\/100, 100\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Joystick x-\/value in interval \mbox{[}0, 255\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Scaled value 
+\end{DoxyReturn}
+
+
+Definition at line 6 of file user\+\_\+input\+\_\+scaling.\+c.
+
+\mbox{\Hypertarget{user__input__scaling_8h_a83e08ff5eb3bb237f4a54f12d8cd80ec}\label{user__input__scaling_8h_a83e08ff5eb3bb237f4a54f12d8cd80ec}} 
+\index{user\+\_\+input\+\_\+scaling.\+h@{user\+\_\+input\+\_\+scaling.\+h}!joystick\+\_\+scale\+\_\+y@{joystick\+\_\+scale\+\_\+y}}
+\index{joystick\+\_\+scale\+\_\+y@{joystick\+\_\+scale\+\_\+y}!user\+\_\+input\+\_\+scaling.\+h@{user\+\_\+input\+\_\+scaling.\+h}}
+\subsubsection{\texorpdfstring{joystick\+\_\+scale\+\_\+y()}{joystick\_scale\_y()}}
+{\footnotesize\ttfamily int joystick\+\_\+scale\+\_\+y (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{value }\end{DoxyParamCaption})}
+
+
+
+Scales y-\/value of joystick with regresion to interval \mbox{[}-\/100, 100\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Joystick y-\/value in interval \mbox{[}0, 255\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Scaled value 
+\end{DoxyReturn}
+
+
+Definition at line 15 of file user\+\_\+input\+\_\+scaling.\+c.
+
+\mbox{\Hypertarget{user__input__scaling_8h_a0f6b662ae2667141607804cb6cc3ae7f}\label{user__input__scaling_8h_a0f6b662ae2667141607804cb6cc3ae7f}} 
+\index{user\+\_\+input\+\_\+scaling.\+h@{user\+\_\+input\+\_\+scaling.\+h}!slider\+\_\+scale\+\_\+left@{slider\+\_\+scale\+\_\+left}}
+\index{slider\+\_\+scale\+\_\+left@{slider\+\_\+scale\+\_\+left}!user\+\_\+input\+\_\+scaling.\+h@{user\+\_\+input\+\_\+scaling.\+h}}
+\subsubsection{\texorpdfstring{slider\+\_\+scale\+\_\+left()}{slider\_scale\_left()}}
+{\footnotesize\ttfamily int slider\+\_\+scale\+\_\+left (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{value }\end{DoxyParamCaption})}
+
+
+
+Scales left slider of multifunction board to interval \mbox{[}0, 100\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Left slider value in interval \mbox{[}0, 255\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Scaled value 
+\end{DoxyReturn}
+
+
+Definition at line 42 of file user\+\_\+input\+\_\+scaling.\+c.
+
+\mbox{\Hypertarget{user__input__scaling_8h_a8a0889f03895abe20a1cb8135d8c45aa}\label{user__input__scaling_8h_a8a0889f03895abe20a1cb8135d8c45aa}} 
+\index{user\+\_\+input\+\_\+scaling.\+h@{user\+\_\+input\+\_\+scaling.\+h}!slider\+\_\+scale\+\_\+right@{slider\+\_\+scale\+\_\+right}}
+\index{slider\+\_\+scale\+\_\+right@{slider\+\_\+scale\+\_\+right}!user\+\_\+input\+\_\+scaling.\+h@{user\+\_\+input\+\_\+scaling.\+h}}
+\subsubsection{\texorpdfstring{slider\+\_\+scale\+\_\+right()}{slider\_scale\_right()}}
+{\footnotesize\ttfamily int slider\+\_\+scale\+\_\+right (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{value }\end{DoxyParamCaption})}
+
+
+
+Scales right slider of multifunction board to interval \mbox{[}0, 100\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Right slider value in interval \mbox{[}0, 255\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Scaled value 
+\end{DoxyReturn}
+
+
+Definition at line 24 of file user\+\_\+input\+\_\+scaling.\+c.
+

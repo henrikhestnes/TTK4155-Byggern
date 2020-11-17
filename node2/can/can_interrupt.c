@@ -12,12 +12,10 @@
 #include "can_controller.h"
 #include "../uart_and_printf/printf-stdarg.h"
 #include "../sam/sam3x/include/sam.h"
-
 #include "../game.h"
 #include "../fsm.h"
 #include "../music_driver.h"
 #include "../../common/can.h"
-
 #include <stdio.h>
 
 

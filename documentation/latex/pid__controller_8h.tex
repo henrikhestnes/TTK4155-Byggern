@@ -1,0 +1,121 @@
+\hypertarget{pid__controller_8h}{}\section{node2/pid\+\_\+controller.h File Reference}
+\label{pid__controller_8h}\index{node2/pid\+\_\+controller.\+h@{node2/pid\+\_\+controller.\+h}}
+
+
+Module for P\+ID controller functionality.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for pid\+\_\+controller.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=192pt]{pid__controller_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{pid__controller_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structPID__DATA}{P\+I\+D\+\_\+\+D\+A\+TA}
+\begin{DoxyCompactList}\small\item\em Data structure to be used to represent the P\+I-\/regulator parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{pid__controller_8h_acaca5b5d8d90310c37a678d81de6f134}{pid\+\_\+controller\+\_\+init} (float k\+\_\+p, float k\+\_\+i, float k\+\_\+d, float timestep, int max\+\_\+u)
+\begin{DoxyCompactList}\small\item\em Initializes P\+I\+D-\/controller. \end{DoxyCompactList}\item 
+void \hyperlink{pid__controller_8h_a6fc026517a20595ccb9a903f0a949b7d}{pid\+\_\+controller\+\_\+set\+\_\+parameters} (float k\+\_\+p, float k\+\_\+i, float k\+\_\+d)
+\begin{DoxyCompactList}\small\item\em Sets parameters of P\+I\+D-\/controller. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{pid__controller_8h_a2819f8400aba1b37bc7812979a0cbe78}\label{pid__controller_8h_a2819f8400aba1b37bc7812979a0cbe78}} 
+void \hyperlink{pid__controller_8h_a2819f8400aba1b37bc7812979a0cbe78}{pid\+\_\+controller\+\_\+reset\+\_\+errors} ()
+\begin{DoxyCompactList}\small\item\em Resets sum\+\_\+error and prev\+\_\+error to zero. \end{DoxyCompactList}\item 
+int \hyperlink{pid__controller_8h_ad69cecc6e54a75e38ebda0eed54074ca}{pid\+\_\+controller} (int ref, int current\+\_\+value)
+\begin{DoxyCompactList}\small\item\em Initializes P\+I\+D-\/controller. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for P\+ID controller functionality. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{pid__controller_8h_ad69cecc6e54a75e38ebda0eed54074ca}\label{pid__controller_8h_ad69cecc6e54a75e38ebda0eed54074ca}} 
+\index{pid\+\_\+controller.\+h@{pid\+\_\+controller.\+h}!pid\+\_\+controller@{pid\+\_\+controller}}
+\index{pid\+\_\+controller@{pid\+\_\+controller}!pid\+\_\+controller.\+h@{pid\+\_\+controller.\+h}}
+\subsubsection{\texorpdfstring{pid\+\_\+controller()}{pid\_controller()}}
+{\footnotesize\ttfamily int pid\+\_\+controller (\begin{DoxyParamCaption}\item[{int}]{ref,  }\item[{int}]{current\+\_\+value }\end{DoxyParamCaption})}
+
+
+
+Initializes P\+I\+D-\/controller. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ref} & Desired position \\
+\hline
+{\em current\+\_\+value} & Current position\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Input to motor 
+\end{DoxyReturn}
+
+
+Definition at line 28 of file pid\+\_\+controller.\+c.
+
+\mbox{\Hypertarget{pid__controller_8h_acaca5b5d8d90310c37a678d81de6f134}\label{pid__controller_8h_acaca5b5d8d90310c37a678d81de6f134}} 
+\index{pid\+\_\+controller.\+h@{pid\+\_\+controller.\+h}!pid\+\_\+controller\+\_\+init@{pid\+\_\+controller\+\_\+init}}
+\index{pid\+\_\+controller\+\_\+init@{pid\+\_\+controller\+\_\+init}!pid\+\_\+controller.\+h@{pid\+\_\+controller.\+h}}
+\subsubsection{\texorpdfstring{pid\+\_\+controller\+\_\+init()}{pid\_controller\_init()}}
+{\footnotesize\ttfamily void pid\+\_\+controller\+\_\+init (\begin{DoxyParamCaption}\item[{float}]{k\+\_\+p,  }\item[{float}]{k\+\_\+i,  }\item[{float}]{k\+\_\+d,  }\item[{float}]{timestep,  }\item[{int}]{max\+\_\+u }\end{DoxyParamCaption})}
+
+
+
+Initializes P\+I\+D-\/controller. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em k\+\_\+p} & Desired K\+\_\+P gain \\
+\hline
+{\em k\+\_\+i} & Desired K\+\_\+I gain \\
+\hline
+{\em k\+\_\+d} & Desired K\+\_\+D gain \\
+\hline
+{\em timestep} & Timestep of how often measurements are updated \\
+\hline
+{\em max\+\_\+u} & Maximum u allowed \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 7 of file pid\+\_\+controller.\+c.
+
+\mbox{\Hypertarget{pid__controller_8h_a6fc026517a20595ccb9a903f0a949b7d}\label{pid__controller_8h_a6fc026517a20595ccb9a903f0a949b7d}} 
+\index{pid\+\_\+controller.\+h@{pid\+\_\+controller.\+h}!pid\+\_\+controller\+\_\+set\+\_\+parameters@{pid\+\_\+controller\+\_\+set\+\_\+parameters}}
+\index{pid\+\_\+controller\+\_\+set\+\_\+parameters@{pid\+\_\+controller\+\_\+set\+\_\+parameters}!pid\+\_\+controller.\+h@{pid\+\_\+controller.\+h}}
+\subsubsection{\texorpdfstring{pid\+\_\+controller\+\_\+set\+\_\+parameters()}{pid\_controller\_set\_parameters()}}
+{\footnotesize\ttfamily void pid\+\_\+controller\+\_\+set\+\_\+parameters (\begin{DoxyParamCaption}\item[{float}]{k\+\_\+p,  }\item[{float}]{k\+\_\+i,  }\item[{float}]{k\+\_\+d }\end{DoxyParamCaption})}
+
+
+
+Sets parameters of P\+I\+D-\/controller. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em k\+\_\+p} & Desired K\+\_\+P gain \\
+\hline
+{\em k\+\_\+i} & Desired K\+\_\+I gain \\
+\hline
+{\em k\+\_\+d} & Desired K\+\_\+D gain \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 15 of file pid\+\_\+controller.\+c.
+

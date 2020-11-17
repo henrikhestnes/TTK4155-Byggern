@@ -25,7 +25,7 @@ typedef struct menu {
     struct menu* parent;
     struct menu* submenus[MAX_SUBMENU_NUMBER];
     void (*action_functions[])();
-} menu_t;
+} MENU;
 
 
 /**

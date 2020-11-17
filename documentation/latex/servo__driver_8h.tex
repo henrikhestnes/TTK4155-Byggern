@@ -1,0 +1,49 @@
+\hypertarget{servo__driver_8h}{}\section{node2/servo\+\_\+driver.h File Reference}
+\label{servo__driver_8h}\index{node2/servo\+\_\+driver.\+h@{node2/servo\+\_\+driver.\+h}}
+
+
+Module for servo functionality.  
+
+
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{servo__driver_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{servo__driver_8h_a32befddd5759ec16ab7964d78e2252c5}\label{servo__driver_8h_a32befddd5759ec16ab7964d78e2252c5}} 
+void \hyperlink{servo__driver_8h_a32befddd5759ec16ab7964d78e2252c5}{servo\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initializes servo by setting P\+W\+M-\/signal, and sets position of servo to zero. \end{DoxyCompactList}\item 
+void \hyperlink{servo__driver_8h_a35b2039a0c840a67f48c087ef7626ec9}{servo\+\_\+set\+\_\+position} (int x)
+\begin{DoxyCompactList}\small\item\em Sets position of servo by adjusting P\+WM duty-\/cycle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for servo functionality. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{servo__driver_8h_a35b2039a0c840a67f48c087ef7626ec9}\label{servo__driver_8h_a35b2039a0c840a67f48c087ef7626ec9}} 
+\index{servo\+\_\+driver.\+h@{servo\+\_\+driver.\+h}!servo\+\_\+set\+\_\+position@{servo\+\_\+set\+\_\+position}}
+\index{servo\+\_\+set\+\_\+position@{servo\+\_\+set\+\_\+position}!servo\+\_\+driver.\+h@{servo\+\_\+driver.\+h}}
+\subsubsection{\texorpdfstring{servo\+\_\+set\+\_\+position()}{servo\_set\_position()}}
+{\footnotesize\ttfamily void servo\+\_\+set\+\_\+position (\begin{DoxyParamCaption}\item[{int}]{x }\end{DoxyParamCaption})}
+
+
+
+Sets position of servo by adjusting P\+WM duty-\/cycle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Desired position of servo in interval \mbox{[}-\/100, 100\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 21 of file servo\+\_\+driver.\+c.
+

@@ -1,0 +1,63 @@
+\hypertarget{node1_2adc_8h}{}\section{node1/adc.h File Reference}
+\label{node1_2adc_8h}\index{node1/adc.\+h@{node1/adc.\+h}}
+
+
+Module for converting analog input signals to digital signals.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for adc.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{node1_2adc_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=268pt]{node1_2adc_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{node1_2adc_8h_ac97938c5997ad9db96f64e94434357ff}\label{node1_2adc_8h_ac97938c5997ad9db96f64e94434357ff}} 
+void \hyperlink{node1_2adc_8h_ac97938c5997ad9db96f64e94434357ff}{adc\+\_\+config\+\_\+clock} (void)
+\begin{DoxyCompactList}\small\item\em Configurates the external clock signal delivered from the A\+T\+Mega162 to the A\+DC. Sets the frequency to half the frequency of the C\+PU interal clock. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{node1_2adc_8h_a2b815e6730e8723a6d1d06d9ef8f31c0}\label{node1_2adc_8h_a2b815e6730e8723a6d1d06d9ef8f31c0}} 
+void \hyperlink{node1_2adc_8h_a2b815e6730e8723a6d1d06d9ef8f31c0}{adc\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initiates the A\+DC by configuring the external clock. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{node1_2adc_8h_ac1513709a7d29dc6590d9371b8cd0556}{adc\+\_\+read} (uint8\+\_\+t channel)
+\begin{DoxyCompactList}\small\item\em Reads the output data from the A\+DC conversion. Starts the conversion by writing to the A\+DC address space, and reads serially until data from channel {\ttfamily channel} is read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for converting analog input signals to digital signals. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{node1_2adc_8h_ac1513709a7d29dc6590d9371b8cd0556}\label{node1_2adc_8h_ac1513709a7d29dc6590d9371b8cd0556}} 
+\index{node1/adc.\+h@{node1/adc.\+h}!adc\+\_\+read@{adc\+\_\+read}}
+\index{adc\+\_\+read@{adc\+\_\+read}!node1/adc.\+h@{node1/adc.\+h}}
+\subsubsection{\texorpdfstring{adc\+\_\+read()}{adc\_read()}}
+{\footnotesize\ttfamily uint8\+\_\+t adc\+\_\+read (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel }\end{DoxyParamCaption})}
+
+
+
+Reads the output data from the A\+DC conversion. Starts the conversion by writing to the A\+DC address space, and reads serially until data from channel {\ttfamily channel} is read. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & The analog channel to be read from\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output data from the conversion of channel {\ttfamily channel}. 
+\end{DoxyReturn}
+
+
+Definition at line 39 of file adc.\+c.
+

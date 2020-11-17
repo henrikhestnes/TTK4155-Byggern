@@ -1,0 +1,130 @@
+\hypertarget{motor_8h}{}\section{node2/motor.h File Reference}
+\label{motor_8h}\index{node2/motor.\+h@{node2/motor.\+h}}
+
+
+Module for motor functionality.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for motor.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{motor_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=345pt]{motor_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{motor_8h_a6c8de73bb604d91743c7f6f356eb171e}\label{motor_8h_a6c8de73bb604d91743c7f6f356eb171e}} 
+\#define {\bfseries D\+IR}~P\+I\+O\+\_\+\+P\+D10
+\item 
+\mbox{\Hypertarget{motor_8h_a22e6626f2c98ed902f8ded47f6438c05}\label{motor_8h_a22e6626f2c98ed902f8ded47f6438c05}} 
+\#define {\bfseries EN}~P\+I\+O\+\_\+\+P\+D9
+\item 
+\mbox{\Hypertarget{motor_8h_a66c7f87d14d4591f214e44dc70c05454}\label{motor_8h_a66c7f87d14d4591f214e44dc70c05454}} 
+\#define {\bfseries S\+EL}~P\+I\+O\+\_\+\+P\+D2
+\item 
+\mbox{\Hypertarget{motor_8h_a3df39239a243fc43430ef2f6fc42af0a}\label{motor_8h_a3df39239a243fc43430ef2f6fc42af0a}} 
+\#define {\bfseries N\+O\+T\+\_\+\+R\+ST}~P\+I\+O\+\_\+\+P\+D1
+\item 
+\mbox{\Hypertarget{motor_8h_aa01edc4557d0fe59ab1df0342fdfedfe}\label{motor_8h_aa01edc4557d0fe59ab1df0342fdfedfe}} 
+\#define {\bfseries N\+O\+T\+\_\+\+OE}~P\+I\+O\+\_\+\+P\+D0
+\item 
+\mbox{\Hypertarget{motor_8h_a2a66705260c7a3f99a155382c167cec5}\label{motor_8h_a2a66705260c7a3f99a155382c167cec5}} 
+\#define {\bfseries D\+O0\+\_\+\+I\+DX}~1
+\item 
+\mbox{\Hypertarget{motor_8h_a0b4d5a65a3c1fedf540eb0fcb0b9c855}\label{motor_8h_a0b4d5a65a3c1fedf540eb0fcb0b9c855}} 
+\#define {\bfseries M\+O\+T\+O\+R\+\_\+\+T\+I\+M\+E\+R\+\_\+\+F\+R\+EQ}~50
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{motor_8h_aa2a5af0fb9c1fa2047a5ca0af110f806}\label{motor_8h_aa2a5af0fb9c1fa2047a5ca0af110f806}} 
+void \hyperlink{motor_8h_aa2a5af0fb9c1fa2047a5ca0af110f806}{motor\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initiates the motor by initiating the D\+AC, and enabling the pins and clock used by the motor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{motor_8h_a024679ab792710e4c0f1800b8cda0834}\label{motor_8h_a024679ab792710e4c0f1800b8cda0834}} 
+void \hyperlink{motor_8h_a024679ab792710e4c0f1800b8cda0834}{motor\+\_\+disable} (void)
+\begin{DoxyCompactList}\small\item\em Disables the motor. Sets the speed to 0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{motor_8h_a8d3f3c8b0807d3879f832e346e86c0c2}\label{motor_8h_a8d3f3c8b0807d3879f832e346e86c0c2}} 
+void \hyperlink{motor_8h_a8d3f3c8b0807d3879f832e346e86c0c2}{motor\+\_\+enable} (void)
+\begin{DoxyCompactList}\small\item\em Enables the motor. Resets the P\+ID errors. \end{DoxyCompactList}\item 
+int \hyperlink{motor_8h_a45b940e7cd61a2fedd2b666082832ad7}{motor\+\_\+read\+\_\+encoder} (void)
+\begin{DoxyCompactList}\small\item\em Reads the motor encoder. \end{DoxyCompactList}\item 
+void \hyperlink{motor_8h_ac41cb93592f494a7078568b425260cc3}{motor\+\_\+run\+\_\+slider} (int reference)
+\begin{DoxyCompactList}\small\item\em Uses the P\+ID controller to drive the motor, by comparing the encoder measurement to the input {\ttfamily reference}. \end{DoxyCompactList}\item 
+void \hyperlink{motor_8h_a7922f5fd00c58af20b34e39bdcd397bf}{motor\+\_\+run\+\_\+joystick} (int joystick\+\_\+value)
+\begin{DoxyCompactList}\small\item\em Drives the motor speed, by comparing the encoder measurement to the input {\ttfamily reference}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{motor_8h_a5f704ee67b11a2ec95459393e6fae7bf}\label{motor_8h_a5f704ee67b11a2ec95459393e6fae7bf}} 
+void \hyperlink{motor_8h_a5f704ee67b11a2ec95459393e6fae7bf}{motor\+\_\+run\+\_\+microbit} ()
+\begin{DoxyCompactList}\small\item\em Drives the motor by reading the accelerometer output from the microbit. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for motor functionality. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{motor_8h_a45b940e7cd61a2fedd2b666082832ad7}\label{motor_8h_a45b940e7cd61a2fedd2b666082832ad7}} 
+\index{motor.\+h@{motor.\+h}!motor\+\_\+read\+\_\+encoder@{motor\+\_\+read\+\_\+encoder}}
+\index{motor\+\_\+read\+\_\+encoder@{motor\+\_\+read\+\_\+encoder}!motor.\+h@{motor.\+h}}
+\subsubsection{\texorpdfstring{motor\+\_\+read\+\_\+encoder()}{motor\_read\_encoder()}}
+{\footnotesize\ttfamily int motor\+\_\+read\+\_\+encoder (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Reads the motor encoder. 
+
+\begin{DoxyReturn}{Returns}
+The read encoder value. 
+\end{DoxyReturn}
+
+
+Definition at line 78 of file motor.\+c.
+
+\mbox{\Hypertarget{motor_8h_a7922f5fd00c58af20b34e39bdcd397bf}\label{motor_8h_a7922f5fd00c58af20b34e39bdcd397bf}} 
+\index{motor.\+h@{motor.\+h}!motor\+\_\+run\+\_\+joystick@{motor\+\_\+run\+\_\+joystick}}
+\index{motor\+\_\+run\+\_\+joystick@{motor\+\_\+run\+\_\+joystick}!motor.\+h@{motor.\+h}}
+\subsubsection{\texorpdfstring{motor\+\_\+run\+\_\+joystick()}{motor\_run\_joystick()}}
+{\footnotesize\ttfamily void motor\+\_\+run\+\_\+joystick (\begin{DoxyParamCaption}\item[{int}]{joystick\+\_\+value }\end{DoxyParamCaption})}
+
+
+
+Drives the motor speed, by comparing the encoder measurement to the input {\ttfamily reference}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em joystick\+\_\+value} & The reference value joystick position. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 126 of file motor.\+c.
+
+\mbox{\Hypertarget{motor_8h_ac41cb93592f494a7078568b425260cc3}\label{motor_8h_ac41cb93592f494a7078568b425260cc3}} 
+\index{motor.\+h@{motor.\+h}!motor\+\_\+run\+\_\+slider@{motor\+\_\+run\+\_\+slider}}
+\index{motor\+\_\+run\+\_\+slider@{motor\+\_\+run\+\_\+slider}!motor.\+h@{motor.\+h}}
+\subsubsection{\texorpdfstring{motor\+\_\+run\+\_\+slider()}{motor\_run\_slider()}}
+{\footnotesize\ttfamily void motor\+\_\+run\+\_\+slider (\begin{DoxyParamCaption}\item[{int}]{reference }\end{DoxyParamCaption})}
+
+
+
+Uses the P\+ID controller to drive the motor, by comparing the encoder measurement to the input {\ttfamily reference}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reference} & The reference value input to the P\+ID controller. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 108 of file motor.\+c.
+

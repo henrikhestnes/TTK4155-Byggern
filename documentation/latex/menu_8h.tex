@@ -1,0 +1,65 @@
+\hypertarget{menu_8h}{}\section{node1/menu.h File Reference}
+\label{menu_8h}\index{node1/menu.\+h@{node1/menu.\+h}}
+
+
+Module for the menu system.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for menu.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=158pt]{menu_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{menu_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structmenu}{menu}
+\begin{DoxyCompactList}\small\item\em Data structure to represent a menu. Points to the text display of the menu, and menus above and below in the structure. Also points to an array of functions to be called when the option is selected. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{menu_8h_a1b978a465ff0398eaea898634ce9d9b0}\label{menu_8h_a1b978a465ff0398eaea898634ce9d9b0}} 
+\#define {\bfseries M\+A\+X\+\_\+\+S\+U\+B\+M\+E\+N\+U\+\_\+\+N\+U\+M\+B\+ER}~5
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{menu_8h_aef883fcbc0fedc43ffe831f59194dc5b}\label{menu_8h_aef883fcbc0fedc43ffe831f59194dc5b}} 
+typedef struct \hyperlink{structmenu}{menu} \hyperlink{menu_8h_aef883fcbc0fedc43ffe831f59194dc5b}{M\+E\+NU}
+\begin{DoxyCompactList}\small\item\em Data structure to represent a menu. Points to the text display of the menu, and menus above and below in the structure. Also points to an array of functions to be called when the option is selected. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{menu_8h_a825deebad1aa530657673fb8a95a2565}\label{menu_8h_a825deebad1aa530657673fb8a95a2565}} 
+void \hyperlink{menu_8h_a825deebad1aa530657673fb8a95a2565}{menu\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initiates the menu by creating all submenus, with their respective linked lists of nodes. Clears the O\+L\+ED screen and writes the main menu to the S\+R\+AM. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8h_a0bf8d4a91e08200bd9e1080ad4fd59ae}\label{menu_8h_a0bf8d4a91e08200bd9e1080ad4fd59ae}} 
+void \hyperlink{menu_8h_a0bf8d4a91e08200bd9e1080ad4fd59ae}{menu\+\_\+run} ()
+\begin{DoxyCompactList}\small\item\em Navigates the menu, depending on the joystick direction. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8h_a666d48b65f316427066fd81a423ccacc}\label{menu_8h_a666d48b65f316427066fd81a423ccacc}} 
+void \hyperlink{menu_8h_a666d48b65f316427066fd81a423ccacc}{menu\+\_\+timer\+\_\+enable} ()
+\begin{DoxyCompactList}\small\item\em Enables the timer which prints the menu to the O\+L\+ED screen. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8h_af317d740a77d0eae48cbe8e2d0d448e9}\label{menu_8h_af317d740a77d0eae48cbe8e2d0d448e9}} 
+void \hyperlink{menu_8h_af317d740a77d0eae48cbe8e2d0d448e9}{menu\+\_\+timer\+\_\+disable} ()
+\begin{DoxyCompactList}\small\item\em Disables the timer which prints the menu to the O\+L\+ED screen. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8h_ad14250594b184a816ab6291c37e28809}\label{menu_8h_ad14250594b184a816ab6291c37e28809}} 
+void \hyperlink{menu_8h_ad14250594b184a816ab6291c37e28809}{menu\+\_\+go\+\_\+to\+\_\+parent} ()
+\begin{DoxyCompactList}\small\item\em Navigates to the menu above the current menu. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{menu_8h_ab6cf37eeeacee3bc68744eaffde1d7d1}\label{menu_8h_ab6cf37eeeacee3bc68744eaffde1d7d1}} 
+void \hyperlink{menu_8h_ab6cf37eeeacee3bc68744eaffde1d7d1}{menu\+\_\+go\+\_\+to\+\_\+child} ()
+\begin{DoxyCompactList}\small\item\em Navigates to the submenu below the current menu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for the menu system. 
+

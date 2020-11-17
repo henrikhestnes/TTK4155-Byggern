@@ -1,0 +1,89 @@
+\hypertarget{uart_8h}{}\section{node1/uart.h File Reference}
+\label{uart_8h}\index{node1/uart.\+h@{node1/uart.\+h}}
+
+
+Module for sending and receiving messages through the U\+A\+RT.  
+
+
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=244pt]{uart_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{uart_8h_a6cd2d179b253d22b5cb7d6b97e26a6b2}{uart\+\_\+init} (unsigned int ubrr)
+\begin{DoxyCompactList}\small\item\em Initiates the uart module by enabling the necessary registers, and setting baudrate and frame format. \end{DoxyCompactList}\item 
+void \hyperlink{uart_8h_ae049828d050821180abb9bedd1af7d0a}{uart\+\_\+transmit} (unsigned char data)
+\begin{DoxyCompactList}\small\item\em Tranmits {\ttfamily data} to the M\+CU. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{uart_8h_ae29439787a3b89a40ed63c5cac6ad75e}{uart\+\_\+recieve} ()
+\begin{DoxyCompactList}\small\item\em Recieves data from the M\+CU. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{uart_8h_a5a3233a1ec3b7fac14ef0a03c1b39bca}\label{uart_8h_a5a3233a1ec3b7fac14ef0a03c1b39bca}} 
+void \hyperlink{uart_8h_a5a3233a1ec3b7fac14ef0a03c1b39bca}{uart\+\_\+link\+\_\+printf} ()
+\begin{DoxyCompactList}\small\item\em Links the {\ttfamily printf()} function to the uart module. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for sending and receiving messages through the U\+A\+RT. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{uart_8h_a6cd2d179b253d22b5cb7d6b97e26a6b2}\label{uart_8h_a6cd2d179b253d22b5cb7d6b97e26a6b2}} 
+\index{uart.\+h@{uart.\+h}!uart\+\_\+init@{uart\+\_\+init}}
+\index{uart\+\_\+init@{uart\+\_\+init}!uart.\+h@{uart.\+h}}
+\subsubsection{\texorpdfstring{uart\+\_\+init()}{uart\_init()}}
+{\footnotesize\ttfamily void uart\+\_\+init (\begin{DoxyParamCaption}\item[{unsigned int}]{ubrr }\end{DoxyParamCaption})}
+
+
+
+Initiates the uart module by enabling the necessary registers, and setting baudrate and frame format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ubrr} & Value used to compute baudrate. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 5 of file uart.\+c.
+
+\mbox{\Hypertarget{uart_8h_ae29439787a3b89a40ed63c5cac6ad75e}\label{uart_8h_ae29439787a3b89a40ed63c5cac6ad75e}} 
+\index{uart.\+h@{uart.\+h}!uart\+\_\+recieve@{uart\+\_\+recieve}}
+\index{uart\+\_\+recieve@{uart\+\_\+recieve}!uart.\+h@{uart.\+h}}
+\subsubsection{\texorpdfstring{uart\+\_\+recieve()}{uart\_recieve()}}
+{\footnotesize\ttfamily unsigned char uart\+\_\+recieve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Recieves data from the M\+CU. 
+
+\begin{DoxyReturn}{Returns}
+8-\/bit value recieved from the M\+CU. 
+\end{DoxyReturn}
+
+
+Definition at line 29 of file uart.\+c.
+
+\mbox{\Hypertarget{uart_8h_ae049828d050821180abb9bedd1af7d0a}\label{uart_8h_ae049828d050821180abb9bedd1af7d0a}} 
+\index{uart.\+h@{uart.\+h}!uart\+\_\+transmit@{uart\+\_\+transmit}}
+\index{uart\+\_\+transmit@{uart\+\_\+transmit}!uart.\+h@{uart.\+h}}
+\subsubsection{\texorpdfstring{uart\+\_\+transmit()}{uart\_transmit()}}
+{\footnotesize\ttfamily void uart\+\_\+transmit (\begin{DoxyParamCaption}\item[{unsigned char}]{data }\end{DoxyParamCaption})}
+
+
+
+Tranmits {\ttfamily data} to the M\+CU. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & 8-\/bit value to be tranmitted. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 20 of file uart.\+c.
+

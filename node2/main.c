@@ -11,8 +11,6 @@
 #include "uart_and_printf/printf-stdarg.h"
 #include "can/can_controller.h"
 #include "sam/sam3x/include/sam.h"
-#include "../common/can.h"
-
 
 #include "game.h"
 #include "fsm.h"

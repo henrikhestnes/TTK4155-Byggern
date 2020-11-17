@@ -1,0 +1,64 @@
+\hypertarget{node1_2main_8c}{}\section{node1/main.c File Reference}
+\label{node1_2main_8c}\index{node1/main.\+c@{node1/main.\+c}}
+
+
+Main program of node 1.  
+
+
+{\ttfamily \#include \char`\"{}uart.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sram.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user\+\_\+input.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}oled.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}menu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}can\+\_\+driver.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}highscore.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fsm.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../common/can.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\newline
+{\ttfamily \#include $<$util/delay.\+h$>$}\newline
+Include dependency graph for main.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{node1_2main_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{node1_2main_8c_a43bafb28b29491ec7f871319b5a3b2f8}\label{node1_2main_8c_a43bafb28b29491ec7f871319b5a3b2f8}} 
+\#define {\bfseries F\+\_\+\+C\+PU}~4.\+9152\+E6
+\item 
+\mbox{\Hypertarget{node1_2main_8c_a62634036639f88eece6fbf226b45f84b}\label{node1_2main_8c_a62634036639f88eece6fbf226b45f84b}} 
+\#define {\bfseries B\+A\+UD}~9600
+\item 
+\mbox{\Hypertarget{node1_2main_8c_af85b10a3b65a3b2c909578fd6601e95e}\label{node1_2main_8c_af85b10a3b65a3b2c909578fd6601e95e}} 
+\#define {\bfseries U\+B\+RR}~F\+\_\+\+C\+PU / 16 / B\+A\+UD -\/ 1
+\item 
+\mbox{\Hypertarget{node1_2main_8c_ab5df03a8a29c9c55a0fbdea399da5626}\label{node1_2main_8c_ab5df03a8a29c9c55a0fbdea399da5626}} 
+\#define {\bfseries N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+V\+ES}~3
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{node1_2main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{node1_2main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+int {\bfseries main} ()
+\item 
+\mbox{\Hypertarget{node1_2main_8c_afea150fcd685610cb9f7672fce361e53}\label{node1_2main_8c_afea150fcd685610cb9f7672fce361e53}} 
+{\bfseries I\+SR} (I\+N\+T0\+\_\+vect)
+\item 
+\mbox{\Hypertarget{node1_2main_8c_ad39420cdd896dd12c68e36313139d0a5}\label{node1_2main_8c_ad39420cdd896dd12c68e36313139d0a5}} 
+{\bfseries I\+SR} (T\+I\+M\+E\+R1\+\_\+\+C\+O\+M\+P\+A\+\_\+vect)
+\item 
+\mbox{\Hypertarget{node1_2main_8c_a86953738188622410b88938da2bf8a63}\label{node1_2main_8c_a86953738188622410b88938da2bf8a63}} 
+{\bfseries I\+SR} (T\+I\+M\+E\+R3\+\_\+\+C\+O\+M\+P\+A\+\_\+vect)
+\item 
+\mbox{\Hypertarget{node1_2main_8c_a04d3f94da90f7ac1b018f80f321e86de}\label{node1_2main_8c_a04d3f94da90f7ac1b018f80f321e86de}} 
+{\bfseries I\+SR} (B\+A\+D\+I\+S\+R\+\_\+vect)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Main program of node 1. 
+

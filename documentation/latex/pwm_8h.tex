@@ -1,0 +1,83 @@
+\hypertarget{pwm_8h}{}\section{node2/pwm.h File Reference}
+\label{pwm_8h}\index{node2/pwm.\+h@{node2/pwm.\+h}}
+
+
+Module for P\+W\+M-\/signal functionality.  
+
+
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{pwm_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pwm_8h_ac2446433833c63959e4ebb8bc8ed7245}\label{pwm_8h_ac2446433833c63959e4ebb8bc8ed7245}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+\+P\+I\+N44}~6
+\item 
+\mbox{\Hypertarget{pwm_8h_a2231f051dba177a1efcfbccc1d377982}\label{pwm_8h_a2231f051dba177a1efcfbccc1d377982}} 
+\#define {\bfseries C\+H\+A\+N\+N\+E\+L\+\_\+\+P\+I\+N45}~5
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pwm_8h_a1e8fdae3fd7118582ffa427dad05b6e1}\label{pwm_8h_a1e8fdae3fd7118582ffa427dad05b6e1}} 
+void \hyperlink{pwm_8h_a1e8fdae3fd7118582ffa427dad05b6e1}{pwm\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initializes P\+W\+M-\/signal, pin 44 set to a period of 20 ms to use for setting servo position, pin 45 to initially not have a pulse to play music later. \end{DoxyCompactList}\item 
+void \hyperlink{pwm_8h_aff51699769a8900e3634cbabd14c5331}{pwm\+\_\+set\+\_\+duty\+\_\+cycle} (float duty\+\_\+cycle, unsigned int channel)
+\begin{DoxyCompactList}\small\item\em Sets duty-\/cycle of P\+W\+M-\/signal. \end{DoxyCompactList}\item 
+void \hyperlink{pwm_8h_a006b294c28e3e463cb456749b981ffb5}{pwm\+\_\+set\+\_\+frequency} (int freq, unsigned int channel)
+\begin{DoxyCompactList}\small\item\em Sets frequency of P\+W\+M-\/signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for P\+W\+M-\/signal functionality. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{pwm_8h_aff51699769a8900e3634cbabd14c5331}\label{pwm_8h_aff51699769a8900e3634cbabd14c5331}} 
+\index{pwm.\+h@{pwm.\+h}!pwm\+\_\+set\+\_\+duty\+\_\+cycle@{pwm\+\_\+set\+\_\+duty\+\_\+cycle}}
+\index{pwm\+\_\+set\+\_\+duty\+\_\+cycle@{pwm\+\_\+set\+\_\+duty\+\_\+cycle}!pwm.\+h@{pwm.\+h}}
+\subsubsection{\texorpdfstring{pwm\+\_\+set\+\_\+duty\+\_\+cycle()}{pwm\_set\_duty\_cycle()}}
+{\footnotesize\ttfamily void pwm\+\_\+set\+\_\+duty\+\_\+cycle (\begin{DoxyParamCaption}\item[{float}]{duty\+\_\+cycle,  }\item[{unsigned int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Sets duty-\/cycle of P\+W\+M-\/signal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em duty\+\_\+cycle} & Desired duty-\/cycle \\
+\hline
+{\em channel} & Which channel to set duty-\/cycle \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 47 of file pwm.\+c.
+
+\mbox{\Hypertarget{pwm_8h_a006b294c28e3e463cb456749b981ffb5}\label{pwm_8h_a006b294c28e3e463cb456749b981ffb5}} 
+\index{pwm.\+h@{pwm.\+h}!pwm\+\_\+set\+\_\+frequency@{pwm\+\_\+set\+\_\+frequency}}
+\index{pwm\+\_\+set\+\_\+frequency@{pwm\+\_\+set\+\_\+frequency}!pwm.\+h@{pwm.\+h}}
+\subsubsection{\texorpdfstring{pwm\+\_\+set\+\_\+frequency()}{pwm\_set\_frequency()}}
+{\footnotesize\ttfamily void pwm\+\_\+set\+\_\+frequency (\begin{DoxyParamCaption}\item[{int}]{freq,  }\item[{unsigned int}]{channel }\end{DoxyParamCaption})}
+
+
+
+Sets frequency of P\+W\+M-\/signal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em freq} & Desired frequence \\
+\hline
+{\em channel} & Which channel to set frequency \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 60 of file pwm.\+c.
+

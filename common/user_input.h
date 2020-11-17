@@ -1,3 +1,10 @@
+/**
+ * @file 
+ * @brief User input constants common for node 1 and 2.
+ */
+
+
+
 #ifndef COMMON_USER_INPUT_H
 #define COMMON_USER_INPUT_H
 

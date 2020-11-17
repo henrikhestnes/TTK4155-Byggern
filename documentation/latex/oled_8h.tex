@@ -1,0 +1,255 @@
+\hypertarget{oled_8h}{}\section{node1/oled.h File Reference}
+\label{oled_8h}\index{node1/oled.\+h@{node1/oled.\+h}}
+
+
+Module for controlling and printing to the O\+L\+ED screen.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for oled.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=152pt]{oled_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{oled_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{oled_8h_abc4336b9de8d9284f7ade60b4b5d652f}\label{oled_8h_abc4336b9de8d9284f7ade60b4b5d652f}} 
+\#define {\bfseries N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES}~8
+\item 
+\mbox{\Hypertarget{oled_8h_a0240364487a54a70da4ffb51459ada98}\label{oled_8h_a0240364487a54a70da4ffb51459ada98}} 
+\#define {\bfseries N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+C\+O\+L\+U\+M\+NS}~128
+\item 
+\mbox{\Hypertarget{oled_8h_ae3c47801ea3ac450ff9b877b1e008e1a}\label{oled_8h_ae3c47801ea3ac450ff9b877b1e008e1a}} 
+\#define {\bfseries A\+S\+C\+I\+I\+\_\+\+O\+F\+F\+S\+ET}~32
+\item 
+\mbox{\Hypertarget{oled_8h_ae06dc7b9804bb102859f0e32754e79a5}\label{oled_8h_ae06dc7b9804bb102859f0e32754e79a5}} 
+\#define {\bfseries F\+O\+N\+T\+\_\+\+L\+E\+N\+G\+TH}~8
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{oled_8h_a8c50659733df2acac1580d209db8e97f}\label{oled_8h_a8c50659733df2acac1580d209db8e97f}} 
+void \hyperlink{oled_8h_a8c50659733df2acac1580d209db8e97f}{oled\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initiates the O\+L\+ED, and clears the screen using {\ttfamily \hyperlink{oled_8h_a66cdd05fb3a765535af54825cb9eb26c}{oled\+\_\+clear()}}. \end{DoxyCompactList}\item 
+void \hyperlink{oled_8h_a33f0de77a99d6143e4ccb2baf21e699a}{oled\+\_\+go\+\_\+to\+\_\+line} (int line)
+\begin{DoxyCompactList}\small\item\em Updates the O\+L\+ED page pointer. Does nothing if {\ttfamily line} is outside the interval \mbox{[}0,7\mbox{]}. \end{DoxyCompactList}\item 
+void \hyperlink{oled_8h_a39da12164c8ef722d0e9f88b1950212a}{oled\+\_\+go\+\_\+to\+\_\+col} (int col)
+\begin{DoxyCompactList}\small\item\em Updates the O\+L\+ED column pointer. Does nothing if {\ttfamily line} is outside the interval \mbox{[}0,127\mbox{]}. \end{DoxyCompactList}\item 
+void \hyperlink{oled_8h_a3447f323dab2790a195dc636eb97c8b7}{oled\+\_\+set\+\_\+pos} (int line, int col)
+\begin{DoxyCompactList}\small\item\em Updates the position pointed to by the page og column poiniters, by using {\ttfamily \hyperlink{oled_8h_a33f0de77a99d6143e4ccb2baf21e699a}{oled\+\_\+go\+\_\+to\+\_\+line()}} and {\ttfamily \hyperlink{oled_8h_a39da12164c8ef722d0e9f88b1950212a}{oled\+\_\+go\+\_\+to\+\_\+col()}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{oled_8h_a66cdd05fb3a765535af54825cb9eb26c}\label{oled_8h_a66cdd05fb3a765535af54825cb9eb26c}} 
+void \hyperlink{oled_8h_a66cdd05fb3a765535af54825cb9eb26c}{oled\+\_\+clear} (void)
+\begin{DoxyCompactList}\small\item\em Clears the O\+L\+ED screen. \end{DoxyCompactList}\item 
+void \hyperlink{oled_8h_ab558b8bab1b1f6bc8d573c230cbc20aa}{oled\+\_\+print\+\_\+char} (char c)
+\begin{DoxyCompactList}\small\item\em Prints a character {\ttfamily c} to the O\+L\+ED screen in the position pointed to by the page and column pointers. Uses the large font given in {\ttfamily \hyperlink{fonts_8h}{fonts.\+h}}. \end{DoxyCompactList}\item 
+void \hyperlink{oled_8h_a47fbb0bd7f8f0a0aac3e90aa49833b69}{oled\+\_\+print\+\_\+string} (const char $\ast$string)
+\begin{DoxyCompactList}\small\item\em Prints a character {\ttfamily string} to the O\+L\+ED screen in the position pointed to by the page and column pointers, by using {\ttfamily \hyperlink{oled_8h_ab558b8bab1b1f6bc8d573c230cbc20aa}{oled\+\_\+print\+\_\+char()}}. \end{DoxyCompactList}\item 
+void \hyperlink{oled_8h_a3e2dd8ae1ab72c11cd8194407a1d4c5d}{oled\+\_\+print\+\_\+int} (uint16\+\_\+t number)
+\begin{DoxyCompactList}\small\item\em Prints an integer {\ttfamily number} to the O\+L\+ED screen in the position pointed to by the page and column pointers, by using {\ttfamily \hyperlink{oled_8h_a47fbb0bd7f8f0a0aac3e90aa49833b69}{oled\+\_\+print\+\_\+string()}}. \end{DoxyCompactList}\item 
+void \hyperlink{oled_8h_a6595d2dea96975e71d5a9eb76a9b756f}{oled\+\_\+print\+\_\+playing\+\_\+screen} (int lives\+\_\+left, int max\+\_\+lives)
+\begin{DoxyCompactList}\small\item\em Prints the playing screen, showing lives left as filled hearts, and lives lost as empty hearts. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{oled_8h_a4c5b25604dfc14447301e518966f9b62}\label{oled_8h_a4c5b25604dfc14447301e518966f9b62}} 
+void \hyperlink{oled_8h_a4c5b25604dfc14447301e518966f9b62}{oled\+\_\+print\+\_\+quit\+\_\+screen} (void)
+\begin{DoxyCompactList}\small\item\em Prints the quit screen. \end{DoxyCompactList}\item 
+void \hyperlink{oled_8h_a1802dd010241b5549bf382e441480457}{oled\+\_\+print\+\_\+game\+\_\+over\+\_\+screen} (int score, char new\+\_\+highscore)
+\begin{DoxyCompactList}\small\item\em Prints the game over screen, which displays {\ttfamily score}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{oled_8h_ac621da3bb2f74172c96e297ad0f8e642}\label{oled_8h_ac621da3bb2f74172c96e297ad0f8e642}} 
+void \hyperlink{oled_8h_ac621da3bb2f74172c96e297ad0f8e642}{oled\+\_\+print\+\_\+from\+\_\+sram} ()
+\begin{DoxyCompactList}\small\item\em Prints the first 1024 bytes of the S\+R\+AM memory to the O\+L\+ED screen. \end{DoxyCompactList}\item 
+void \hyperlink{oled_8h_a75681f1038002d7d3ea4fe0ad379c715}{oled\+\_\+set\+\_\+brightness} (uint8\+\_\+t brightness)
+\begin{DoxyCompactList}\small\item\em Adjusts the brightness of the O\+L\+ED screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for controlling and printing to the O\+L\+ED screen. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{oled_8h_a39da12164c8ef722d0e9f88b1950212a}\label{oled_8h_a39da12164c8ef722d0e9f88b1950212a}} 
+\index{oled.\+h@{oled.\+h}!oled\+\_\+go\+\_\+to\+\_\+col@{oled\+\_\+go\+\_\+to\+\_\+col}}
+\index{oled\+\_\+go\+\_\+to\+\_\+col@{oled\+\_\+go\+\_\+to\+\_\+col}!oled.\+h@{oled.\+h}}
+\subsubsection{\texorpdfstring{oled\+\_\+go\+\_\+to\+\_\+col()}{oled\_go\_to\_col()}}
+{\footnotesize\ttfamily void oled\+\_\+go\+\_\+to\+\_\+col (\begin{DoxyParamCaption}\item[{int}]{col }\end{DoxyParamCaption})}
+
+
+
+Updates the O\+L\+ED column pointer. Does nothing if {\ttfamily line} is outside the interval \mbox{[}0,127\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em col} & New value of the O\+L\+ED column pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 52 of file oled.\+c.
+
+\mbox{\Hypertarget{oled_8h_a33f0de77a99d6143e4ccb2baf21e699a}\label{oled_8h_a33f0de77a99d6143e4ccb2baf21e699a}} 
+\index{oled.\+h@{oled.\+h}!oled\+\_\+go\+\_\+to\+\_\+line@{oled\+\_\+go\+\_\+to\+\_\+line}}
+\index{oled\+\_\+go\+\_\+to\+\_\+line@{oled\+\_\+go\+\_\+to\+\_\+line}!oled.\+h@{oled.\+h}}
+\subsubsection{\texorpdfstring{oled\+\_\+go\+\_\+to\+\_\+line()}{oled\_go\_to\_line()}}
+{\footnotesize\ttfamily void oled\+\_\+go\+\_\+to\+\_\+line (\begin{DoxyParamCaption}\item[{int}]{line }\end{DoxyParamCaption})}
+
+
+
+Updates the O\+L\+ED page pointer. Does nothing if {\ttfamily line} is outside the interval \mbox{[}0,7\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & New value of the O\+L\+ED page pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 45 of file oled.\+c.
+
+\mbox{\Hypertarget{oled_8h_ab558b8bab1b1f6bc8d573c230cbc20aa}\label{oled_8h_ab558b8bab1b1f6bc8d573c230cbc20aa}} 
+\index{oled.\+h@{oled.\+h}!oled\+\_\+print\+\_\+char@{oled\+\_\+print\+\_\+char}}
+\index{oled\+\_\+print\+\_\+char@{oled\+\_\+print\+\_\+char}!oled.\+h@{oled.\+h}}
+\subsubsection{\texorpdfstring{oled\+\_\+print\+\_\+char()}{oled\_print\_char()}}
+{\footnotesize\ttfamily void oled\+\_\+print\+\_\+char (\begin{DoxyParamCaption}\item[{char}]{c }\end{DoxyParamCaption})}
+
+
+
+Prints a character {\ttfamily c} to the O\+L\+ED screen in the position pointed to by the page and column pointers. Uses the large font given in {\ttfamily \hyperlink{fonts_8h}{fonts.\+h}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & Character to be printed to the O\+L\+ED screen. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 79 of file oled.\+c.
+
+\mbox{\Hypertarget{oled_8h_a1802dd010241b5549bf382e441480457}\label{oled_8h_a1802dd010241b5549bf382e441480457}} 
+\index{oled.\+h@{oled.\+h}!oled\+\_\+print\+\_\+game\+\_\+over\+\_\+screen@{oled\+\_\+print\+\_\+game\+\_\+over\+\_\+screen}}
+\index{oled\+\_\+print\+\_\+game\+\_\+over\+\_\+screen@{oled\+\_\+print\+\_\+game\+\_\+over\+\_\+screen}!oled.\+h@{oled.\+h}}
+\subsubsection{\texorpdfstring{oled\+\_\+print\+\_\+game\+\_\+over\+\_\+screen()}{oled\_print\_game\_over\_screen()}}
+{\footnotesize\ttfamily void oled\+\_\+print\+\_\+game\+\_\+over\+\_\+screen (\begin{DoxyParamCaption}\item[{int}]{score,  }\item[{char}]{new\+\_\+highscore }\end{DoxyParamCaption})}
+
+
+
+Prints the game over screen, which displays {\ttfamily score}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em score} & Score to be displayed. \\
+\hline
+{\em new\+\_\+highscore} & If 1, player is congratulated with achieving a new highscore. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 171 of file oled.\+c.
+
+\mbox{\Hypertarget{oled_8h_a3e2dd8ae1ab72c11cd8194407a1d4c5d}\label{oled_8h_a3e2dd8ae1ab72c11cd8194407a1d4c5d}} 
+\index{oled.\+h@{oled.\+h}!oled\+\_\+print\+\_\+int@{oled\+\_\+print\+\_\+int}}
+\index{oled\+\_\+print\+\_\+int@{oled\+\_\+print\+\_\+int}!oled.\+h@{oled.\+h}}
+\subsubsection{\texorpdfstring{oled\+\_\+print\+\_\+int()}{oled\_print\_int()}}
+{\footnotesize\ttfamily void oled\+\_\+print\+\_\+int (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{number }\end{DoxyParamCaption})}
+
+
+
+Prints an integer {\ttfamily number} to the O\+L\+ED screen in the position pointed to by the page and column pointers, by using {\ttfamily \hyperlink{oled_8h_a47fbb0bd7f8f0a0aac3e90aa49833b69}{oled\+\_\+print\+\_\+string()}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em number} & Integer to be printed to the O\+L\+ED screen. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 98 of file oled.\+c.
+
+\mbox{\Hypertarget{oled_8h_a6595d2dea96975e71d5a9eb76a9b756f}\label{oled_8h_a6595d2dea96975e71d5a9eb76a9b756f}} 
+\index{oled.\+h@{oled.\+h}!oled\+\_\+print\+\_\+playing\+\_\+screen@{oled\+\_\+print\+\_\+playing\+\_\+screen}}
+\index{oled\+\_\+print\+\_\+playing\+\_\+screen@{oled\+\_\+print\+\_\+playing\+\_\+screen}!oled.\+h@{oled.\+h}}
+\subsubsection{\texorpdfstring{oled\+\_\+print\+\_\+playing\+\_\+screen()}{oled\_print\_playing\_screen()}}
+{\footnotesize\ttfamily void oled\+\_\+print\+\_\+playing\+\_\+screen (\begin{DoxyParamCaption}\item[{int}]{lives\+\_\+left,  }\item[{int}]{max\+\_\+lives }\end{DoxyParamCaption})}
+
+
+
+Prints the playing screen, showing lives left as filled hearts, and lives lost as empty hearts. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lives\+\_\+left} & Amount of filled hearts. \\
+\hline
+{\em max\+\_\+lives} & Number of hearts on screen. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 143 of file oled.\+c.
+
+\mbox{\Hypertarget{oled_8h_a47fbb0bd7f8f0a0aac3e90aa49833b69}\label{oled_8h_a47fbb0bd7f8f0a0aac3e90aa49833b69}} 
+\index{oled.\+h@{oled.\+h}!oled\+\_\+print\+\_\+string@{oled\+\_\+print\+\_\+string}}
+\index{oled\+\_\+print\+\_\+string@{oled\+\_\+print\+\_\+string}!oled.\+h@{oled.\+h}}
+\subsubsection{\texorpdfstring{oled\+\_\+print\+\_\+string()}{oled\_print\_string()}}
+{\footnotesize\ttfamily void oled\+\_\+print\+\_\+string (\begin{DoxyParamCaption}\item[{const char $\ast$}]{string }\end{DoxyParamCaption})}
+
+
+
+Prints a character {\ttfamily string} to the O\+L\+ED screen in the position pointed to by the page and column pointers, by using {\ttfamily \hyperlink{oled_8h_ab558b8bab1b1f6bc8d573c230cbc20aa}{oled\+\_\+print\+\_\+char()}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em string} & String to be printed to the O\+L\+ED screen. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 89 of file oled.\+c.
+
+\mbox{\Hypertarget{oled_8h_a75681f1038002d7d3ea4fe0ad379c715}\label{oled_8h_a75681f1038002d7d3ea4fe0ad379c715}} 
+\index{oled.\+h@{oled.\+h}!oled\+\_\+set\+\_\+brightness@{oled\+\_\+set\+\_\+brightness}}
+\index{oled\+\_\+set\+\_\+brightness@{oled\+\_\+set\+\_\+brightness}!oled.\+h@{oled.\+h}}
+\subsubsection{\texorpdfstring{oled\+\_\+set\+\_\+brightness()}{oled\_set\_brightness()}}
+{\footnotesize\ttfamily void oled\+\_\+set\+\_\+brightness (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{brightness }\end{DoxyParamCaption})}
+
+
+
+Adjusts the brightness of the O\+L\+ED screen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em brightness} & Desired brightness. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 205 of file oled.\+c.
+
+\mbox{\Hypertarget{oled_8h_a3447f323dab2790a195dc636eb97c8b7}\label{oled_8h_a3447f323dab2790a195dc636eb97c8b7}} 
+\index{oled.\+h@{oled.\+h}!oled\+\_\+set\+\_\+pos@{oled\+\_\+set\+\_\+pos}}
+\index{oled\+\_\+set\+\_\+pos@{oled\+\_\+set\+\_\+pos}!oled.\+h@{oled.\+h}}
+\subsubsection{\texorpdfstring{oled\+\_\+set\+\_\+pos()}{oled\_set\_pos()}}
+{\footnotesize\ttfamily void oled\+\_\+set\+\_\+pos (\begin{DoxyParamCaption}\item[{int}]{line,  }\item[{int}]{col }\end{DoxyParamCaption})}
+
+
+
+Updates the position pointed to by the page og column poiniters, by using {\ttfamily \hyperlink{oled_8h_a33f0de77a99d6143e4ccb2baf21e699a}{oled\+\_\+go\+\_\+to\+\_\+line()}} and {\ttfamily \hyperlink{oled_8h_a39da12164c8ef722d0e9f88b1950212a}{oled\+\_\+go\+\_\+to\+\_\+col()}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & New value of the O\+L\+ED page pointer. \\
+\hline
+{\em col} & New value of the O\+L\+ED column pointer. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 63 of file oled.\+c.
+

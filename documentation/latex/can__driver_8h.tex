@@ -1,0 +1,104 @@
+\hypertarget{can__driver_8h}{}\section{node1/can\+\_\+driver.h File Reference}
+\label{can__driver_8h}\index{node1/can\+\_\+driver.\+h@{node1/can\+\_\+driver.\+h}}
+
+
+Module for sending and receiving data over the C\+AN bus.  
+
+
+{\ttfamily \#include \char`\"{}mcp2515\+\_\+driver.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../common/can.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for can\+\_\+driver.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{can__driver_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{can__driver_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{can__driver_8h_a7ee6213bfaeacdb7d26ef64cc213c846}{can\+\_\+init} (uint8\+\_\+t mode)
+\begin{DoxyCompactList}\small\item\em Data structure to be used for messages sent using the C\+AN interface. \end{DoxyCompactList}\item 
+void \hyperlink{can__driver_8h_a935732faa9f8acfbc2fe7ac9e9001033}{can\+\_\+send} (\hyperlink{can_8h_a5918f3dbd6f1aa407afc4f7c34854e08}{C\+A\+N\+\_\+\+M\+E\+S\+S\+A\+GE} $\ast$message)
+\begin{DoxyCompactList}\small\item\em Transmits a message of type {\ttfamily C\+A\+N\+\_\+\+M\+E\+S\+S\+A\+GE} using the C\+AN interface. Uses transmit buffer {\ttfamily T\+X\+B0}. \end{DoxyCompactList}\item 
+int \hyperlink{can__driver_8h_a32e14e772cf104ed3251fb44ca098b7c}{can\+\_\+recieve} (\hyperlink{can_8h_a5918f3dbd6f1aa407afc4f7c34854e08}{C\+A\+N\+\_\+\+M\+E\+S\+S\+A\+GE} $\ast$message)
+\begin{DoxyCompactList}\small\item\em Recieves a message of type {\ttfamily C\+A\+N\+\_\+\+M\+E\+S\+S\+A\+GE} using the C\+AN interface. Uses recieve buffer {\ttfamily R\+X\+B0} or {\ttfamily R\+B\+X1}, depending on the interrupt flag register of the M\+C\+P2515. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for sending and receiving data over the C\+AN bus. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{can__driver_8h_a7ee6213bfaeacdb7d26ef64cc213c846}\label{can__driver_8h_a7ee6213bfaeacdb7d26ef64cc213c846}} 
+\index{can\+\_\+driver.\+h@{can\+\_\+driver.\+h}!can\+\_\+init@{can\+\_\+init}}
+\index{can\+\_\+init@{can\+\_\+init}!can\+\_\+driver.\+h@{can\+\_\+driver.\+h}}
+\subsubsection{\texorpdfstring{can\+\_\+init()}{can\_init()}}
+{\footnotesize\ttfamily void can\+\_\+init (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{mode }\end{DoxyParamCaption})}
+
+
+
+Data structure to be used for messages sent using the C\+AN interface. 
+
+Initiates the C\+AN interface, by setting the M\+C\+P2515 to the desired mode, and enabling interrupt on message reception.
+
+
+\begin{DoxyParams}{Parameters}
+{\em mode} & Mode M\+C\+P2515 is being set to. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 21 of file can\+\_\+driver.\+c.
+
+\mbox{\Hypertarget{can__driver_8h_a32e14e772cf104ed3251fb44ca098b7c}\label{can__driver_8h_a32e14e772cf104ed3251fb44ca098b7c}} 
+\index{can\+\_\+driver.\+h@{can\+\_\+driver.\+h}!can\+\_\+recieve@{can\+\_\+recieve}}
+\index{can\+\_\+recieve@{can\+\_\+recieve}!can\+\_\+driver.\+h@{can\+\_\+driver.\+h}}
+\subsubsection{\texorpdfstring{can\+\_\+recieve()}{can\_recieve()}}
+{\footnotesize\ttfamily int can\+\_\+recieve (\begin{DoxyParamCaption}\item[{\hyperlink{can_8h_a5918f3dbd6f1aa407afc4f7c34854e08}{C\+A\+N\+\_\+\+M\+E\+S\+S\+A\+GE} $\ast$}]{message }\end{DoxyParamCaption})}
+
+
+
+Recieves a message of type {\ttfamily C\+A\+N\+\_\+\+M\+E\+S\+S\+A\+GE} using the C\+AN interface. Uses recieve buffer {\ttfamily R\+X\+B0} or {\ttfamily R\+B\+X1}, depending on the interrupt flag register of the M\+C\+P2515. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Pointer to the message being recieved to.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, 1 on failure. 
+\end{DoxyReturn}
+
+
+Definition at line 48 of file can\+\_\+driver.\+c.
+
+\mbox{\Hypertarget{can__driver_8h_a935732faa9f8acfbc2fe7ac9e9001033}\label{can__driver_8h_a935732faa9f8acfbc2fe7ac9e9001033}} 
+\index{can\+\_\+driver.\+h@{can\+\_\+driver.\+h}!can\+\_\+send@{can\+\_\+send}}
+\index{can\+\_\+send@{can\+\_\+send}!can\+\_\+driver.\+h@{can\+\_\+driver.\+h}}
+\subsubsection{\texorpdfstring{can\+\_\+send()}{can\_send()}}
+{\footnotesize\ttfamily void can\+\_\+send (\begin{DoxyParamCaption}\item[{\hyperlink{can_8h_a5918f3dbd6f1aa407afc4f7c34854e08}{C\+A\+N\+\_\+\+M\+E\+S\+S\+A\+GE} $\ast$}]{message }\end{DoxyParamCaption})}
+
+
+
+Transmits a message of type {\ttfamily C\+A\+N\+\_\+\+M\+E\+S\+S\+A\+GE} using the C\+AN interface. Uses transmit buffer {\ttfamily T\+X\+B0}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & Pointer to the message being sent. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 34 of file can\+\_\+driver.\+c.
+

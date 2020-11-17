@@ -1,0 +1,70 @@
+\hypertarget{highscore_8h}{}\section{node1/highscore.h File Reference}
+\label{highscore_8h}\index{node1/highscore.\+h@{node1/highscore.\+h}}
+
+
+Module for saving and updating highscores in the non-\/volatile E\+E\+P\+R\+OM.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for highscore.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=176pt]{highscore_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{highscore_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{highscore_8h_a15d1ac1fca3799b4aa6ee5b94dd7dd97}\label{highscore_8h_a15d1ac1fca3799b4aa6ee5b94dd7dd97}} 
+\#define {\bfseries H\+I\+G\+H\+S\+C\+O\+R\+E\+\_\+\+L\+I\+S\+T\+\_\+\+L\+E\+N\+G\+TH}~3
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{highscore_8h_afb784b5df2d71aa32f62c632a4f1951a}\label{highscore_8h_afb784b5df2d71aa32f62c632a4f1951a}} 
+void \hyperlink{highscore_8h_afb784b5df2d71aa32f62c632a4f1951a}{highscore\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initiates the highscore by reading the highscore table from the E\+E\+P\+R\+OM memory. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{highscore_8h_a5475f5fa2206bd5bcdbb5b96a6f0ca49}\label{highscore_8h_a5475f5fa2206bd5bcdbb5b96a6f0ca49}} 
+void \hyperlink{highscore_8h_a5475f5fa2206bd5bcdbb5b96a6f0ca49}{highscore\+\_\+update} (void)
+\begin{DoxyCompactList}\small\item\em Updates the highscore, by comparing any new set scores to the highscore table. \end{DoxyCompactList}\item 
+uint16\+\_\+t $\ast$ \hyperlink{highscore_8h_a13b610af1ff392fc51e1f6f4e8cc7425}{highscore\+\_\+get} (void)
+\begin{DoxyCompactList}\small\item\em Returns the highscore table. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{highscore_8h_afa0fa6095ee9f0bbdeb155d11e233d1a}\label{highscore_8h_afa0fa6095ee9f0bbdeb155d11e233d1a}} 
+void \hyperlink{highscore_8h_afa0fa6095ee9f0bbdeb155d11e233d1a}{highscore\+\_\+reset} (void)
+\begin{DoxyCompactList}\small\item\em Resets the highscore table, setting all highscores to 0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{highscore_8h_ad1447bafdf8c9142d3ae2c2b08a97945}\label{highscore_8h_ad1447bafdf8c9142d3ae2c2b08a97945}} 
+void \hyperlink{highscore_8h_ad1447bafdf8c9142d3ae2c2b08a97945}{highscore\+\_\+set\+\_\+new\+\_\+score} (uint16\+\_\+t score)
+\begin{DoxyCompactList}\small\item\em Sets a new score, which is compared to the highscore table when {\ttfamily \hyperlink{highscore_8h_a5475f5fa2206bd5bcdbb5b96a6f0ca49}{highscore\+\_\+update()}} is called. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for saving and updating highscores in the non-\/volatile E\+E\+P\+R\+OM. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{highscore_8h_a13b610af1ff392fc51e1f6f4e8cc7425}\label{highscore_8h_a13b610af1ff392fc51e1f6f4e8cc7425}} 
+\index{highscore.\+h@{highscore.\+h}!highscore\+\_\+get@{highscore\+\_\+get}}
+\index{highscore\+\_\+get@{highscore\+\_\+get}!highscore.\+h@{highscore.\+h}}
+\subsubsection{\texorpdfstring{highscore\+\_\+get()}{highscore\_get()}}
+{\footnotesize\ttfamily uint16\+\_\+t$\ast$ highscore\+\_\+get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the highscore table. 
+
+\begin{DoxyReturn}{Returns}
+The highscore table, as an array with three elements of type {\ttfamily uint16\+\_\+t}. 
+\end{DoxyReturn}
+
+
+Definition at line 55 of file highscore.\+c.
+

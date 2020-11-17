@@ -21,7 +21,7 @@ typedef struct {
     int prev_error;
     float T;
     int max_u;
-} PID_DATA_t;
+} PID_DATA;
 
 
 /**

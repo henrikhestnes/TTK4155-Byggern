@@ -53,8 +53,8 @@ void user_input_init(void) {
 }
 
 
-pos_t user_input_joystick_pos(void) {
-    pos_t pos;
+JOYSTICK_POS user_input_joystick_pos(void) {
+    JOYSTICK_POS pos;
     pos.x = adc_read(X_CHANNEL);
     pos.y = adc_read(Y_CHANNEL);
 
@@ -80,8 +80,8 @@ int joystick_scale_value(uint8_t value, int offset) {
 }
 
 
-dir_t user_input_joystick_dir(void) {
-    pos_t pos = user_input_joystick_pos();
+JOYSTICK_DIR user_input_joystick_dir(void) {
+    JOYSTICK_POS pos = user_input_joystick_pos();
     pos.x = joystick_scale_value(pos.x, JOYSTICK_X_OFFSET);
     pos.y = joystick_scale_value(pos.y, JOYSTICK_Y_OFFSET);
 
@@ -111,8 +111,8 @@ dir_t user_input_joystick_dir(void) {
 }
 
 
-slider_t user_input_slider_pos(void) {
-    slider_t slider;
+SLIDER_POS user_input_slider_pos(void) {
+    SLIDER_POS slider;
     slider.left = adc_read(LEFT_SLIDER_CHANNEL);
     slider.right = adc_read(RIGHT_SLIDER_CHANNEL);
 
@@ -120,8 +120,8 @@ slider_t user_input_slider_pos(void) {
 }
 
 
-button_t user_input_buttons(void) {
-    button_t status = {0, 0, 0};
+BUTTONS user_input_buttons(void) {
+    BUTTONS status = {0, 0, 0};
 
     status.right = (PINB & (1 << RIGHT_BUTTON_PIN)) >> RIGHT_BUTTON_PIN;
     status.left = (PINB & (1 << LEFT_BUTTON_PIN)) >> LEFT_BUTTON_PIN;
@@ -132,9 +132,9 @@ button_t user_input_buttons(void) {
 
 
 void user_input_transmit() {
-    pos_t joystick = user_input_joystick_pos();
-    slider_t slider = user_input_slider_pos();
-    button_t button = user_input_buttons();
+    JOYSTICK_POS joystick = user_input_joystick_pos();
+    SLIDER_POS slider = user_input_slider_pos();
+    BUTTONS button = user_input_buttons();
 
     CAN_MESSAGE m = {
         .id = USER_INPUT_ID,

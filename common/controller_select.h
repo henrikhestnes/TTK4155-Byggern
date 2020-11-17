@@ -1,3 +1,10 @@
+/**
+ * @file 
+ * @brief Enumeration for controller selection common for node 1 and 2.
+ */
+
+
+
 #ifndef COMMON_CONTROLLER_SELECT_H
 #define COMMON_CONTROLLER_SELECT_H
 

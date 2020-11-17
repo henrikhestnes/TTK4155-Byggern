@@ -1,0 +1,144 @@
+\hypertarget{node1_2user__input_8h}{}\section{node1/user\+\_\+input.h File Reference}
+\label{node1_2user__input_8h}\index{node1/user\+\_\+input.\+h@{node1/user\+\_\+input.\+h}}
+
+
+Module for reading and transmitting user input data from the U\+SB multifunction board..  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for user\+\_\+input.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=179pt]{node1_2user__input_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{node1_2user__input_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structJOYSTICK__POS}{J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+OS}
+\begin{DoxyCompactList}\small\item\em Data structure to be used to represent the joystick position. \end{DoxyCompactList}\item 
+struct \hyperlink{structSLIDER__POS}{S\+L\+I\+D\+E\+R\+\_\+\+P\+OS}
+\begin{DoxyCompactList}\small\item\em Data structure to be used to represent the position of the two sliders. \end{DoxyCompactList}\item 
+struct \hyperlink{structBUTTONS}{B\+U\+T\+T\+O\+NS}
+\begin{DoxyCompactList}\small\item\em Data structure to be used to represent the status of the three buttons. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{node1_2user__input_8h_a76b104ee703e253f2bff35f2beee628d}\label{node1_2user__input_8h_a76b104ee703e253f2bff35f2beee628d}} 
+enum \hyperlink{node1_2user__input_8h_a76b104ee703e253f2bff35f2beee628d}{J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+D\+IR} \{ \newline
+{\bfseries UP}, 
+{\bfseries D\+O\+WN}, 
+{\bfseries L\+E\+FT}, 
+{\bfseries R\+I\+G\+HT}, 
+\newline
+{\bfseries C\+E\+N\+T\+ER}, 
+{\bfseries N\+E\+U\+T\+R\+AL}
+ \}\begin{DoxyCompactList}\small\item\em The different directions the joystick can point. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{node1_2user__input_8h_ac90157a0f1482f163abc8b24a02907fb}\label{node1_2user__input_8h_ac90157a0f1482f163abc8b24a02907fb}} 
+void \hyperlink{node1_2user__input_8h_ac90157a0f1482f163abc8b24a02907fb}{user\+\_\+input\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initiates the user input modeule by initiating the A\+DC, configuring input pins for the button, and setting up a timer for timed transmissions. \end{DoxyCompactList}\item 
+\hyperlink{structJOYSTICK__POS}{J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+OS} \hyperlink{node1_2user__input_8h_a33325461fea91ff023c9f5c1fb7372cf}{user\+\_\+input\+\_\+joystick\+\_\+pos} (void)
+\begin{DoxyCompactList}\small\item\em Reads the joystick position through the A\+DC. Returns a position with x and y values in the interval \mbox{[}0, 255\mbox{]}. \end{DoxyCompactList}\item 
+\hyperlink{node1_2user__input_8h_a76b104ee703e253f2bff35f2beee628d}{J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+D\+IR} \hyperlink{node1_2user__input_8h_a2adb6f7e123060a4c81ec9a70b9ef725}{user\+\_\+input\+\_\+joystick\+\_\+dir} (void)
+\begin{DoxyCompactList}\small\item\em Calculates the joystick\textquotesingle{}s direction from it\textquotesingle{}s postiton. Reads the joystick position using {\ttfamily joystick\+\_\+pos\+\_\+read()}. \end{DoxyCompactList}\item 
+\hyperlink{structSLIDER__POS}{S\+L\+I\+D\+E\+R\+\_\+\+P\+OS} \hyperlink{node1_2user__input_8h_a2bd9ad54baa6f5e04ef577f67ea3579d}{user\+\_\+input\+\_\+slider\+\_\+pos} (void)
+\begin{DoxyCompactList}\small\item\em Reads the slider position through the A\+DC. Returns a position for the left and right slider values in the interval \mbox{[}0, 255\mbox{]}. \end{DoxyCompactList}\item 
+\hyperlink{structBUTTONS}{B\+U\+T\+T\+O\+NS} \hyperlink{node1_2user__input_8h_a1229ee3a2d02735fb14d044a83781ded}{user\+\_\+input\+\_\+buttons} (void)
+\begin{DoxyCompactList}\small\item\em Reads the button statuses. Returns 1 if a button is pressed, and 0 otherwise. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{node1_2user__input_8h_a9451713cb4707bf0bdbb90f32b078eb2}\label{node1_2user__input_8h_a9451713cb4707bf0bdbb90f32b078eb2}} 
+void \hyperlink{node1_2user__input_8h_a9451713cb4707bf0bdbb90f32b078eb2}{user\+\_\+input\+\_\+transmit} (void)
+\begin{DoxyCompactList}\small\item\em Transmits all the input data over the C\+AN bus. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{node1_2user__input_8h_a9d3099164b85e4f6c6faa63fcbfcad0d}\label{node1_2user__input_8h_a9d3099164b85e4f6c6faa63fcbfcad0d}} 
+void \hyperlink{node1_2user__input_8h_a9d3099164b85e4f6c6faa63fcbfcad0d}{user\+\_\+input\+\_\+timer\+\_\+enable} ()
+\begin{DoxyCompactList}\small\item\em Enables the timer which calls {\ttfamily \hyperlink{node1_2user__input_8h_a9451713cb4707bf0bdbb90f32b078eb2}{user\+\_\+input\+\_\+transmit()}} at a frequency of 10 Hz. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{node1_2user__input_8h_a0f0406087b958880d329d8a4f07da82a}\label{node1_2user__input_8h_a0f0406087b958880d329d8a4f07da82a}} 
+void \hyperlink{node1_2user__input_8h_a0f0406087b958880d329d8a4f07da82a}{user\+\_\+input\+\_\+timer\+\_\+disable} ()
+\begin{DoxyCompactList}\small\item\em Disables the timer which calls {\ttfamily \hyperlink{node1_2user__input_8h_a9451713cb4707bf0bdbb90f32b078eb2}{user\+\_\+input\+\_\+transmit()}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for reading and transmitting user input data from the U\+SB multifunction board.. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{node1_2user__input_8h_a1229ee3a2d02735fb14d044a83781ded}\label{node1_2user__input_8h_a1229ee3a2d02735fb14d044a83781ded}} 
+\index{node1/user\+\_\+input.\+h@{node1/user\+\_\+input.\+h}!user\+\_\+input\+\_\+buttons@{user\+\_\+input\+\_\+buttons}}
+\index{user\+\_\+input\+\_\+buttons@{user\+\_\+input\+\_\+buttons}!node1/user\+\_\+input.\+h@{node1/user\+\_\+input.\+h}}
+\subsubsection{\texorpdfstring{user\+\_\+input\+\_\+buttons()}{user\_input\_buttons()}}
+{\footnotesize\ttfamily \hyperlink{structBUTTONS}{B\+U\+T\+T\+O\+NS} user\+\_\+input\+\_\+buttons (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Reads the button statuses. Returns 1 if a button is pressed, and 0 otherwise. 
+
+\begin{DoxyReturn}{Returns}
+The status of the left, right and joystick buttons. 
+\end{DoxyReturn}
+
+
+Definition at line 123 of file user\+\_\+input.\+c.
+
+\mbox{\Hypertarget{node1_2user__input_8h_a2adb6f7e123060a4c81ec9a70b9ef725}\label{node1_2user__input_8h_a2adb6f7e123060a4c81ec9a70b9ef725}} 
+\index{node1/user\+\_\+input.\+h@{node1/user\+\_\+input.\+h}!user\+\_\+input\+\_\+joystick\+\_\+dir@{user\+\_\+input\+\_\+joystick\+\_\+dir}}
+\index{user\+\_\+input\+\_\+joystick\+\_\+dir@{user\+\_\+input\+\_\+joystick\+\_\+dir}!node1/user\+\_\+input.\+h@{node1/user\+\_\+input.\+h}}
+\subsubsection{\texorpdfstring{user\+\_\+input\+\_\+joystick\+\_\+dir()}{user\_input\_joystick\_dir()}}
+{\footnotesize\ttfamily \hyperlink{node1_2user__input_8h_a76b104ee703e253f2bff35f2beee628d}{J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+D\+IR} user\+\_\+input\+\_\+joystick\+\_\+dir (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Calculates the joystick\textquotesingle{}s direction from it\textquotesingle{}s postiton. Reads the joystick position using {\ttfamily joystick\+\_\+pos\+\_\+read()}. 
+
+\begin{DoxyReturn}{Returns}
+The direction the joystick is pointing. 
+\end{DoxyReturn}
+
+
+Definition at line 83 of file user\+\_\+input.\+c.
+
+\mbox{\Hypertarget{node1_2user__input_8h_a33325461fea91ff023c9f5c1fb7372cf}\label{node1_2user__input_8h_a33325461fea91ff023c9f5c1fb7372cf}} 
+\index{node1/user\+\_\+input.\+h@{node1/user\+\_\+input.\+h}!user\+\_\+input\+\_\+joystick\+\_\+pos@{user\+\_\+input\+\_\+joystick\+\_\+pos}}
+\index{user\+\_\+input\+\_\+joystick\+\_\+pos@{user\+\_\+input\+\_\+joystick\+\_\+pos}!node1/user\+\_\+input.\+h@{node1/user\+\_\+input.\+h}}
+\subsubsection{\texorpdfstring{user\+\_\+input\+\_\+joystick\+\_\+pos()}{user\_input\_joystick\_pos()}}
+{\footnotesize\ttfamily \hyperlink{structJOYSTICK__POS}{J\+O\+Y\+S\+T\+I\+C\+K\+\_\+\+P\+OS} user\+\_\+input\+\_\+joystick\+\_\+pos (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Reads the joystick position through the A\+DC. Returns a position with x and y values in the interval \mbox{[}0, 255\mbox{]}. 
+
+\begin{DoxyReturn}{Returns}
+The joystick position. 
+\end{DoxyReturn}
+
+
+Definition at line 56 of file user\+\_\+input.\+c.
+
+\mbox{\Hypertarget{node1_2user__input_8h_a2bd9ad54baa6f5e04ef577f67ea3579d}\label{node1_2user__input_8h_a2bd9ad54baa6f5e04ef577f67ea3579d}} 
+\index{node1/user\+\_\+input.\+h@{node1/user\+\_\+input.\+h}!user\+\_\+input\+\_\+slider\+\_\+pos@{user\+\_\+input\+\_\+slider\+\_\+pos}}
+\index{user\+\_\+input\+\_\+slider\+\_\+pos@{user\+\_\+input\+\_\+slider\+\_\+pos}!node1/user\+\_\+input.\+h@{node1/user\+\_\+input.\+h}}
+\subsubsection{\texorpdfstring{user\+\_\+input\+\_\+slider\+\_\+pos()}{user\_input\_slider\_pos()}}
+{\footnotesize\ttfamily \hyperlink{structSLIDER__POS}{S\+L\+I\+D\+E\+R\+\_\+\+P\+OS} user\+\_\+input\+\_\+slider\+\_\+pos (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Reads the slider position through the A\+DC. Returns a position for the left and right slider values in the interval \mbox{[}0, 255\mbox{]}. 
+
+\begin{DoxyReturn}{Returns}
+The slider positions. 
+\end{DoxyReturn}
+
+
+Definition at line 114 of file user\+\_\+input.\+c.
+

@@ -1,0 +1,114 @@
+\hypertarget{node1_2fsm_8h}{}\section{node1/fsm.h File Reference}
+\label{node1_2fsm_8h}\index{node1/fsm.\+h@{node1/fsm.\+h}}
+
+
+Module for running the system as a Finite State Machine.  
+
+
+{\ttfamily \#include \char`\"{}../common/fsm\+\_\+state.\+h\char`\"{}}\newline
+Include dependency graph for fsm.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{node1_2fsm_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{node1_2fsm_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+F\+S\+M\+\_\+\+S\+T\+A\+TE \hyperlink{node1_2fsm_8h_a738db290745f8f50938f482a5da85f37}{fsm\+\_\+get\+\_\+state} (void)
+\begin{DoxyCompactList}\small\item\em Returns the current F\+SM state. \end{DoxyCompactList}\item 
+void \hyperlink{node1_2fsm_8h_a10da0d27428fd76c537c3bdb468c7816}{fsm\+\_\+transition\+\_\+to} (F\+S\+M\+\_\+\+S\+T\+A\+TE state)
+\begin{DoxyCompactList}\small\item\em Transitions the F\+SM to {\ttfamily state} by calling the state\textquotesingle{}s entry actions, and updating the current state. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{node1_2fsm_8h_a9926003a1b6faa1f0ce31b5976b5bf16}{fsm\+\_\+get\+\_\+lives\+\_\+left} (void)
+\begin{DoxyCompactList}\small\item\em Returns the number of lives left in a game. \end{DoxyCompactList}\item 
+void \hyperlink{node1_2fsm_8h_a29847c00ae4183b4838b94dc4111b11b}{fsm\+\_\+set\+\_\+lives\+\_\+left} (unsigned int lives)
+\begin{DoxyCompactList}\small\item\em Sets the number of lives left in a game. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for running the system as a Finite State Machine. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{node1_2fsm_8h_a9926003a1b6faa1f0ce31b5976b5bf16}\label{node1_2fsm_8h_a9926003a1b6faa1f0ce31b5976b5bf16}} 
+\index{node1/fsm.\+h@{node1/fsm.\+h}!fsm\+\_\+get\+\_\+lives\+\_\+left@{fsm\+\_\+get\+\_\+lives\+\_\+left}}
+\index{fsm\+\_\+get\+\_\+lives\+\_\+left@{fsm\+\_\+get\+\_\+lives\+\_\+left}!node1/fsm.\+h@{node1/fsm.\+h}}
+\subsubsection{\texorpdfstring{fsm\+\_\+get\+\_\+lives\+\_\+left()}{fsm\_get\_lives\_left()}}
+{\footnotesize\ttfamily unsigned int fsm\+\_\+get\+\_\+lives\+\_\+left (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the number of lives left in a game. 
+
+\begin{DoxyReturn}{Returns}
+The number of lives left in a game. 
+\end{DoxyReturn}
+
+
+Definition at line 31 of file fsm.\+c.
+
+\mbox{\Hypertarget{node1_2fsm_8h_a738db290745f8f50938f482a5da85f37}\label{node1_2fsm_8h_a738db290745f8f50938f482a5da85f37}} 
+\index{node1/fsm.\+h@{node1/fsm.\+h}!fsm\+\_\+get\+\_\+state@{fsm\+\_\+get\+\_\+state}}
+\index{fsm\+\_\+get\+\_\+state@{fsm\+\_\+get\+\_\+state}!node1/fsm.\+h@{node1/fsm.\+h}}
+\subsubsection{\texorpdfstring{fsm\+\_\+get\+\_\+state()}{fsm\_get\_state()}}
+{\footnotesize\ttfamily F\+S\+M\+\_\+\+S\+T\+A\+TE fsm\+\_\+get\+\_\+state (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the current F\+SM state. 
+
+\begin{DoxyReturn}{Returns}
+The current F\+SM state, of data type {\ttfamily F\+S\+M\+\_\+\+S\+T\+A\+TE}. 
+\end{DoxyReturn}
+
+
+Definition at line 26 of file fsm.\+c.
+
+\mbox{\Hypertarget{node1_2fsm_8h_a29847c00ae4183b4838b94dc4111b11b}\label{node1_2fsm_8h_a29847c00ae4183b4838b94dc4111b11b}} 
+\index{node1/fsm.\+h@{node1/fsm.\+h}!fsm\+\_\+set\+\_\+lives\+\_\+left@{fsm\+\_\+set\+\_\+lives\+\_\+left}}
+\index{fsm\+\_\+set\+\_\+lives\+\_\+left@{fsm\+\_\+set\+\_\+lives\+\_\+left}!node1/fsm.\+h@{node1/fsm.\+h}}
+\subsubsection{\texorpdfstring{fsm\+\_\+set\+\_\+lives\+\_\+left()}{fsm\_set\_lives\_left()}}
+{\footnotesize\ttfamily void fsm\+\_\+set\+\_\+lives\+\_\+left (\begin{DoxyParamCaption}\item[{unsigned int}]{lives }\end{DoxyParamCaption})}
+
+
+
+Sets the number of lives left in a game. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em lives\+\_\+left} & The new number of lives left in a game. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 36 of file fsm.\+c.
+
+\mbox{\Hypertarget{node1_2fsm_8h_a10da0d27428fd76c537c3bdb468c7816}\label{node1_2fsm_8h_a10da0d27428fd76c537c3bdb468c7816}} 
+\index{node1/fsm.\+h@{node1/fsm.\+h}!fsm\+\_\+transition\+\_\+to@{fsm\+\_\+transition\+\_\+to}}
+\index{fsm\+\_\+transition\+\_\+to@{fsm\+\_\+transition\+\_\+to}!node1/fsm.\+h@{node1/fsm.\+h}}
+\subsubsection{\texorpdfstring{fsm\+\_\+transition\+\_\+to()}{fsm\_transition\_to()}}
+{\footnotesize\ttfamily void fsm\+\_\+transition\+\_\+to (\begin{DoxyParamCaption}\item[{F\+S\+M\+\_\+\+S\+T\+A\+TE}]{state }\end{DoxyParamCaption})}
+
+
+
+Transitions the F\+SM to {\ttfamily state} by calling the state\textquotesingle{}s entry actions, and updating the current state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The F\+SM state to be transitioned to, of data type {\ttfamily F\+S\+M\+\_\+\+S\+T\+A\+TE}. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 41 of file fsm.\+c.
+

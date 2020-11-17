@@ -1,7 +1,7 @@
 #include "pid_controller.h"
 
 
-static PID_DATA_t PID = {0, 0, 0, 0, 0, 0, 0};
+static PID_DATA PID = {0, 0, 0, 0, 0, 0, 0};
 
 
 void pid_controller_init(float k_p, float k_i, float k_d, float timestep, int max_u) {

@@ -12,7 +12,9 @@
 #include "../sam/sam3x/include/sam.h"
 #include "../uart_and_printf/printf-stdarg.h"
 
+
 #define IRQ_CAN0_priority 1
+
 
 /**
  * \brief Initialize can bus with predefined number of rx and tx mailboxes, 

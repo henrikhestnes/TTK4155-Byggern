@@ -8,8 +8,6 @@
 #include "can/can_controller.h"
 #include "microbit.h"
 #include "sam/sam3x/include/sam.h"
-#include "../common/can.h"
-
 #include <stdint.h>
 
 

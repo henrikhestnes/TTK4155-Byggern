@@ -1,0 +1,157 @@
+\hypertarget{game_8h}{}\section{node2/game.h File Reference}
+\label{game_8h}\index{node2/game.\+h@{node2/game.\+h}}
+
+
+Module for game-\/fuctionality.  
+
+
+{\ttfamily \#include \char`\"{}../common/controller\+\_\+select.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../common/difficulty\+\_\+select.\+h\char`\"{}}\newline
+Include dependency graph for game.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=308pt]{game_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=341pt]{game_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{game_8h_ac465bb46e4ee9f25d9f8ba918c1a21e9}\label{game_8h_ac465bb46e4ee9f25d9f8ba918c1a21e9}} 
+\#define {\bfseries I\+N\+I\+T\+I\+A\+L\+\_\+\+L\+I\+V\+ES}~3
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{game_8h_afe35a1f8874f44c04acfdec83ef9ef8e}\label{game_8h_afe35a1f8874f44c04acfdec83ef9ef8e}} 
+void \hyperlink{game_8h_afe35a1f8874f44c04acfdec83ef9ef8e}{game\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initiates the game by resetting the score and lives left, enabling the timer for timed updating of the game signals, and initiating the P\+ID controller for the motor. \end{DoxyCompactList}\item 
+int \hyperlink{game_8h_a797c47cfebac12385eb43746dfc167b4}{game\+\_\+count\+\_\+fails} (void)
+\begin{DoxyCompactList}\small\item\em Checks if the IR beam is disrupted by the ball. Decreases the number of lives left if this is the case. \end{DoxyCompactList}\item 
+void \hyperlink{game_8h_a7f8e8b2bc4d5263789aff1b40d71c55d}{game\+\_\+set\+\_\+user\+\_\+data} (char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Updates the user input data. \end{DoxyCompactList}\item 
+void \hyperlink{game_8h_a4a32647b73e765a719fc4097bdc0fafe}{game\+\_\+set\+\_\+controller} (C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+S\+EL controller)
+\begin{DoxyCompactList}\small\item\em Selects the controller to be used in the game. \end{DoxyCompactList}\item 
+void \hyperlink{game_8h_a02cb95b89dfad24606ed1e6ee0ece81e}{game\+\_\+set\+\_\+difficulty} (D\+I\+F\+F\+I\+C\+U\+L\+TY difficulty)
+\begin{DoxyCompactList}\small\item\em Selects the difficulty to be used in the game. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{game_8h_a3cc4819959534dcbb31b1c9f7f40615c}\label{game_8h_a3cc4819959534dcbb31b1c9f7f40615c}} 
+void \hyperlink{game_8h_a3cc4819959534dcbb31b1c9f7f40615c}{game\+\_\+timer\+\_\+enable} ()
+\begin{DoxyCompactList}\small\item\em Enables the timer which runs the game. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{game_8h_a8cf447d101d6ef10f6dd0691566c2276}\label{game_8h_a8cf447d101d6ef10f6dd0691566c2276}} 
+void \hyperlink{game_8h_a8cf447d101d6ef10f6dd0691566c2276}{game\+\_\+timer\+\_\+disable} ()
+\begin{DoxyCompactList}\small\item\em Disables the timer which runs the game. \end{DoxyCompactList}\item 
+int \hyperlink{game_8h_a05db567a17ee0823a4bed45e122d700c}{game\+\_\+get\+\_\+score} ()
+\begin{DoxyCompactList}\small\item\em Returns the score of a game, which is increased by 50 every seconds. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{game_8h_aab5c9885ccb80a787910546e0a304fcb}\label{game_8h_aab5c9885ccb80a787910546e0a304fcb}} 
+void \hyperlink{game_8h_aab5c9885ccb80a787910546e0a304fcb}{game\+\_\+reset\+\_\+score} ()
+\begin{DoxyCompactList}\small\item\em Resets the score of a game. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{game_8h_a976b9ccf9cd4c3c354aee0f2bb6e1e4f}\label{game_8h_a976b9ccf9cd4c3c354aee0f2bb6e1e4f}} 
+void \hyperlink{game_8h_a976b9ccf9cd4c3c354aee0f2bb6e1e4f}{game\+\_\+reset\+\_\+lives\+\_\+left} ()
+\begin{DoxyCompactList}\small\item\em Resets the number of lives left in a game. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for game-\/fuctionality. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{game_8h_a797c47cfebac12385eb43746dfc167b4}\label{game_8h_a797c47cfebac12385eb43746dfc167b4}} 
+\index{game.\+h@{game.\+h}!game\+\_\+count\+\_\+fails@{game\+\_\+count\+\_\+fails}}
+\index{game\+\_\+count\+\_\+fails@{game\+\_\+count\+\_\+fails}!game.\+h@{game.\+h}}
+\subsubsection{\texorpdfstring{game\+\_\+count\+\_\+fails()}{game\_count\_fails()}}
+{\footnotesize\ttfamily int game\+\_\+count\+\_\+fails (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Checks if the IR beam is disrupted by the ball. Decreases the number of lives left if this is the case. 
+
+\begin{DoxyReturn}{Returns}
+1 if the IR beam is disrupted, 0 if not. 
+\end{DoxyReturn}
+
+
+Definition at line 89 of file game.\+c.
+
+\mbox{\Hypertarget{game_8h_a05db567a17ee0823a4bed45e122d700c}\label{game_8h_a05db567a17ee0823a4bed45e122d700c}} 
+\index{game.\+h@{game.\+h}!game\+\_\+get\+\_\+score@{game\+\_\+get\+\_\+score}}
+\index{game\+\_\+get\+\_\+score@{game\+\_\+get\+\_\+score}!game.\+h@{game.\+h}}
+\subsubsection{\texorpdfstring{game\+\_\+get\+\_\+score()}{game\_get\_score()}}
+{\footnotesize\ttfamily int game\+\_\+get\+\_\+score (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the score of a game, which is increased by 50 every seconds. 
+
+\begin{DoxyReturn}{Returns}
+The score of a game. 
+\end{DoxyReturn}
+
+
+Definition at line 201 of file game.\+c.
+
+\mbox{\Hypertarget{game_8h_a4a32647b73e765a719fc4097bdc0fafe}\label{game_8h_a4a32647b73e765a719fc4097bdc0fafe}} 
+\index{game.\+h@{game.\+h}!game\+\_\+set\+\_\+controller@{game\+\_\+set\+\_\+controller}}
+\index{game\+\_\+set\+\_\+controller@{game\+\_\+set\+\_\+controller}!game.\+h@{game.\+h}}
+\subsubsection{\texorpdfstring{game\+\_\+set\+\_\+controller()}{game\_set\_controller()}}
+{\footnotesize\ttfamily void game\+\_\+set\+\_\+controller (\begin{DoxyParamCaption}\item[{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+S\+EL}]{controller }\end{DoxyParamCaption})}
+
+
+
+Selects the controller to be used in the game. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em controller} & The controller option of data type {\ttfamily C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+S\+EL} to be used in the game. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 107 of file game.\+c.
+
+\mbox{\Hypertarget{game_8h_a02cb95b89dfad24606ed1e6ee0ece81e}\label{game_8h_a02cb95b89dfad24606ed1e6ee0ece81e}} 
+\index{game.\+h@{game.\+h}!game\+\_\+set\+\_\+difficulty@{game\+\_\+set\+\_\+difficulty}}
+\index{game\+\_\+set\+\_\+difficulty@{game\+\_\+set\+\_\+difficulty}!game.\+h@{game.\+h}}
+\subsubsection{\texorpdfstring{game\+\_\+set\+\_\+difficulty()}{game\_set\_difficulty()}}
+{\footnotesize\ttfamily void game\+\_\+set\+\_\+difficulty (\begin{DoxyParamCaption}\item[{D\+I\+F\+F\+I\+C\+U\+L\+TY}]{difficulty }\end{DoxyParamCaption})}
+
+
+
+Selects the difficulty to be used in the game. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em controller} & The difficulty option of data type {\ttfamily D\+I\+F\+F\+I\+C\+U\+L\+TY} to be used in the game. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 112 of file game.\+c.
+
+\mbox{\Hypertarget{game_8h_a7f8e8b2bc4d5263789aff1b40d71c55d}\label{game_8h_a7f8e8b2bc4d5263789aff1b40d71c55d}} 
+\index{game.\+h@{game.\+h}!game\+\_\+set\+\_\+user\+\_\+data@{game\+\_\+set\+\_\+user\+\_\+data}}
+\index{game\+\_\+set\+\_\+user\+\_\+data@{game\+\_\+set\+\_\+user\+\_\+data}!game.\+h@{game.\+h}}
+\subsubsection{\texorpdfstring{game\+\_\+set\+\_\+user\+\_\+data()}{game\_set\_user\_data()}}
+{\footnotesize\ttfamily void game\+\_\+set\+\_\+user\+\_\+data (\begin{DoxyParamCaption}\item[{char $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+Updates the user input data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & An array with new user input data, in the order \{joystick.\+x, joystick.\+y, slider.\+right, slider.\+left, buttons.\+left, buttons.\+right\}. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 138 of file game.\+c.
+

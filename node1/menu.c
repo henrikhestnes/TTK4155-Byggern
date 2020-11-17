@@ -23,7 +23,7 @@
 typedef void (*action_function)();
 
 
-static menu_t* current;
+static MENU* current;
 static uint8_t state;
 
 
@@ -118,8 +118,8 @@ void menu_go_to_child() {
 }
 
 
-static menu_t* menu_new(const char* const* text_display, uint8_t length, menu_t* parent) {
-    menu_t* menu = malloc(sizeof(menu_t) + length * sizeof(action_function) + MAX_SUBMENU_NUMBER * sizeof(menu_t*));
+static MENU* menu_new(const char* const* text_display, uint8_t length, MENU* parent) {
+    MENU* menu = malloc(sizeof(MENU) + length * sizeof(action_function) + MAX_SUBMENU_NUMBER * sizeof(MENU*));
 
     // check for successful allocation
     if (menu) {
@@ -141,21 +141,21 @@ static menu_t* menu_new(const char* const* text_display, uint8_t length, menu_t*
 }
 
 
-static void menu_config_node(menu_t* menu, uint8_t node, menu_t* submenu, action_function func) {
+static void menu_config_node(MENU* menu, uint8_t node, MENU* submenu, action_function func) {
     menu->submenus[node] = submenu;
     menu->action_functions[node] = func;
 }
 
 
-static menu_t* menu_allocate() {
+static MENU* menu_allocate() {
     // dynamically allocate menus
-    menu_t* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH, NULL);
-    menu_t* settings_menu = menu_new(content_settings, SETTINGS_MENU_LENGTH, main_menu);
-    menu_t* highscore_menu = menu_new(content_highscore, HIGHSCORE_MENU_LENGTH, main_menu);
-    menu_t* music_menu = menu_new(content_music, MUSIC_MENU_LENGTH, main_menu);
-    menu_t* controller_menu = menu_new(content_controller, CONTROLLER_MENU_LENGTH, settings_menu);
-    menu_t* brightness_menu = menu_new(content_brightness, BRIGHTNESS_MENU_LENGTH, settings_menu);
-    menu_t* difficulty_menu = menu_new(content_difficulty, DIFFICULTY_MENU_LENGTH, settings_menu);
+    MENU* main_menu = menu_new(content_main_menu, MAIN_MENU_LENGTH, NULL);
+    MENU* settings_menu = menu_new(content_settings, SETTINGS_MENU_LENGTH, main_menu);
+    MENU* highscore_menu = menu_new(content_highscore, HIGHSCORE_MENU_LENGTH, main_menu);
+    MENU* music_menu = menu_new(content_music, MUSIC_MENU_LENGTH, main_menu);
+    MENU* controller_menu = menu_new(content_controller, CONTROLLER_MENU_LENGTH, settings_menu);
+    MENU* brightness_menu = menu_new(content_brightness, BRIGHTNESS_MENU_LENGTH, settings_menu);
+    MENU* difficulty_menu = menu_new(content_difficulty, DIFFICULTY_MENU_LENGTH, settings_menu);
     
     // configure main menu
     menu_config_node(main_menu, 0, NULL, start_new_game);

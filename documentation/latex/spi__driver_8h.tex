@@ -1,0 +1,60 @@
+\hypertarget{spi__driver_8h}{}\section{node1/spi\+\_\+driver.h File Reference}
+\label{spi__driver_8h}\index{node1/spi\+\_\+driver.\+h@{node1/spi\+\_\+driver.\+h}}
+
+
+Module for sending and receiving messages over the S\+PI bus.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for spi\+\_\+driver.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=176pt]{spi__driver_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{spi__driver_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{spi__driver_8h_ae909944aa85ae98323073c628be541aa}\label{spi__driver_8h_ae909944aa85ae98323073c628be541aa}} 
+void \hyperlink{spi__driver_8h_ae909944aa85ae98323073c628be541aa}{spi\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initiates the S\+PI driver by configuring data directions, and setting the A\+T\+Mega162 to be master node. \end{DoxyCompactList}\item 
+void \hyperlink{spi__driver_8h_a49f141469f72b159771fb765a78ecbe5}{spi\+\_\+write} (char data)
+\begin{DoxyCompactList}\small\item\em Transmits a data byte to the slave on the S\+PI bus. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{spi__driver_8h_a738951e73ed07d1e0177c8f66964afc3}\label{spi__driver_8h_a738951e73ed07d1e0177c8f66964afc3}} 
+uint8\+\_\+t \hyperlink{spi__driver_8h_a738951e73ed07d1e0177c8f66964afc3}{spi\+\_\+read} ()
+\begin{DoxyCompactList}\small\item\em Recieves a data byte from the slave the S\+PI bus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for sending and receiving messages over the S\+PI bus. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{spi__driver_8h_a49f141469f72b159771fb765a78ecbe5}\label{spi__driver_8h_a49f141469f72b159771fb765a78ecbe5}} 
+\index{spi\+\_\+driver.\+h@{spi\+\_\+driver.\+h}!spi\+\_\+write@{spi\+\_\+write}}
+\index{spi\+\_\+write@{spi\+\_\+write}!spi\+\_\+driver.\+h@{spi\+\_\+driver.\+h}}
+\subsubsection{\texorpdfstring{spi\+\_\+write()}{spi\_write()}}
+{\footnotesize\ttfamily void spi\+\_\+write (\begin{DoxyParamCaption}\item[{char}]{data }\end{DoxyParamCaption})}
+
+
+
+Transmits a data byte to the slave on the S\+PI bus. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Byte to be transmitted. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 18 of file spi\+\_\+driver.\+c.
+

@@ -1,0 +1,74 @@
+\hypertarget{node2_2fsm_8h}{}\section{node2/fsm.h File Reference}
+\label{node2_2fsm_8h}\index{node2/fsm.\+h@{node2/fsm.\+h}}
+
+
+Module consisting of state-\/machine-\/functionality.  
+
+
+{\ttfamily \#include \char`\"{}../common/fsm\+\_\+state.\+h\char`\"{}}\newline
+Include dependency graph for fsm.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{node2_2fsm_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=244pt]{node2_2fsm_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+F\+S\+M\+\_\+\+S\+T\+A\+TE \hyperlink{node2_2fsm_8h_aa4e82e4c25771d31ae375834c3a2df75}{fsm\+\_\+get\+\_\+state} ()
+\begin{DoxyCompactList}\small\item\em Returns the current F\+SM state. \end{DoxyCompactList}\item 
+void \hyperlink{node2_2fsm_8h_a10da0d27428fd76c537c3bdb468c7816}{fsm\+\_\+transition\+\_\+to} (F\+S\+M\+\_\+\+S\+T\+A\+TE state)
+\begin{DoxyCompactList}\small\item\em Transitions the F\+SM to {\ttfamily state} by calling the state\textquotesingle{}s entry actions, and updating the current state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module consisting of state-\/machine-\/functionality. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{node2_2fsm_8h_aa4e82e4c25771d31ae375834c3a2df75}\label{node2_2fsm_8h_aa4e82e4c25771d31ae375834c3a2df75}} 
+\index{node2/fsm.\+h@{node2/fsm.\+h}!fsm\+\_\+get\+\_\+state@{fsm\+\_\+get\+\_\+state}}
+\index{fsm\+\_\+get\+\_\+state@{fsm\+\_\+get\+\_\+state}!node2/fsm.\+h@{node2/fsm.\+h}}
+\subsubsection{\texorpdfstring{fsm\+\_\+get\+\_\+state()}{fsm\_get\_state()}}
+{\footnotesize\ttfamily F\+S\+M\+\_\+\+S\+T\+A\+TE fsm\+\_\+get\+\_\+state (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the current F\+SM state. 
+
+\begin{DoxyReturn}{Returns}
+The current F\+SM state, of data type {\ttfamily F\+S\+M\+\_\+\+S\+T\+A\+TE}. 
+\end{DoxyReturn}
+
+
+Definition at line 26 of file fsm.\+c.
+
+\mbox{\Hypertarget{node2_2fsm_8h_a10da0d27428fd76c537c3bdb468c7816}\label{node2_2fsm_8h_a10da0d27428fd76c537c3bdb468c7816}} 
+\index{node2/fsm.\+h@{node2/fsm.\+h}!fsm\+\_\+transition\+\_\+to@{fsm\+\_\+transition\+\_\+to}}
+\index{fsm\+\_\+transition\+\_\+to@{fsm\+\_\+transition\+\_\+to}!node2/fsm.\+h@{node2/fsm.\+h}}
+\subsubsection{\texorpdfstring{fsm\+\_\+transition\+\_\+to()}{fsm\_transition\_to()}}
+{\footnotesize\ttfamily void fsm\+\_\+transition\+\_\+to (\begin{DoxyParamCaption}\item[{F\+S\+M\+\_\+\+S\+T\+A\+TE}]{state }\end{DoxyParamCaption})}
+
+
+
+Transitions the F\+SM to {\ttfamily state} by calling the state\textquotesingle{}s entry actions, and updating the current state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & The F\+SM state to be transitioned to, of data type {\ttfamily F\+S\+M\+\_\+\+S\+T\+A\+TE}. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 41 of file fsm.\+c.
+

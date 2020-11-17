@@ -1,0 +1,68 @@
+\hypertarget{node2_2adc_8h}{}\section{node2/adc.h File Reference}
+\label{node2_2adc_8h}\index{node2/adc.\+h@{node2/adc.\+h}}
+
+
+Module for adc-\/fuctionality.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for adc.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{node2_2adc_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{node2_2adc_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{node2_2adc_8h_a2b815e6730e8723a6d1d06d9ef8f31c0}{adc\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initiates the A\+DC by setting its mode and clock source, and configuring its P\+MC settings. \end{DoxyCompactList}\item 
+uint16\+\_\+t \hyperlink{node2_2adc_8h_a1780a2a12aeb6ba6d00d18c528205159}{adc\+\_\+read} ()
+\begin{DoxyCompactList}\small\item\em Reads the A\+DC channel 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for adc-\/fuctionality. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{node2_2adc_8h_a2b815e6730e8723a6d1d06d9ef8f31c0}\label{node2_2adc_8h_a2b815e6730e8723a6d1d06d9ef8f31c0}} 
+\index{node2/adc.\+h@{node2/adc.\+h}!adc\+\_\+init@{adc\+\_\+init}}
+\index{adc\+\_\+init@{adc\+\_\+init}!node2/adc.\+h@{node2/adc.\+h}}
+\subsubsection{\texorpdfstring{adc\+\_\+init()}{adc\_init()}}
+{\footnotesize\ttfamily void adc\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initiates the A\+DC by setting its mode and clock source, and configuring its P\+MC settings. 
+
+Initiates the A\+DC by setting its mode and clock source, and configuring its P\+MC settings. 
+
+Definition at line 34 of file adc.\+c.
+
+\mbox{\Hypertarget{node2_2adc_8h_a1780a2a12aeb6ba6d00d18c528205159}\label{node2_2adc_8h_a1780a2a12aeb6ba6d00d18c528205159}} 
+\index{node2/adc.\+h@{node2/adc.\+h}!adc\+\_\+read@{adc\+\_\+read}}
+\index{adc\+\_\+read@{adc\+\_\+read}!node2/adc.\+h@{node2/adc.\+h}}
+\subsubsection{\texorpdfstring{adc\+\_\+read()}{adc\_read()}}
+{\footnotesize\ttfamily uint16\+\_\+t adc\+\_\+read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads the A\+DC channel 0. 
+
+\begin{DoxyReturn}{Returns}
+The converted value at the A\+DC pin, with type {\ttfamily uint16\+\_\+t}. 
+\end{DoxyReturn}
+
+
+Definition at line 25 of file adc.\+c.
+

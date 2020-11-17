@@ -17,7 +17,7 @@
 typedef struct {
     int x;
     int y;
-} pos_t;
+} JOYSTICK_POS;
 
 
 /**
@@ -30,7 +30,7 @@ typedef enum {
     RIGHT,
     CENTER,
     NEUTRAL
-} dir_t;
+} JOYSTICK_DIR;
 
 
 /**
@@ -40,7 +40,7 @@ typedef enum {
 typedef struct {
     int left;
     int right;
-} slider_t;
+} SLIDER_POS;
 
 
 /**
@@ -51,7 +51,7 @@ typedef struct {
     unsigned int left;
     unsigned int right;
     unsigned int joystick;
-} button_t;
+} BUTTONS;
 
 
 /**
@@ -68,7 +68,7 @@ void user_input_init(void);
  *
  * @return The joystick position.
  */
-pos_t user_input_joystick_pos(void);
+JOYSTICK_POS user_input_joystick_pos(void);
 
 
 /**
@@ -77,7 +77,7 @@ pos_t user_input_joystick_pos(void);
  *
  * @return The direction the joystick is pointing.
  */
-dir_t user_input_joystick_dir(void);
+JOYSTICK_DIR user_input_joystick_dir(void);
 
 
 /**
@@ -86,7 +86,7 @@ dir_t user_input_joystick_dir(void);
  *
  * @return The slider positions.
  */
-slider_t user_input_slider_pos(void);
+SLIDER_POS user_input_slider_pos(void);
 
 
 /**
@@ -95,7 +95,7 @@ slider_t user_input_slider_pos(void);
  *
  * @return The status of the left, right and joystick buttons.
  */
-button_t user_input_buttons(void);
+BUTTONS user_input_buttons(void);
 
 
 /**

@@ -1,0 +1,72 @@
+\hypertarget{eeprom__driver_8h}{}\section{node1/eeprom\+\_\+driver.h File Reference}
+\label{eeprom__driver_8h}\index{node1/eeprom\+\_\+driver.\+h@{node1/eeprom\+\_\+driver.\+h}}
+
+
+Module for reading from and writing to the E\+E\+P\+R\+OM of the A\+T\+Mega162.  
+
+
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=310pt]{eeprom__driver_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{eeprom__driver_8h_a23be9e5de8414d8c781308d2deed169b}{eeprom\+\_\+write} (unsigned int address, unsigned char data)
+\begin{DoxyCompactList}\small\item\em Writes {\ttfamily data} to the E\+E\+P\+R\+OM memory address {\ttfamily address}. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{eeprom__driver_8h_acb77b6d54f181385535caf60f55114cc}{eeprom\+\_\+read} (unsigned int address)
+\begin{DoxyCompactList}\small\item\em Reads a data byte from the E\+E\+P\+R\+OM memory address {\ttfamily address}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for reading from and writing to the E\+E\+P\+R\+OM of the A\+T\+Mega162. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{eeprom__driver_8h_acb77b6d54f181385535caf60f55114cc}\label{eeprom__driver_8h_acb77b6d54f181385535caf60f55114cc}} 
+\index{eeprom\+\_\+driver.\+h@{eeprom\+\_\+driver.\+h}!eeprom\+\_\+read@{eeprom\+\_\+read}}
+\index{eeprom\+\_\+read@{eeprom\+\_\+read}!eeprom\+\_\+driver.\+h@{eeprom\+\_\+driver.\+h}}
+\subsubsection{\texorpdfstring{eeprom\+\_\+read()}{eeprom\_read()}}
+{\footnotesize\ttfamily unsigned char eeprom\+\_\+read (\begin{DoxyParamCaption}\item[{unsigned int}]{address }\end{DoxyParamCaption})}
+
+
+
+Reads a data byte from the E\+E\+P\+R\+OM memory address {\ttfamily address}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Memory address to be read from.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Data byte at memory address {\ttfamily address}. 
+\end{DoxyReturn}
+
+
+Definition at line 28 of file eeprom\+\_\+driver.\+c.
+
+\mbox{\Hypertarget{eeprom__driver_8h_a23be9e5de8414d8c781308d2deed169b}\label{eeprom__driver_8h_a23be9e5de8414d8c781308d2deed169b}} 
+\index{eeprom\+\_\+driver.\+h@{eeprom\+\_\+driver.\+h}!eeprom\+\_\+write@{eeprom\+\_\+write}}
+\index{eeprom\+\_\+write@{eeprom\+\_\+write}!eeprom\+\_\+driver.\+h@{eeprom\+\_\+driver.\+h}}
+\subsubsection{\texorpdfstring{eeprom\+\_\+write()}{eeprom\_write()}}
+{\footnotesize\ttfamily void eeprom\+\_\+write (\begin{DoxyParamCaption}\item[{unsigned int}]{address,  }\item[{unsigned char}]{data }\end{DoxyParamCaption})}
+
+
+
+Writes {\ttfamily data} to the E\+E\+P\+R\+OM memory address {\ttfamily address}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Memory address to be written to. \\
+\hline
+{\em data} & Data to be written. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 6 of file eeprom\+\_\+driver.\+c.
+

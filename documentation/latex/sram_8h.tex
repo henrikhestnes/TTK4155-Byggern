@@ -1,0 +1,86 @@
+\hypertarget{sram_8h}{}\section{node1/sram.h File Reference}
+\label{sram_8h}\index{node1/sram.\+h@{node1/sram.\+h}}
+
+
+Module for reading from and writing to the S\+R\+AM.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for sram.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=156pt]{sram_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sram_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sram_8h_a95a334ecab578f183f77e75f8ab52bbe}\label{sram_8h_a95a334ecab578f183f77e75f8ab52bbe}} 
+void \hyperlink{sram_8h_a95a334ecab578f183f77e75f8ab52bbe}{sram\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em Initiates the external memory by enabling the required pins on the M\+CU. \end{DoxyCompactList}\item 
+void \hyperlink{sram_8h_a8fce4e49266a872db4af56b2b02d6b76}{sram\+\_\+write} (uint8\+\_\+t data, uint16\+\_\+t addr)
+\begin{DoxyCompactList}\small\item\em Writes {\ttfamily data} to the address {\ttfamily addr}, defined as offset from {\ttfamily 0x1800}. \end{DoxyCompactList}\item 
+uint8\+\_\+t \hyperlink{sram_8h_a57e52e7e762b18068fba46a8bf8b7d22}{sram\+\_\+read} (uint16\+\_\+t addr)
+\begin{DoxyCompactList}\small\item\em Reads from the address {\ttfamily addr}, defined as offset from {\ttfamily 0x1800}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{sram_8h_a5398d7c2f04f1096190f6e4bfd75f7b6}\label{sram_8h_a5398d7c2f04f1096190f6e4bfd75f7b6}} 
+void \hyperlink{sram_8h_a5398d7c2f04f1096190f6e4bfd75f7b6}{sram\+\_\+test} (void)
+\begin{DoxyCompactList}\small\item\em Performs a S\+R\+AM test with random writes and consequent reads. Prints the result using {\ttfamily printf()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module for reading from and writing to the S\+R\+AM. 
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{sram_8h_a57e52e7e762b18068fba46a8bf8b7d22}\label{sram_8h_a57e52e7e762b18068fba46a8bf8b7d22}} 
+\index{sram.\+h@{sram.\+h}!sram\+\_\+read@{sram\+\_\+read}}
+\index{sram\+\_\+read@{sram\+\_\+read}!sram.\+h@{sram.\+h}}
+\subsubsection{\texorpdfstring{sram\+\_\+read()}{sram\_read()}}
+{\footnotesize\ttfamily uint8\+\_\+t sram\+\_\+read (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{addr }\end{DoxyParamCaption})}
+
+
+
+Reads from the address {\ttfamily addr}, defined as offset from {\ttfamily 0x1800}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em addr} & Offset from the base address {\ttfamily 0x1800} in the external memery address space.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The 8-\/bit data at the address given på {\ttfamily addr}. 
+\end{DoxyReturn}
+
+
+Definition at line 22 of file sram.\+c.
+
+\mbox{\Hypertarget{sram_8h_a8fce4e49266a872db4af56b2b02d6b76}\label{sram_8h_a8fce4e49266a872db4af56b2b02d6b76}} 
+\index{sram.\+h@{sram.\+h}!sram\+\_\+write@{sram\+\_\+write}}
+\index{sram\+\_\+write@{sram\+\_\+write}!sram.\+h@{sram.\+h}}
+\subsubsection{\texorpdfstring{sram\+\_\+write()}{sram\_write()}}
+{\footnotesize\ttfamily void sram\+\_\+write (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{data,  }\item[{uint16\+\_\+t}]{addr }\end{DoxyParamCaption})}
+
+
+
+Writes {\ttfamily data} to the address {\ttfamily addr}, defined as offset from {\ttfamily 0x1800}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & 8-\/bit value to be written to the external memory. \\
+\hline
+{\em addr} & Offset from the base address {\ttfamily 0x1800} in the external memery address space. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 16 of file sram.\+c.
+

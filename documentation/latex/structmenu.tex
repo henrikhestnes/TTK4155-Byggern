@@ -1,0 +1,50 @@
+\hypertarget{structmenu}{}\section{menu Struct Reference}
+\label{structmenu}\index{menu@{menu}}
+
+
+Data structure to represent a menu. Points to the text display of the menu, and menus above and below in the structure. Also points to an array of functions to be called when the option is selected.  
+
+
+
+
+{\ttfamily \#include $<$menu.\+h$>$}
+
+
+
+Collaboration diagram for menu\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=188pt]{structmenu__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structmenu_a9cf30093128a1f582de1bdfc1b94c784}\label{structmenu_a9cf30093128a1f582de1bdfc1b94c784}} 
+const char $\ast$const  $\ast$ {\bfseries text\+\_\+display}
+\item 
+\mbox{\Hypertarget{structmenu_ae5f3af0d2cf600f97e3e6011b09cdcf6}\label{structmenu_ae5f3af0d2cf600f97e3e6011b09cdcf6}} 
+uint8\+\_\+t {\bfseries length}
+\item 
+\mbox{\Hypertarget{structmenu_ab37f2faa5398d13b27ca50dcfd4e36e4}\label{structmenu_ab37f2faa5398d13b27ca50dcfd4e36e4}} 
+struct \hyperlink{structmenu}{menu} $\ast$ {\bfseries parent}
+\item 
+\mbox{\Hypertarget{structmenu_a20d5717eb42d807da8fe68a8c0a5eaf6}\label{structmenu_a20d5717eb42d807da8fe68a8c0a5eaf6}} 
+struct \hyperlink{structmenu}{menu} $\ast$ {\bfseries submenus} \mbox{[}M\+A\+X\+\_\+\+S\+U\+B\+M\+E\+N\+U\+\_\+\+N\+U\+M\+B\+ER\mbox{]}
+\item 
+\mbox{\Hypertarget{structmenu_ac32370935be0b516b01cd4cc6d0cf827}\label{structmenu_ac32370935be0b516b01cd4cc6d0cf827}} 
+void($\ast$ {\bfseries action\+\_\+functions} \mbox{[}$\,$\mbox{]})()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Data structure to represent a menu. Points to the text display of the menu, and menus above and below in the structure. Also points to an array of functions to be called when the option is selected. 
+
+Definition at line 22 of file menu.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+node1/\hyperlink{menu_8h}{menu.\+h}\end{DoxyCompactItemize}
