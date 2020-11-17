@@ -3,12 +3,20 @@
 #include <stdint.h>
 
 /**
+* @file
+* @brief Module for accelerometer-fuctionality, based on microbit-task in
+* TTK4235.
+*/
+
+
+/**
  * @brief Initialize the micro:bit on-board accelerometer. This
  * call will initialize all underlying resources required for
  * normal accelerometer operation with sane parameters that will
  * work for most use cases.
  */
 void accelerometer_init();
+
 
 /**
  * @brief Read the accelerometer values in X, Y, and Z directions.

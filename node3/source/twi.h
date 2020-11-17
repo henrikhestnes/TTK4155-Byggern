@@ -2,6 +2,14 @@
 #define TWI_H
 #include <stdint.h>
 
+
+/**
+* @file
+* @brief Module for twi-fuctionality, , based on microbit-task in
+* TTK4235. 
+*/
+
+
 /**
  * @brief Initialize a TWI interface on the micro:bit
  * with parameters that work for the micro:bit hardware.
@@ -35,6 +43,7 @@ void twi_read(
     uint8_t * data_buffer
 );
 
+
 /**
  * @brief Write @p registers_to_write number of bytes
  * taken from @p data_buffer into a slave with address
@@ -55,5 +64,6 @@ void twi_write(
     uint8_t registers_to_write,
     uint8_t * data_buffer
 );
+
 
 #endif

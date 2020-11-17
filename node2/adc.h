@@ -2,6 +2,12 @@
 #define ADC_H
 
 
+/**
+* @file
+* @brief Module for adc-fuctionality
+*/
+
+
 #include <stdint.h>
 
 
@@ -14,7 +20,7 @@ void adc_init(void);
 
 /**
  * @brief Reads the ADC channel 0.
- * 
+ *
  * @return The converted value at the ADC pin, with type @c uint16_t.
  */
 uint16_t adc_read();

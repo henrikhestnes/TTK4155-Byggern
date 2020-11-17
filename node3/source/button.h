@@ -2,6 +2,14 @@
 #define BUTTON_H
 #include <stdint.h>
 
+
+/**
+* @file
+* @brief Module for button-fuctionality, based on microbit-task in
+* TTK4235. 
+*/
+
+
 /**
  * @brief Initialize the buttons on the micro:bit.
  * Must be called before @c button_a_pressed and
@@ -9,12 +17,14 @@
  */
 void button_init();
 
+
 /**
  * @brief Check if button A is pressed on the micro:bit.
  *
  * @return 1 if button A is pressed; 0 otherwise.
  */
 uint8_t button_a_pressed();
+
 
 /**
  * @brief Check if button B is pressed on the micro:bit.

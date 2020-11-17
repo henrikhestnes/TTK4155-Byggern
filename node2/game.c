@@ -80,6 +80,11 @@ void game_init() {
     lives_left = NUMBER_OF_LIVES;
     game_timer_init();
     pid_controller_init(K_P_HARD, K_I_HARD, K_D_HARD, T, MAX_MOTOR_SPEED);
+    adc_init();
+    servo_init();
+    motor_init();
+    solenoid_init();
+    microbit_init();
 }
 
 
@@ -103,7 +108,6 @@ int game_count_fails() {
 
 void game_set_controller(CONTROLLER_SEL controller){
     controller_select = controller;
-    printf("New controller: %d \n\r", controller);
 }
 
 
@@ -113,26 +117,23 @@ void game_set_difficulty(DIFFICULTY difficulty) {
     case HARD:
     {
         pid_controller_set_parameters(K_P_HARD, K_I_HARD, K_D_HARD);
-        printf("New parameters: \n\r K_p = %d \n\r K_i = %d \n\r K_d = %d \n\n\r", K_P_HARD, K_I_HARD, K_D_HARD);
         break;
     }
     case EXTREME:
     {
         pid_controller_set_parameters(K_P_EXTREME, K_I_EXTREME, K_D_EXTREME);
-        printf("New parameters: \n\r K_p = %d \n\r K_i = %d \n\r K_d = %d \n\n\r", K_P_EXTREME, K_I_EXTREME, K_D_EXTREME);
         break;
     }
     case IMPOSSIBLE:
     {
         pid_controller_set_parameters(K_P_IMPOSSIBLE, K_I_IMPOSSIBLE, K_D_IMPOSSIBLE);
-        printf("New parameters: \n\r K_p = %d \n\r K_i = %d \n\r K_d = %d \n\n\r", K_P_IMPOSSIBLE, K_I_IMPOSSIBLE, K_D_IMPOSSIBLE);
         break;
     }
     default:
         break;
     }
 
-    
+
 }
 
 
@@ -147,9 +148,6 @@ void game_set_user_data(char* data) {
 
 
 static void game_run() {
-    // motor_run_slider(user_data.slider_right);
-    // servo_set_position(user_data.joystick_x);
-    // solenoid_run_button(user_data.button_right);
 
     switch (controller_select) {
         case SLIDER_POS_CTRL:
@@ -160,7 +158,7 @@ static void game_run() {
             break;
         }
         case JOYSTICK_SPEED_CTRL:
-        {   
+        {
             motor_run_joystick(user_data.joystick_x);
             servo_set_position(2*(user_data.slider_right - 50));
             solenoid_run_button(user_data.button_right);
@@ -175,10 +173,9 @@ static void game_run() {
         default:
             break;
     }
-    
+
 
     if (game_count_fails()) {
-        printf("Lives left: %d \n\r", lives_left);
 
         CAN_MESSAGE m = {
             .id = GAME_LIVES_LEFT_ID,

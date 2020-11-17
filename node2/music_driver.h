@@ -1,3 +1,9 @@
+/**
+ * @file 
+ * @brief Module for music functionality
+ */
+
+
 #ifndef MUSIC_DRIVER_H
 #define MUSIC_DRIVER_H
 

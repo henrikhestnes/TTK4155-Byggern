@@ -2,7 +2,6 @@
 #include "sam/sam3x/include/sam.h"
 #include "sam/interrupt.h"
 #include "sam/interrupt/interrupt_sam_nvic.h"
-#include <time.h>
 
 
 #define IRQ_SysTick_priority    0
