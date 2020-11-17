@@ -1,9 +1,23 @@
+/**
+ * @file 
+ * @brief Module for song notes
+ */
+
+
 #ifndef MUSIC_METADATA_H
 #define MUSIC_METADATA_H
+
+
+/**
+ * @brief Frequencies of corresponding notes 
+ */
+
 
 /*************************************************
  * Public Constants
  *************************************************/
+
+
 #define NOTE_B0  31
 #define NOTE_C1  33
 #define NOTE_CS1 35
@@ -96,6 +110,10 @@
 #define REST        0
 
 
+
+/**
+ * @brief Notes of Mii Theme
+ */
 static const int mii_theme_notes[] = {
     // Mii Channel theme 
     // Score available at https://musescore.com/user/16403456/scores/4984153
@@ -172,6 +190,9 @@ static const int mii_theme_notes[] = {
 };
 
 
+/**
+ * @brief Notes of Super Mario
+ */
 static const int super_mario_notes[] = {
     NOTE_E5,  8,  NOTE_E5,  8,  REST,     8,  NOTE_E5,  8,  REST,     8,  NOTE_C5,  8,  NOTE_E5,  8, //1
     REST,     12, NOTE_G5,  4,  REST,     4,  NOTE_G4,  8,  REST,     4, 
@@ -252,6 +273,9 @@ static const int super_mario_notes[] = {
 };
 
 
+/**
+ * @brief Notes of Harry Potter
+ */
 int harry_potter_notes[] = {
     // Hedwig's theme fromn the Harry Potter Movies
     // Socre from https://musescore.com/user/3811306/scores/4906610
@@ -293,6 +317,10 @@ int harry_potter_notes[] = {
     NOTE_G4, -1, 
 };
 
+
+/**
+ * @brief Notes of Savage Love
+ */
 static const int savage_love_notes[] = {
     NOTE_B4,  12, REST,     12,   NOTE_F4,  12,   REST,     12,   NOTE_E4,  12,   REST,     4,
     NOTE_G4,  12, NOTE_B5,  12,   NOTE_B5,  12,   NOTE_B5,  12,   NOTE_G4,  12,   NOTE_B5,  12, NOTE_B5, 12,  NOTE_B5, 12,
@@ -303,6 +331,10 @@ static const int savage_love_notes[] = {
     NOTE_C4,  8,  NOTE_F4,  8,    NOTE_E5,  8,    NOTE_F4,  8,    NOTE_G4,  8,    NOTE_B5,  8,  NOTE_B5, 8,   NOTE_B5, 8,   NOTE_B5, 8 
 };
 
+
+/**
+ * @brief Notes of game over sound
+ */
 const int game_over_notes[] = {                                              
     NOTE_C4,  8, NOTE_B3, 8, NOTE_B3, 8, NOTE_G3, 8, NOTE_B3, 4, NOTE_E3, 4, NOTE_A3, 6, NOTE_B3, 6, NOTE_A3, 6, NOTE_GS3, 6, NOTE_AS3, 6, 
     NOTE_GS3, 6, NOTE_G3, 8, NOTE_F3, 8, NOTE_G3, 4

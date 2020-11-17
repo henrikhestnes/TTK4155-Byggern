@@ -80,6 +80,11 @@ void game_init() {
     lives_left = NUMBER_OF_LIVES;
     game_timer_init();
     pid_controller_init(K_P_HARD, K_I_HARD, K_D_HARD, T, MAX_MOTOR_SPEED);
+    adc_init();
+    servo_init();
+    motor_init();
+    solenoid_init();
+    microbit_init();
 }
 
 

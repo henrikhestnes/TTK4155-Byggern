@@ -1,3 +1,9 @@
+/**
+ * @file 
+ * @brief Module for motor functionality
+ */
+
+
 #ifndef MOTOR_H
 #define MOTOR_H
 

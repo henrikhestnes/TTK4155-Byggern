@@ -1,3 +1,9 @@
+/**
+ * @file 
+ * @brief Module for PID controller functionality
+ */
+
+
 #ifndef PID_H
 #define PID_H
 
@@ -18,15 +24,42 @@ typedef struct {
 } PID_DATA_t;
 
 
+/**
+ * @brief Initializes PID-controller
+ * 
+ * @param k_p Desired K_P gain
+ * @param k_i Desired K_I gain
+ * @param k_d Desired K_D gain
+ * @param timestep Timestep of how often measurements are updated
+ * @param max_u Maximum u allowed 
+ */
 void pid_controller_init(float k_p, float k_i, float k_d, float timestep, int max_u);
 
 
+/**
+ * @brief Sets parameters of PID-controller
+ * 
+ * @param k_p Desired K_P gain
+ * @param k_i Desired K_I gain
+ * @param k_d Desired K_D gain 
+ */
 void pid_controller_set_parameters(float k_p, float k_i, float k_d);
 
 
+/**
+ * @brief Resets sum_error and prev_error to zero
+ */
 void pid_controller_reset_errors();
 
 
+/**
+ * @brief Initializes PID-controller
+ * 
+ * @param ref Desired position
+ * @param current_value Current position
+ *
+ * @return Input to motor
+ */
 int pid_controller(int ref, int current_value);
 
 
