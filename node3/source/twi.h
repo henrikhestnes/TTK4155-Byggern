@@ -5,7 +5,8 @@
 
 /**
 * @file
-* @brief Module for twi-fuctionality, 
+* @brief Module for twi-fuctionality, , based on microbit-task in
+* TTK4235. 
 */
 
 

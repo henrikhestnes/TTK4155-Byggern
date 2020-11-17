@@ -5,7 +5,8 @@
 
 /**
 * @file
-* @brief Module for button-fuctionality
+* @brief Module for button-fuctionality, based on microbit-task in
+* TTK4235. 
 */
 
 
