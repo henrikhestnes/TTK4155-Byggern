@@ -1,22 +1,19 @@
 #include "motor.h"
 #include "dac.h"
-// #include "../node1/user_input.h"
 #include "timer.h"
 #include "pid_controller.h"
+#include "microbit.h"
 #include "sam/sam3x/include/sam.h"
 #include "sam/interrupt.h"
+#include "../common/user_input.h"
 #include <math.h>
-#include "user_input.h"
 
 
 #define ENCODER_DATA_MASK   (0xFF << DO0_IDX)
 #define MIN_ENCODER_VALUE   0
 #define MAX_ENCODER_VALUE   8800
-// REMOVE THIS WHEN WE HAVE FIXED ALL THE CODE :)
-#define SLIDER_MAX          100
 
-
-#define MICROBIT_CONTROLLER_MOTOR_SPEED 0x0FF
+#define MICROBIT_CONTROLLER_MOTOR_SPEED 0x4FF
 
 
 static int scale_encoder_value(int value) {
@@ -141,9 +138,9 @@ void motor_run_joystick(int joystick_value) {
 
 
 void motor_run_microbit() {
-    acc_dir_t microbit_dir = user_input_microbit_dir();
+    acc_dir_t microbit_acc = microbit_dir();
 
-    switch(microbit_dir) {
+    switch(microbit_acc) {
         case(ACC_LEFT):
         {
             motor_set_direction(LEFT);

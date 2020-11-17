@@ -1,14 +1,15 @@
 #include "game.h"
 #include "adc.h"
-#include "user_input.h"
 #include "motor.h"
 #include "servo_driver.h"
 #include "solenoid.h"
 #include "pid_controller.h"
+#include "user_input_scaling.h"
 #include "can/can_controller.h"
+#include "microbit.h"
 #include "sam/sam3x/include/sam.h"
 #include "../common/can_id.h"
-#include "../node1/user_input.h"
+
 #include <stdint.h>
 
 
@@ -164,6 +165,12 @@ static void game_run() {
             servo_set_position(2*(user_data.slider_right - 50));
             solenoid_run_button(user_data.button_right);
             break;
+        }
+        case MICROBIT_SPEED_CTRL:
+        {
+            motor_run_microbit();
+            servo_set_position(user_data.joystick_x);
+            solenoid_run_button(microbit_button());
         }
         default:
             break;

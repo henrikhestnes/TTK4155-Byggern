@@ -53,6 +53,16 @@ void motor_run_slider(int reference);
 
 
 /**
+ * @brief Drives the motor speed, by comparing
+ * the encoder measurement to the input @c reference. 
+ * 
+ * @param joystick_value The reference value joystick position.
+ */
+void motor_run_joystick(int joystick_value);
+
+
+
+/**
  * @brief Drives the motor by reading the accelerometer output
  * from the microbit.
  */

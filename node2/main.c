@@ -20,6 +20,7 @@
 #include "solenoid.h"
 #include "fsm.h"
 #include "music_driver.h"
+#include "microbit.h"
 
 
 int main()
@@ -49,6 +50,9 @@ int main()
 
     // SOLENOID
         solenoid_init();
+
+    // MICROBIT
+        microbit_init();
 
 
 
@@ -83,10 +87,6 @@ int main()
     // TESTING
         // game_timer_enable();
         // motor_enable();
-
-        // while (1) {
-            
-        // }
 
     return 0;
 }

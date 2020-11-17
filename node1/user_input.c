@@ -2,6 +2,7 @@
 #include "adc.h"
 #include "can_driver.h"
 #include "../common/can_id.h"
+#include "../common/user_input.h"
 #include <math.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>

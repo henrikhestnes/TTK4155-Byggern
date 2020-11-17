@@ -15,7 +15,6 @@
 
 #include "../game.h"
 #include "../fsm.h"
-#include "../user_input.h"
 #include "../music_driver.h"
 #include "../../common/can_id.h"
 

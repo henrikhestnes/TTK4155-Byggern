@@ -27,7 +27,7 @@ static void music_buzz(int freq, int duration){
 }
 
 
-static void music_play_song(int* song, int song_size, int tempo, float pause_fraction) {
+static void music_play_song(const int* song, int song_size, int tempo, float pause_fraction) {
     // duration of a whole note in milliseconds
     int wholenote = 240000 / tempo;
 
