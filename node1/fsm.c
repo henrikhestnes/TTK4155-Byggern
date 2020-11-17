@@ -3,6 +3,7 @@
 #include "oled.h"
 #include "menu.h"
 #include "can_driver.h"
+#include "highscore.h"
 #include "../common/can_id.h"
 #include "user_input.h"
 
@@ -10,67 +11,68 @@
 #include <util/delay.h>
 
 
+static FSM_STATE current_state = INIT;
+static unsigned int lives_left;
 
-static enum FSM_STATE current_state = INIT;
 
-
-static void fsm_transmit_state(enum FSM_STATE state) {
-    message_t m = {.id = FSM_STATE_ID, .length = 1, .data = state};
-    can_transmit(&m);
+static void fsm_transmit_state(FSM_STATE state) {
+    message_t m = {
+        .id = FSM_STATE_ID, 
+        .data_length = 1, 
+        .data = state};
+    can_send(&m);
 }
 
 
-enum FSM_STATE fsm_get_state(void) {
+FSM_STATE fsm_get_state(void) {
     return current_state;
 }
 
 
-void fsm_set_state(enum FSM_STATE state) {
-    current_state = state;
+unsigned int fsm_get_lives_left() {
+    return lives_left;
 }
 
 
-void fsm_transition_to(enum FSM_STATE state) {
+void fsm_set_lives_left(unsigned int lives) {
+    lives_left = lives;
+}
+
+
+void fsm_transition_to(FSM_STATE state) {
     switch (state) {
         case MENU:
         {
             menu_timer_enable();
             current_state = MENU;
+            // printf("Transitioning to MENU \n\r");
             break;
         }
         case PLAYING:
         {
             menu_timer_disable();
             user_input_timer_enable();
-
             oled_clear();
-            oled_set_pos(1, 8);
-            oled_print_string("PLAYING!");
-            oled_set_pos(3, 8);
-            oled_print_string("Quit the game");
-            oled_set_pos(4, 8);
-            oled_print_string("by pushing the");
-            oled_set_pos(5, 8);
-            oled_print_string("left button");
 
             current_state = PLAYING;
+            // printf("Transitioning to PLAYING \n\r");
             break;
         }
-        case POSTGAME: 
+        case GAME_OVER: 
         {
             user_input_timer_disable();
-            
-            oled_clear();
-            oled_set_pos(1, 8);
-            oled_print_string("GAME ENDED!");
-            oled_set_pos(3, 8);
-            oled_print_string("Return to main");
-            oled_set_pos(4, 8);
-            oled_print_string("menu by pushing");
-            oled_set_pos(5, 8);
-            oled_print_string("the left button");
 
-            current_state = POSTGAME;
+            current_state = GAME_OVER;
+            // printf("Transitioning to GAME_OVER \n\r");
+            break;
+        }
+        case IDLE:
+        {   
+            user_input_timer_disable();
+            highscore_update();
+
+            current_state = IDLE;
+            // printf("Transitioning to IDLE \n\r");
             break;
         }
         default:

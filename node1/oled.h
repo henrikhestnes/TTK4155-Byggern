@@ -5,7 +5,10 @@
 #include <stdint.h>
 
 
-#define NUMBER_OF_PAGES 8
+#define NUMBER_OF_PAGES     8
+#define NUMBER_OF_COLUMNS   128
+#define ASCII_OFFSET        32
+#define FONT_LENGTH         8
 
 
 /**
@@ -104,7 +107,22 @@ void oled_print_inverted_char(char c);
 void oled_print_inverted_string(const char* string);
 
 
-// void oled_print_from_sram();
+void oled_print_playing_screen(int lives_left);
+
+
+void oled_print_quit_screen(void);
+
+
+void oled_print_game_over_screen(int score, char new_highscore);
+
+
+void oled_print_from_sram();
+
+
+void oled_set_brightness(uint8_t brightness);
+
+
+void oled_print_int(uint16_t number);
 
 
 #endif

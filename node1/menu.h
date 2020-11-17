@@ -10,14 +10,14 @@
  * Also points to a function which is called when the node is selected
  * when the joystick button is pressed. 
  */
-typedef struct menu_node {
-    struct menu* parent_menu;
-    struct menu* own_menu;
-    struct menu* child_menu;
-    struct menu_node* next;
-    struct menu_node* prev;
-    void (*action_function)();
-} menu_node_t;
+// typedef struct menu_node {
+//     struct menu* parent_menu;
+//     struct menu* own_menu;
+//     struct menu* child_menu;
+//     struct menu_node* next;
+//     struct menu_node* prev;
+//     void (*action_function)();
+// } menu_node_t;
 
 
 /**
@@ -25,17 +25,17 @@ typedef struct menu_node {
  * to be printed to the OLED screen. Also points to the first node in the linked list
  * of nodes in the menu.
  */
-typedef struct menu {
-    const char* const* text_display;
-    int length;
-    struct menu_node* head;
-} menu_t;
+// typedef struct menu {
+//     const char* const* text_display;
+//     int length;
+//     struct menu_node* head;
+// } menu_t;
 
 
 /**
  * @brief Links two menu nodes in a linked list. 
  */
-void menu_link_nodes(menu_node_t* first, menu_node_t* second);
+// void menu_link_nodes(menu_node_t* first, menu_node_t* second);
 
 
 /**
@@ -54,7 +54,7 @@ void menu_init();
  * 
  * @return A pointer to the new menu object. 
  */
-menu_t* menu_new(const char* const* text_display, int length);
+// menu_t* menu_new(const char* const* text_display, int length);
 
 
 /**
@@ -67,7 +67,7 @@ menu_t* menu_new(const char* const* text_display, int length);
  * 
  * @return A pointer to the new menu node object. 
  */
-menu_node_t* menu_new_node(menu_t* parent_menu, menu_t* own_menu, menu_t* child_menu, void (*action_function)());
+// menu_node_t* menu_new_node(menu_t* parent_menu, menu_t* own_menu, menu_t* child_menu, void (*action_function)());
 
 
 /**
@@ -88,7 +88,12 @@ void menu_timer_enable();
 void menu_timer_disable();
 
 
-// void menu_write_to_sram();
+// menu_node_t* menu_get_current();
 
+
+void menu_go_to_parent();
+
+
+void menu_go_to_child();
 
 #endif

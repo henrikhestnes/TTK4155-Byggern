@@ -5,10 +5,21 @@
 #include "../common/fsm_state.h"
 
 
-extern enum FSM_STATE fsm_current_state;
+/**
+ * @brief Returns the current FSM state.
+ * 
+ * @return The current FSM state, of data type @c FSM_STATE.
+ */
+FSM_STATE fsm_get_state();
 
 
-void fsm_transition_to(enum FSM_STATE state);
+/**
+ * @brief Transitions the FSM to @c state by calling the state's
+ * entry actions, and updating the current state.
+ * 
+ * @param state The FSM state to be transitioned to, of data type @c FSM_STATE.
+ */
+void fsm_transition_to(FSM_STATE state);
 
 
 #endif

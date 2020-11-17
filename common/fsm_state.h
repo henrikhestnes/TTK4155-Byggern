@@ -2,13 +2,13 @@
 #define COMMON_FSM_STATE_H
 
 
-enum FSM_STATE {
+typedef enum {
     INIT,
     MENU,
     PLAYING,
     GAME_OVER,
-    POSTGAME
-};
+    IDLE
+} FSM_STATE;
 
 
 #endif

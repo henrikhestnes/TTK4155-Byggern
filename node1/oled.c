@@ -3,10 +3,6 @@
 #include "fonts.h"
 
 
-#define ASCII_OFFSET    32
-#define FONT_LENGTH     8
-
-
 void oled_init(){
     oled_write_command(0xae);
     oled_write_command(0xa1);
@@ -118,16 +114,114 @@ void oled_print_inverted_string(const char* string) {
 }
 
 
-// void oled_print_from_sram() {
-//     oled_clear();
+void oled_print_heart(char filled) {
+    if (filled) {
+        oled_write_data(0b00001110);
+        oled_write_data(0b00011111);
+        oled_write_data(0b00111111);
+        oled_write_data(0b01111111);
+        oled_write_data(0b11111110);
+        oled_write_data(0b01111111);
+        oled_write_data(0b00111111);
+        oled_write_data(0b00011111);
+        oled_write_data(0b00001110);
+    }
+    else {
+        oled_write_data(0b00001110);
+        oled_write_data(0b00010001);
+        oled_write_data(0b00100001);
+        oled_write_data(0b01000001);
+        oled_write_data(0b10000010);
+        oled_write_data(0b01000001);
+        oled_write_data(0b00100001);
+        oled_write_data(0b00010001);
+        oled_write_data(0b00001110);
+    }
+}
 
-//     for (int p = 0; p < NUMBER_OF_PAGES; ++p) {
-//         char word[20];
-//         for (int i = 0; i < 20; ++i) {
-//             uint16_t address = p*sizeof(word) + i*sizeof(char);
-//             word[i] = sram_read(address);
-//         }
-//         oled_set_pos(p, 8);
-//         oled_print_string(word);
-//     }
-// }
+
+void oled_print_lives(int lives_left) {
+    for (int i = 0; i < lives_left; ++i) {
+        oled_print_heart(1);
+        oled_print_char(' ');
+    }
+    for (int i = 0; i < (3 - lives_left); ++i) {
+        oled_print_heart(0);
+        oled_print_char(' ');
+    }
+}
+
+
+void oled_print_playing_screen(int lives_left) {
+    oled_set_pos(1, 8);
+    oled_print_string("Lives left:");
+    oled_set_pos(3, 30);
+    oled_print_lives(lives_left);
+    oled_set_pos(5, 8);
+    oled_print_string("Quit the game");
+    oled_set_pos(6, 8);
+    oled_print_string("by pushing the");
+    oled_set_pos(7, 8);
+    oled_print_string("left button");
+}
+
+
+void oled_print_quit_screen() {
+    oled_clear();
+
+    oled_set_pos(1, 8);
+    oled_print_string("GAME QUIT!");
+    oled_set_pos(3, 8);
+    oled_print_string("Return to main");
+    oled_set_pos(4, 8);
+    oled_print_string("menu by pushing");
+    oled_set_pos(5, 8);
+    oled_print_string("the left button");
+}
+
+
+void oled_print_game_over_screen(int score, char new_highscore) {
+    oled_clear();
+
+    oled_set_pos(1, 8);
+    if (new_highscore) {
+        oled_print_string("NEW HIGHSCORE!!");
+    }
+    else
+    {
+        oled_print_string("GAME OVER!");
+    }
+    
+    oled_set_pos(2, 8);
+    oled_print_string("Score: ");
+    oled_print_int(score);
+    oled_set_pos(4, 8);
+    oled_print_string("Return to main");
+    oled_set_pos(5, 8);
+    oled_print_string("menu by pushing");
+    oled_set_pos(6, 8);
+    oled_print_string("the left button");
+}
+
+
+void oled_print_from_sram() {
+    for (uint8_t line = 0; line < NUMBER_OF_PAGES; ++line){
+        oled_set_pos(line, 0);
+        for (uint8_t col = 0; col < NUMBER_OF_COLUMNS; ++col){
+            oled_write_data(sram_read(line*NUMBER_OF_COLUMNS + col));
+        }
+    }
+}
+
+
+void oled_set_brightness(uint8_t brightness) {
+    oled_write_command(0x81);
+    oled_write_command(brightness);
+}
+
+
+void oled_print_int(uint16_t number) {
+    char string[6];
+    sprintf(string, "%d", number);
+    oled_print_string(string);
+}

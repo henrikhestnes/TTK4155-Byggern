@@ -1,17 +1,6 @@
-#include "user_input.h"
-#include "../node1/user_input.h"
-#include "sam/sam3x/include/sam.h"
+#include "user_input_scaling.h"
+#include "../common/user_input.h"
 
-#define A8          27
-#define A9          2
-#define A10         3
-
-#define MB_LEFT_PIN    A8
-#define MB_RIGHT_PIN   A9
-#define MB_BUTTON_PIN  A10
-
-#define BUTTON_PRESSED      1
-#define BUTTON_NOT_PRESSED  0
 
 
 int joystick_scale_x(uint8_t value) {
@@ -65,40 +54,4 @@ int slider_scale_left(uint8_t value) {
     }
 
     return scaled_value;
-}
-
-
-void microbit_user_input_init(){
-    // enables the PIO to control the corresponding pins
-    PIOA->PIO_PER |= (1 << MB_LEFT_PIN);
-    PIOA->PIO_PER |= (1 << MB_RIGHT_PIN);
-    PIOA->PIO_PER |= (1 << MB_BUTTON_PIN);
-
-    PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_PIOA << PMC_PCR_PID_Pos);
-    PMC->PMC_PCER0 |= 1 << (ID_PIOA);
-}
-
-
-const acc_dir_t user_input_microbit_get_dir(){
-    char left_dir   = (PIOA->PIO_PDSR & (1 << MB_LEFT_PIN));
-    char right_dir  = (PIOA->PIO_PDSR & (1 << MB_RIGHT_PIN));
-
-    if(left_dir == 0 && right_dir == 0){
-        return ACC_MIDDLE;
-    }
-    else if(left_dir == (1 << MB_LEFT_PIN)){
-        return ACC_LEFT;
-    }
-    else{
-        return ACC_RIGHT;
-    }
-    return ACC_MIDDLE;
-}
-
-
-const char user_input_microbit_button_pressed(){
-    if((PIOA->PIO_PDSR & (1 << MB_BUTTON_PIN)) == (1 << MB_BUTTON_PIN)){
-        return BUTTON_PRESSED;
-    }
-    return BUTTON_NOT_PRESSED;
 }

@@ -32,7 +32,7 @@ void adc_config_clock(void) {
 }
 
 
-void adc_init(void){
+void adc_init(void) {
     adc_config_clock();
 }
 

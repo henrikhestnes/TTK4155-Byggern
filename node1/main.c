@@ -9,6 +9,7 @@
 #include "mcp2515_driver.h"
 #include "can_driver.h"
 #include "fsm.h"
+#include "highscore.h"
 #include "../common/can_id.h"
 #include <avr/interrupt.h>
 
@@ -16,12 +17,8 @@
 #define F_CPU 4.9152E6
 #include <util/delay.h> 
 
-
-#define FOSC 4915200
 #define BAUD 9600
-#define UBRR FOSC / 16 / BAUD - 1
-
-#define CAN_JOYSTICK 1
+#define UBRR F_CPU / 16 / BAUD - 1
 
 
 int main() {
@@ -33,7 +30,6 @@ int main() {
 
     // SRAM
         sram_init();
-        sram_test();
 
     // USER INPUT
         user_input_init();
@@ -43,33 +39,34 @@ int main() {
         oled_init();
 
     // Menu
-        menu_init(); 
+        menu_init();
+        // menu_timer_disable();
 
     // CAN
         can_init(MODE_NORMAL);
 
+    // Highscore
+        highscore_init();
 
         sei();
 
-        DDRB |= (1 << PB3);
-
     // Testing
         // while (1) {
-            // user_input_transmit();
+        //     user_input_transmit();
 
-            // if (can_get_recieve_flag()) {
-            //     message_t message = can_recieve();
-            //     printf("message id: %d\n\r", message.id);
-            //     printf("message data length: %d\n\r", message.length);
-            //     printf("message data: %s\n\r", message.data);
-            // }
+        //     if (can_get_recieve_flag()) {
+        //         message_t message = can_recieve();
+        //         printf("message id: %d\n\r", message.id);
+        //         printf("message data length: %d\n\r", message.length);
+        //         printf("message data: %s\n\r", message.data);
+        //     }
 
-            // menu_run();
-            // PORTB ^= (1 << PB3);
-
+        //     menu_run();
         // }
 
-    fsm_set_state(MENU);
+
+    // Real code :DDD
+    fsm_transition_to(MENU);
     
     while (1) {
     enum FSM_STATE state = fsm_get_state();
@@ -80,21 +77,35 @@ int main() {
                 break;
             }
             case PLAYING:
-            {
+            {   
+                unsigned int lives_left = fsm_get_lives_left();
+                if (lives_left) {
+                    oled_print_playing_screen(lives_left);
+                }
+                else {
+                    fsm_transition_to(GAME_OVER);
+                }
+
                 if (user_input_buttons().left) {
-                    fsm_transition_to(POSTGAME);
+                    oled_clear();
+                    oled_print_quit_screen();
+                    fsm_transition_to(IDLE);
                     _delay_ms(1000);
                 }
 
                 break;
             }
-            case POSTGAME:
+            case GAME_OVER:
             {
+                _delay_ms(100);
+                fsm_transition_to(IDLE);
+                break;
+            }
+            case IDLE:
+            {   
                 if (user_input_buttons().left) {
                     fsm_transition_to(MENU);
-                    _delay_ms(1000);
                 }
-                break;
             }
             default:
                 break;
@@ -106,22 +117,31 @@ int main() {
 
 
 ISR(INT0_vect) {
-    message_t m = can_recieve();
+    message_t m;
+    can_recieve(&m);
 
     switch (m.id) {
-        case GAME_LIVES_LEFT_ID: {
-            int lives_left = = m.data[0];
-
-            if (lives_left) {
-                // update oled with lives left
-            }
-            else {
-                fsm_transition_to(POSTGAME)
-            }
+        case GAME_LIVES_LEFT_ID: 
+        {
+            fsm_set_lives_left(m.data[0]);
+            break;
         }
+        case GAME_SCORE_ID:
+        {
+            uint8_t msb = m.data[0];
+            uint8_t lsb = m.data[1];
+            int score = (msb << 8) + lsb;
+            highscore_set_new_score(score);
+
+            uint16_t* highscores = highscore_get();
+            char new_highscore = score > highscores[0];
+            oled_print_game_over_screen(score, new_highscore);
+            break;
+        }
+        default:
+            break;
     }
     
-
     mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF | MCP_RX1IF, 0);
 }
 

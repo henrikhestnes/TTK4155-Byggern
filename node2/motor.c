@@ -1,44 +1,24 @@
 #include "motor.h"
 #include "dac.h"
-// #include "../node1/user_input.h"
 #include "timer.h"
 #include "pid_controller.h"
+#include "microbit.h"
 #include "sam/sam3x/include/sam.h"
 #include "sam/interrupt.h"
+#include "../common/user_input.h"
 #include <math.h>
-#include "user_input.h"
 
 
 #define ENCODER_DATA_MASK   (0xFF << DO0_IDX)
 #define MIN_ENCODER_VALUE   0
 #define MAX_ENCODER_VALUE   8800
-// REMOVE THIS WHEN WE HAVE FIXED ALL THE CODE :)
-#define SLIDER_MAX          100
 
-
-#define K_P                 60
-#define K_I                 35
-#define K_D                 5
-#define T                   1.0 / MOTOR_TIMER_FREQ
-#define MAX_MOTOR_SPEED     0x4FF
-
-#define MICROBIT_CONTROLLER_MOTOR_SPEED 0x0FF
+#define MICROBIT_CONTROLLER_MOTOR_SPEED 0x4FF
 
 
 static int scale_encoder_value(int value) {
     return SLIDER_MAX * value / (MAX_ENCODER_VALUE - MIN_ENCODER_VALUE);
 }
-
-
-static PID_DATA_t PID = {
-    K_P,
-    K_I,
-    K_D,
-    0,
-    0,
-    T,
-    MAX_MOTOR_SPEED
-};
 
 
 enum motor_direction {
@@ -91,8 +71,7 @@ void motor_disable() {
 
 void motor_enable() {
     PIOD->PIO_SODR = EN;
-    PID.sum_error = 0;
-    PID.prev_error = 0;
+    pid_controller_reset_errors();
 }
 
 
@@ -127,31 +106,11 @@ int motor_read_encoder() {
 
 
 void motor_run_slider(int reference) {
-    // pos_t pos = {0, 0};
-    // if (!(joystick_pos_recieve(&pos))) {
-    //     printf("recieved position \n\r");
-    //     if (pos.x > 0) {
-    //         printf("moving right, x = %d \n\r", pos.x);
-    //         // moving right, set direction pin
-    //         PIOD->PIO_SODR = DIR;
-    //     }
-    //     else {
-    //         printf("moving left x = %d \n\r", pos.x);
-    //         // moving left, clear direction pin
-    //         PIOD->PIO_CODR = DIR;
-    //     }
-
-    //     // set motor speed
-    //     uint16_t speed = (uint16_t) (0x4FF * abs(pos.x) / 100);
-    //     printf("speed = %X \n\n\r", speed);
-    //     dac_write(speed);
-    // }
-
     int encoder_value = motor_read_encoder();
     int current_position = scale_encoder_value(encoder_value);
-    // printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
-    int u = pid_controller(&PID, reference, current_position);
-    // printf("pådrag: %d \r\n", u);
+    //printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
+    int u = pid_controller(reference, current_position);
+    //printf("pådrag: %d \r\n", u);
 
     if (u > 0) {
         motor_set_direction(RIGHT);
@@ -164,22 +123,45 @@ void motor_run_slider(int reference) {
 }
 
 
-void motor_run_microbit(){
-    acc_dir_t microbit_dir = user_input_microbit_get_dir();
+void motor_run_joystick(int joystick_value) {
+    if (joystick_value > 0) {
+        motor_set_direction(RIGHT);
+    }
+    else {
+        motor_set_direction(LEFT);
+    }
 
-    switch(microbit_dir){
+    // set motor speed
+    uint16_t speed = (uint16_t) (0x4FF * abs(joystick_value) / 100);
+    dac_write(speed);
+}
+
+
+void motor_run_microbit() {
+    acc_dir_t microbit_acc = microbit_dir();
+
+    switch(microbit_acc) {
         case(ACC_LEFT):
+        {
             motor_set_direction(LEFT);
             motor_set_speed(MICROBIT_CONTROLLER_MOTOR_SPEED);
             break;
+        }
         case(ACC_RIGHT):
+        {
             motor_set_direction(RIGHT);
             motor_set_speed(MICROBIT_CONTROLLER_MOTOR_SPEED);
             break;
+        }
         case(ACC_MIDDLE):
+        {
             motor_set_speed(0);
             break;
+        }
         default:
+        {
             motor_set_speed(0);
+            break;
+        }
     }
 }

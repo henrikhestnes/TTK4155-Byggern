@@ -1,16 +1,13 @@
 #ifndef MUSIC_DRIVER_H
 #define MUSIC_DRIVER_H
 
-typedef enum {
-    MII_THEME,
-    MARIO,
-    SIMPSON,
-} SONG;
+
+#include "../common/songs.h"
 
 
-void music_buzz(int freq, int length);
-
-
+/**
+ * @brief Plays a song @c song through a PWM signal fed to a buzzer.
+ */
 void music_play(SONG song);
 
 

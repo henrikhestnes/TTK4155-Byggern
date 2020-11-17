@@ -1,14 +1,16 @@
 #include "game.h"
 #include "adc.h"
-#include "user_input.h"
 #include "motor.h"
 #include "servo_driver.h"
 #include "solenoid.h"
+#include "pid_controller.h"
+#include "user_input_scaling.h"
 #include "can/can_controller.h"
+#include "microbit.h"
 #include "sam/sam3x/include/sam.h"
 #include "../common/can_id.h"
+
 #include <stdint.h>
-#include "../node1/user_input.h"
 
 
 #define F_CPU               84E6
@@ -17,13 +19,26 @@
 #define IR_TRESHOLD         1000
 #define NUMBER_OF_LIVES     3
 
+#define K_P_HARD            35
+#define K_I_HARD            20
+#define K_D_HARD            1
+#define K_P_EXTREME         20
+#define K_I_EXTREME         10
+#define K_D_EXTREME         1
+#define K_P_IMPOSSIBLE      10
+#define K_I_IMPOSSIBLE      5
+#define K_D_IMPOSSIBLE      1
+
+#define T                   1.0 / MOTOR_TIMER_FREQ
+#define MAX_MOTOR_SPEED     0x4FF
+
 #define IRQ_TC0_priority    2
 
 
 static unsigned int score;
 static unsigned int lives_left;
 static unsigned int counting_flag;
-unsigned int controller_select = 0;
+static CONTROLLER_SEL controller_select = SLIDER_POS_CTRL;
 
 
 static struct user_input_data {
@@ -64,12 +79,7 @@ void game_init() {
     score = 0;
     lives_left = NUMBER_OF_LIVES;
     game_timer_init();
-}
-
-
-
-void game_set_controller(unsigned int controller){
-    controller_select = controller;
+    pid_controller_init(K_P_HARD, K_I_HARD, K_D_HARD, T, MAX_MOTOR_SPEED);
 }
 
 
@@ -85,12 +95,48 @@ int game_count_fails() {
 
     else if (ir_level > IR_TRESHOLD) {
         counting_flag = 0;
-        return 0;
     }
+
+    return 0;
 }
 
 
-void game_get_user_data(char* data) {
+void game_set_controller(CONTROLLER_SEL controller){
+    controller_select = controller;
+    printf("New controller: %d \n\r", controller);
+}
+
+
+void game_set_difficulty(DIFFICULTY difficulty) {
+    switch (difficulty)
+    {
+    case HARD:
+    {
+        pid_controller_set_parameters(K_P_HARD, K_I_HARD, K_D_HARD);
+        printf("New parameters: \n\r K_p = %d \n\r K_i = %d \n\r K_d = %d \n\n\r", K_P_HARD, K_I_HARD, K_D_HARD);
+        break;
+    }
+    case EXTREME:
+    {
+        pid_controller_set_parameters(K_P_EXTREME, K_I_EXTREME, K_D_EXTREME);
+        printf("New parameters: \n\r K_p = %d \n\r K_i = %d \n\r K_d = %d \n\n\r", K_P_EXTREME, K_I_EXTREME, K_D_EXTREME);
+        break;
+    }
+    case IMPOSSIBLE:
+    {
+        pid_controller_set_parameters(K_P_IMPOSSIBLE, K_I_IMPOSSIBLE, K_D_IMPOSSIBLE);
+        printf("New parameters: \n\r K_p = %d \n\r K_i = %d \n\r K_d = %d \n\n\r", K_P_IMPOSSIBLE, K_I_IMPOSSIBLE, K_D_IMPOSSIBLE);
+        break;
+    }
+    default:
+        break;
+    }
+
+    
+}
+
+
+void game_set_user_data(char* data) {
     user_data.joystick_x = joystick_scale_x(data[0]);
     user_data.joystick_y = joystick_scale_y(data[1]);
     user_data.slider_left = slider_scale_left(data[2]);
@@ -101,36 +147,49 @@ void game_get_user_data(char* data) {
 
 
 static void game_run() {
+    // motor_run_slider(user_data.slider_right);
+    // servo_set_position(user_data.joystick_x);
+    // solenoid_run_button(user_data.button_right);
 
-    printf("x: %d \r\n", user_data.joystick_x);
-    if(controller_select == USE_JOYSTICK){
-        motor_run_slider(user_data.slider_right);
-        servo_set_position(user_data.joystick_x);
-        solenoid_run_button(user_data.button_right);
-
-        if (game_count_fails()) {
-            CAN_MESSAGE m = {
-                .id = GAME_LIVES_LEFT_ID,
-                .data_length = 1,
-                .data = lives_left
-            };
-
-            can_send(&m, 0);
+    switch (controller_select) {
+        case SLIDER_POS_CTRL:
+        {
+            motor_run_slider(user_data.slider_right);
+            servo_set_position(user_data.joystick_x);
+            solenoid_run_button(user_data.button_right);
+            break;
         }
-
-        ++score;
+        case JOYSTICK_SPEED_CTRL:
+        {   
+            motor_run_joystick(user_data.joystick_x);
+            servo_set_position(2*(user_data.slider_right - 50));
+            solenoid_run_button(user_data.button_right);
+            break;
+        }
+        case MICROBIT_SPEED_CTRL:
+        {
+            motor_run_microbit();
+            servo_set_position(user_data.joystick_x);
+            solenoid_run_button(microbit_button());
+        }
+        default:
+            break;
     }
-    else if(controller_select == USE_MICROBIT_CONTROLLER){
-        const button_pressed = user_input_microbit_button_pressed();
-        motor_run_microbit();
-        servo_set_position(0);
-        solenoid_run_button(button_pressed);
+    
+
+    if (game_count_fails()) {
+        printf("Lives left: %d \n\r", lives_left);
+
+        CAN_MESSAGE m = {
+            .id = GAME_LIVES_LEFT_ID,
+            .data_length = 1,
+            .data = lives_left
+        };
+
+        can_send(&m, 0);
     }
 
-
-
-
-
+    ++score;
 }
 
 
@@ -138,7 +197,7 @@ void game_timer_enable(){
     TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKEN | TC_CCR_SWTRG;
 }
 
-void solenoid_run_microbit_button();
+
 void game_timer_disable(){
     TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKDIS;
 }
@@ -151,6 +210,11 @@ int game_get_score() {
 
 void game_reset_score() {
     score = 0;
+}
+
+
+void game_reset_lives_left() {
+    lives_left = INITIAL_LIVES;
 }
 
 

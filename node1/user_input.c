@@ -2,10 +2,10 @@
 #include "adc.h"
 #include "can_driver.h"
 #include "../common/can_id.h"
+#include "../common/user_input.h"
 #include <math.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
-
 
 
 #define X_CHANNEL               0
@@ -13,24 +13,13 @@
 #define RIGHT_SLIDER_CHANNEL    2
 #define LEFT_SLIDER_CHANNEL     3
 #define DIRECTION_TRESHOLD      50
+#define CENTER_TRESHOLD         10
 #define RIGHT_BUTTON_PIN        PB1
 #define LEFT_BUTTON_PIN         PB2
+#define JOYSTICK_BUTTON_PIN     PD3
 
 #define CLKSEL_OFF_MASK         0xF8
 #define CLKSEL_PRESCALER_1024   ((1 << CS32) | (1 << CS30))
-
-
-static void interrupt_joystick_init() {
-    // set INT1 as input
-    DDRD &= ~(1 << PD3);
-
-    // enable INT1 interrupt vector
-    GICR |= (1 << INT1);
-
-    // interrupt on falling edge
-    MCUCR |= (1 << ISC11);
-    MCUCR &= ~(1 << ISC10);
-}
 
 
 static void interrupt_can_timer_init() {
@@ -52,6 +41,27 @@ static void interrupt_can_timer_init() {
 }
 
 
+void user_input_init(void) {
+    adc_init();
+
+    // set button pins to input
+    DDRB &= ~(1 << RIGHT_BUTTON_PIN) & ~(1 << LEFT_BUTTON_PIN);
+    DDRD &= ~(1 << JOYSTICK_BUTTON_PIN);
+
+    // interrupt_joystick_init();
+    interrupt_can_timer_init();
+}
+
+
+pos_t user_input_joystick_pos(void) {
+    pos_t pos;
+    pos.x = adc_read(X_CHANNEL);
+    pos.y = adc_read(Y_CHANNEL);
+
+    return pos;
+}
+
+
 int joystick_scale_value(uint8_t value, int offset) {
     // scale to values between min and max
     int scaled_value = (int)(value - 128)*(JOYSTICK_MAX - JOYSTICK_MIN)/256;
@@ -67,26 +77,6 @@ int joystick_scale_value(uint8_t value, int offset) {
     }
 
     return scaled_value;
-}
-
-
-void user_input_init(void) {
-    adc_init();
-
-    // set button pins to input
-    DDRB &= ~(1 << RIGHT_BUTTON_PIN) & ~(1 << LEFT_BUTTON_PIN);
-
-    interrupt_joystick_init();
-    interrupt_can_timer_init();
-}
-
-
-pos_t user_input_joystick_pos(void) {
-    pos_t pos;
-    pos.x = adc_read(X_CHANNEL);
-    pos.y = adc_read(Y_CHANNEL);
-
-    return pos;
 }
 
 
@@ -111,6 +101,10 @@ dir_t user_input_joystick_dir(void) {
         return DOWN;
     }
 
+    else if (abs(pos.x) < CENTER_TRESHOLD && abs(pos.y) < CENTER_TRESHOLD) {
+        return CENTER;
+    }
+
     else {
         return NEUTRAL;
     }
@@ -127,10 +121,11 @@ slider_t user_input_slider_pos(void) {
 
 
 button_t user_input_buttons(void) {
-    button_t status = {0, 0};
+    button_t status = {0, 0, 0};
 
     status.right = (PINB & (1 << RIGHT_BUTTON_PIN)) >> RIGHT_BUTTON_PIN;
     status.left = (PINB & (1 << LEFT_BUTTON_PIN)) >> LEFT_BUTTON_PIN;
+    status.joystick = !((PIND & (1 << JOYSTICK_BUTTON_PIN)) >> JOYSTICK_BUTTON_PIN);
 
     return status;
 }
@@ -143,11 +138,11 @@ void user_input_transmit() {
 
     message_t m = {
         .id = USER_INPUT_ID,
-        .length = 6,
+        .data_length = 6,
         .data = {joystick.x, joystick.y, slider.left, slider.right, button.left, button.right}
     };
 
-    can_transmit(&m);
+    can_send(&m);
 }
 
 
@@ -166,26 +161,4 @@ void user_input_timer_disable() {
     TCCR3B &= CLKSEL_OFF_MASK;
 
     sei();
-}
-
-
-user_input_select_controller_joystick(){
-    message_t m = {
-        .id = CONTROLLER_ID
-        .length = 1,
-        .data = {USE_JOYSTICK}
-    };
-
-    can_transmit(&m);
-}
-
-
-void user_input_select_controller_microbit(){
-    message_t m = {
-        .id = CONTROLLER_ID
-        .length = 1,
-        .data = {USE_MICROBIT_CONTROLLER}
-    };
-
-    can_transmit(&m);
 }
