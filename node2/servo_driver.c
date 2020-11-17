@@ -19,6 +19,6 @@ void servo_init() {
 
 
 void servo_set_position(int x) {
-    float duty_cycle = GAIN * x + OFFSET;
+    float duty_cycle = GAIN * (-x) + OFFSET;
     pwm_set_duty_cycle(duty_cycle, CHANNEL_PIN45);
 }

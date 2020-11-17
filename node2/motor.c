@@ -109,26 +109,6 @@ int motor_read_encoder() {
 
 
 void motor_run_slider(int reference) {
-    // pos_t pos = {0, 0};
-    // if (!(joystick_pos_recieve(&pos))) {
-    //     printf("recieved position \n\r");
-    //     if (pos.x > 0) {
-    //         printf("moving right, x = %d \n\r", pos.x);
-    //         // moving right, set direction pin
-    //         PIOD->PIO_SODR = DIR;
-    //     }
-    //     else {
-    //         printf("moving left x = %d \n\r", pos.x);
-    //         // moving left, clear direction pin
-    //         PIOD->PIO_CODR = DIR;
-    //     }
-
-    //     // set motor speed
-    //     uint16_t speed = (uint16_t) (0x4FF * abs(pos.x) / 100);
-    //     printf("speed = %X \n\n\r", speed);
-    //     dac_write(speed);
-    // }
-
     int encoder_value = motor_read_encoder();
     int current_position = scale_encoder_value(encoder_value);
     //printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
@@ -143,6 +123,20 @@ void motor_run_slider(int reference) {
     }
 
     motor_set_speed(abs(u));
+}
+
+
+void motor_run_joystick(int joystick_value) {
+    if (joystick_value > 0) {
+        motor_set_direction(RIGHT);
+    }
+    else {
+        motor_set_direction(LEFT);
+    }
+
+    // set motor speed
+    uint16_t speed = (uint16_t) (0x4FF * abs(joystick_value) / 100);
+    dac_write(speed);
 }
 
 

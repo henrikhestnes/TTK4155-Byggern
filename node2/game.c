@@ -144,34 +144,30 @@ void game_set_user_data(char* data) {
     user_data.button_right = data[5];
 }
 
+
 static void game_run() {
+    // motor_run_slider(user_data.slider_right);
+    // servo_set_position(user_data.joystick_x);
+    // solenoid_run_button(user_data.button_right);
 
-    motor_run_slider(user_data.slider_right);
-    servo_set_position(user_data.joystick_x);
-    solenoid_run_button(user_data.button_right);
-
-
-    // switch (controller_select) {
-    //     case SLIDER_POS_CTRL:
-    //     {
-    //         motor_run_slider(user_data.slider_right);
-    //         servo_set_position(user_data.joystick_x);
-    //         solenoid_run_button(user_data.button_right);
-    //         break;
-    //     }
-    //     case MICROBIT_SPEED_CTRL:
-    //     {   
-    //         motor_run_microbit();
-    //         servo_set_position(0);
-
-    //         char button_pressed = user_input_microbit_button();
-    //         printf("button: %d \r\n", button_pressed);
-    //         solenoid_run_button(button_pressed);
-    //         break;
-    //     }
-    //     default:
-    //         break;
-    // }
+    switch (controller_select) {
+        case SLIDER_POS_CTRL:
+        {
+            motor_run_slider(user_data.slider_right);
+            servo_set_position(user_data.joystick_x);
+            solenoid_run_button(user_data.button_right);
+            break;
+        }
+        case JOYSTICK_SPEED_CTRL:
+        {   
+            motor_run_joystick(user_data.joystick_x);
+            servo_set_position(2*(user_data.slider_right - 50));
+            solenoid_run_button(user_data.button_right);
+            break;
+        }
+        default:
+            break;
+    }
     
 
     if (game_count_fails()) {
