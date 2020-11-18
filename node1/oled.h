@@ -4,8 +4,8 @@
  */
 
 
-#ifndef OLED_H
-#define OLED_H
+#ifndef NODE1_OLED_H
+#define NODE1_OLED_H
 
 
 #include <stdint.h>

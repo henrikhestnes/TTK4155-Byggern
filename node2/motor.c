@@ -2,9 +2,7 @@
 #include "dac.h"
 #include "timer.h"
 #include "pid_controller.h"
-#include "microbit.h"
 #include "sam/sam3x/include/sam.h"
-#include "sam/interrupt.h"
 #include "../common/user_input.h"
 #include <math.h>
 
@@ -13,7 +11,8 @@
 #define MIN_ENCODER_VALUE   0
 #define MAX_ENCODER_VALUE   8800
 
-#define MICROBIT_CONTROLLER_MOTOR_SPEED 0x4FF
+
+static uint16_t microbit_motor_speed;
 
 
 static int scale_encoder_value(int value) {
@@ -43,7 +42,6 @@ static void motor_set_direction(enum motor_direction d) {
 
 
 void motor_init() {
-    // initiate dac
     dac_init();
 
     // enable PIOD pins to motor box as output
@@ -57,9 +55,6 @@ void motor_init() {
     // enable PIOC clock
     PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_PIOC << PMC_PCR_PID_Pos);
     PMC->PMC_PCER0 |= 1 << (ID_PIOC);
-
-    // enable motor
-    // PIOD->PIO_SODR = EN | NOT_RST;
 }
 
 
@@ -108,10 +103,8 @@ int motor_read_encoder() {
 void motor_run_slider(int reference) {
     int encoder_value = motor_read_encoder();
     int current_position = scale_encoder_value(encoder_value);
-    //printf("reference: %d, \t\tcurrent position: %d \r\n", reference, current_position);
     int u = pid_controller(reference, current_position);
-    //printf("pådrag: %d \r\n", u);
-
+    
     if (u > 0) {
         motor_set_direction(RIGHT);
     }
@@ -137,20 +130,18 @@ void motor_run_joystick(int joystick_value) {
 }
 
 
-void motor_run_microbit() {
-    acc_dir_t microbit_acc = microbit_dir();
-
-    switch(microbit_acc) {
+void motor_run_microbit(acc_dir_t direction) {
+    switch(direction) {
         case(ACC_LEFT):
-        {
+        {   
             motor_set_direction(LEFT);
-            motor_set_speed(MICROBIT_CONTROLLER_MOTOR_SPEED);
+            motor_set_speed(microbit_motor_speed);
             break;
         }
         case(ACC_RIGHT):
         {
             motor_set_direction(RIGHT);
-            motor_set_speed(MICROBIT_CONTROLLER_MOTOR_SPEED);
+            motor_set_speed(microbit_motor_speed);
             break;
         }
         case(ACC_MIDDLE):
@@ -164,4 +155,9 @@ void motor_run_microbit() {
             break;
         }
     }
+}
+
+
+void motor_set_microbit_speed(uint16_t speed) {
+    microbit_motor_speed = speed;
 }

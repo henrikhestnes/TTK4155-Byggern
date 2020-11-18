@@ -4,8 +4,8 @@
  */
 
 
-#ifndef PWM_H
-#define PWM_H
+#ifndef NODE2_PWM_H
+#define NODE2_PWM_H
 
 
 #define CHANNEL_PIN44 6

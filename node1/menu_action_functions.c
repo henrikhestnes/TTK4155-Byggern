@@ -10,7 +10,7 @@
 
 
 void start_new_game() {
-    fsm_transition_to(PLAYING);
+    fsm_transition_to(STATE_PLAYING);
 }
 
 

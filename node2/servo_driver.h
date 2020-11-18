@@ -4,8 +4,8 @@
  */
 
 
-#ifndef SERVO_H
-#define SERVO_H
+#ifndef NODE2_SERVO_H
+#define NODE2_SERVO_H
 
 
 /**

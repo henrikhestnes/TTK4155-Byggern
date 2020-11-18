@@ -23,10 +23,9 @@ int main()
 
     configure_uart();
     can_init_def_tx_rx_mb(ATSAM_CAN_BR);
-    //can_init(ATSAM_CAN_BR, 1, 3);
     game_init();
 
-    fsm_transition_to(MENU);
+    fsm_transition_to(STATE_MENU);
     while (1);
 
     return 0;

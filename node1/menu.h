@@ -4,8 +4,8 @@
  */
 
 
-#ifndef MENU_H
-#define MENU_H
+#ifndef NODE1_MENU_H
+#define NODE1_MENU_H
 
 
 #include <stdint.h>

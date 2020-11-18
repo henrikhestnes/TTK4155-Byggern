@@ -1,5 +1,5 @@
-#ifndef ADC_H
-#define ADC_H
+#ifndef NODE2_ADC_H
+#define NODE2_ADC_H
 
 
 /**

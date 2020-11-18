@@ -4,8 +4,8 @@
  */
 
 
-#ifndef FSM_H
-#define FSM_H
+#ifndef NODE1_FSM_H
+#define NODE1_FSM_H
 
 
 #include "../common/fsm_state.h"

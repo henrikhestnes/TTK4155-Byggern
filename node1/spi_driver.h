@@ -4,8 +4,8 @@
  */
 
 
-#ifndef SPI_H
-#define SPI_H
+#ifndef NODE1_SPI_H
+#define NODE1_SPI_H
 
 
 #include <stdint.h>

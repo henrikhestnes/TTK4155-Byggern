@@ -4,8 +4,8 @@
  */
 
 
-#ifndef HIGHSCORE_H
-#define HIGHSCORE_H
+#ifndef NODE1_HIGHSCORE_H
+#define NODE1_HIGHSCORE_H
 
 
 #include <stdint.h>

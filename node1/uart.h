@@ -4,8 +4,8 @@
  */
 
 
-#ifndef uart_H
-#define uart_H
+#ifndef NODE1_UART_H
+#define NODE1_UART_H
 
 
 /**

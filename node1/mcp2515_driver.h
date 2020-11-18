@@ -4,8 +4,8 @@
  */
 
 
-#ifndef MCP2515_H
-#define MCP2515_H
+#ifndef NODE1_MCP2515_H
+#define NODE1_MCP2515_H
 
 
 #include "spi_driver.h"

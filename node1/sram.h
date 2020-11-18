@@ -4,8 +4,8 @@
  */
 
 
-#ifndef SRAM_H
-#define SRAM_H
+#ifndef NODE1_SRAM_H
+#define NODE1_SRAM_H
 
 
 #include <stdint.h>

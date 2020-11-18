@@ -1,5 +1,5 @@
-#ifndef LED_H
-#define LED_H
+#ifndef NODE2_LED_H
+#define NODE2_LED_H
 
 
 /**

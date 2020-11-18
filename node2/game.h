@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef NODE2_GAME_H
+#define NODE2_GAME_H
 
 
 /**

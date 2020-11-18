@@ -4,17 +4,16 @@
  */
 
 
-
 #ifndef COMMON_FSM_STATE_H
 #define COMMON_FSM_STATE_H
 
 
 typedef enum {
-    INIT,
-    MENU,
-    PLAYING,
-    GAME_OVER,
-    IDLE
+    STATE_INIT,
+    STATE_MENU,
+    STATE_PLAYING,
+    STATE_GAME_OVER,
+    STATE_IDLE
 } FSM_STATE;
 
 

@@ -4,8 +4,8 @@
  */
 
 
-#ifndef MUSIC_DRIVER_H
-#define MUSIC_DRIVER_H
+#ifndef NODE2_MUSIC_DRIVER_H
+#define NODE2_MUSIC_DRIVER_H
 
 
 #include "../common/songs.h"

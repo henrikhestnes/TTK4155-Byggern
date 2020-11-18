@@ -4,8 +4,8 @@
  */
 
 
-#ifndef MICROBIT_H
-#define MICROBIT_H
+#ifndef NODE2_MICROBIT_H
+#define NODE2_MICROBIT_H
 
 
 #include "../node3/source/controller.h"

@@ -4,8 +4,8 @@
  */
 
 
-#ifndef FONTS_H
-#define FONTS_H
+#ifndef NODE1_FONTS_H
+#define NODE1_FONTS_H
 
 
 #include <avr/pgmspace.h>

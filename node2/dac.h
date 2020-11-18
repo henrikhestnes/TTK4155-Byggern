@@ -1,5 +1,5 @@
-#ifndef DAC_H
-#define DAC_H
+#ifndef NODE2_DAC_H
+#define NODE2_DAC_H
 
 
 /**

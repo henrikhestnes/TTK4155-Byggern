@@ -4,8 +4,8 @@
  */
 
 
-#ifndef CAN_H
-#define CAN_H
+#ifndef NODE1_CAN_H
+#define NODE1_CAN_H
 
 
 #include "mcp2515_driver.h"

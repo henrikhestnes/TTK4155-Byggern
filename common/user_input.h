@@ -4,7 +4,6 @@
  */
 
 
-
 #ifndef COMMON_USER_INPUT_H
 #define COMMON_USER_INPUT_H
 

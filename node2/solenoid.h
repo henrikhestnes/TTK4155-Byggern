@@ -4,8 +4,8 @@
  */
 
 
-#ifndef SOLENOID_H
-#define SOLENOID_H
+#ifndef NODE2_SOLENOID_H
+#define NODE2_SOLENOID_H
 
 
 /**

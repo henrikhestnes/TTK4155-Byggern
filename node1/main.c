@@ -39,44 +39,46 @@ int main() {
 
     sei();
 
-    fsm_transition_to(MENU);
+    fsm_transition_to(STATE_MENU);
     while (1) {
     FSM_STATE state = fsm_get_state();
         switch (state) {
-            case MENU:
+            case STATE_MENU:
             {
                 menu_run();
                 break;
             }
-            case PLAYING:
+            case STATE_PLAYING:
             {   
                 unsigned int lives_left = fsm_get_lives_left();
                 if (lives_left) {
                     oled_print_playing_screen(lives_left, NUMBER_OF_LIVES);
                 }
                 else {
-                    fsm_transition_to(GAME_OVER);
+                    fsm_transition_to(STATE_GAME_OVER);
                 }
 
                 if (user_input_buttons().left) {
                     oled_clear();
                     oled_print_quit_screen();
-                    fsm_transition_to(IDLE);
+                    fsm_transition_to(STATE_IDLE);
                     _delay_ms(1000);
                 }
 
                 break;
             }
-            case GAME_OVER:
-            {
+            case STATE_GAME_OVER:
+            {  
+                // wait for score message reception
                 _delay_ms(100);
-                fsm_transition_to(IDLE);
+                highscore_update();
+                fsm_transition_to(STATE_IDLE);
                 break;
             }
-            case IDLE:
+            case STATE_IDLE:
             {   
                 if (user_input_buttons().left) {
-                    fsm_transition_to(MENU);
+                    fsm_transition_to(STATE_MENU);
                 }
             }
             default:

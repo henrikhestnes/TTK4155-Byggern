@@ -4,8 +4,8 @@
  */
 
 
-#ifndef MUSIC_METADATA_H
-#define MUSIC_METADATA_H
+#ifndef NODE2_MUSIC_METADATA_H
+#define NODE2_MUSIC_METADATA_H
 
 
 /**

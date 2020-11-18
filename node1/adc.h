@@ -4,8 +4,8 @@
  */
 
 
-#ifndef ADC_H
-#define ADC_H
+#ifndef NODE1_ADC_H
+#define NODE1_ADC_H
 
 
 #include <stdint.h>

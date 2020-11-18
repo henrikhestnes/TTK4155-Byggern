@@ -4,8 +4,8 @@
  */
 
 
-#ifndef EEPROM_DRIVER_H
-#define EEPROM_DRIVER_H
+#ifndef NODE1_EEPROM_DRIVER_H
+#define NODE1_EEPROM_DRIVER_H
 
 
 /**

@@ -10,7 +10,7 @@
 #include <util/delay.h>
 
 
-static FSM_STATE current_state = INIT;
+static FSM_STATE current_state = STATE_INIT;
 static unsigned int lives_left;
 
 
@@ -40,38 +40,33 @@ void fsm_set_lives_left(unsigned int lives) {
 
 void fsm_transition_to(FSM_STATE state) {
     switch (state) {
-        case MENU:
+        case STATE_MENU:
         {
             menu_timer_enable();
-            current_state = MENU;
-            // printf("Transitioning to MENU \n\r");
+            current_state = STATE_MENU;
             break;
         }
-        case PLAYING:
+        case STATE_PLAYING:
         {
             menu_timer_disable();
             user_input_timer_enable();
             oled_clear();
 
-            current_state = PLAYING;
-            // printf("Transitioning to PLAYING \n\r");
+            current_state = STATE_PLAYING;
             break;
         }
-        case GAME_OVER: 
+        case STATE_GAME_OVER: 
         {
             user_input_timer_disable();
 
-            current_state = GAME_OVER;
-            // printf("Transitioning to GAME_OVER \n\r");
+            current_state = STATE_GAME_OVER;
             break;
         }
-        case IDLE:
+        case STATE_IDLE:
         {   
             user_input_timer_disable();
-            highscore_update();
 
-            current_state = IDLE;
-            // printf("Transitioning to IDLE \n\r");
+            current_state = STATE_IDLE;
             break;
         }
         default:

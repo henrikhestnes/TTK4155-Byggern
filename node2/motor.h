@@ -4,10 +4,11 @@
  */
 
 
-#ifndef MOTOR_H
-#define MOTOR_H
+#ifndef NODE2_MOTOR_H
+#define NODE2_MOTOR_H
 
 
+#include "microbit.h"
 #include <stdint.h>
 
 
@@ -71,8 +72,19 @@ void motor_run_joystick(int joystick_value);
 /**
  * @brief Drives the motor by reading the accelerometer output
  * from the microbit.
+ * 
+ * @param direction The direction the microbit is tilted. Varies between left, 
+ * right, and neutral.
  */
-void motor_run_microbit();
+void motor_run_microbit(acc_dir_t direction); 
+
+
+/**
+ * @brief Set the motor speed when controlling with the microbit.
+ * 
+ * @param speed Desired motor speed.
+ */
+void motor_set_microbit_speed(uint16_t speed);
 
 
 #endif

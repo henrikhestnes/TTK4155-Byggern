@@ -4,9 +4,8 @@
  */
 
 
-
-#ifndef DIFFICULTY_H
-#define DIFFICULTY_H
+#ifndef COMMON_DIFFICULTY_H
+#define COMMON_DIFFICULTY_H
 
 typedef enum {
     HARD,

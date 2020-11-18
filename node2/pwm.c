@@ -33,14 +33,14 @@ void pwm_init() {
 
     // assign clocks to respective channels: clock A for channel 5 (PIN45), clock B for channel 6 (PIN44)
     // waveform set to be left-aligned
-    PWM->PWM_CH_NUM[5].PWM_CMR = PWM_CMR_CPRE_CLKA;
-    PWM->PWM_CH_NUM[6].PWM_CMR = PWM_CMR_CPRE_CLKB;
+    PWM->PWM_CH_NUM[CHANNEL_PIN45].PWM_CMR = PWM_CMR_CPRE_CLKA;
+    PWM->PWM_CH_NUM[CHANNEL_PIN44].PWM_CMR = PWM_CMR_CPRE_CLKB;
     
     // set PIN45 to a period to 20 ms, giving a frequency of 50 Hz
-    PWM->PWM_CH_NUM[5].PWM_CPRD = PWM_CPRD_CPRD(CPRDA);
+    PWM->PWM_CH_NUM[CHANNEL_PIN45].PWM_CPRD = PWM_CPRD_CPRD(CPRDA);
 
     // set PIN44 to not initially have a pulse
-    PWM->PWM_CH_NUM[6].PWM_CPRD = PWM_CPRD_CPRD(0);
+    PWM->PWM_CH_NUM[CHANNEL_PIN44].PWM_CPRD = PWM_CPRD_CPRD(0);
 }
 
 

@@ -4,8 +4,8 @@
  */
 
 
-#ifndef PID_H
-#define PID_H
+#ifndef NODE2_PID_H
+#define NODE2_PID_H
 
 #include <stdint.h>
 

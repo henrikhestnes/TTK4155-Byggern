@@ -4,8 +4,8 @@
  */
 
 
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef NODE2_TIMER_H
+#define NODE2_TIMER_H
 
 
 #include <stdint.h>

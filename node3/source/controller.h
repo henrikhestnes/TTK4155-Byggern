@@ -13,7 +13,7 @@
 /**
  * @brief Enum that describes the tilting of the accelerometer.
  */
-typedef enum{
+typedef enum {
     ACC_MIDDLE = 1,
     ACC_LEFT,
     ACC_RIGHT
