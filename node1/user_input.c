@@ -41,19 +41,18 @@ static void interrupt_can_timer_init() {
 }
 
 
-void user_input_init(void) {
+void user_input_init() {
     adc_init();
 
     // set button pins to input
     DDRB &= ~(1 << RIGHT_BUTTON_PIN) & ~(1 << LEFT_BUTTON_PIN);
     DDRD &= ~(1 << JOYSTICK_BUTTON_PIN);
 
-    // interrupt_joystick_init();
     interrupt_can_timer_init();
 }
 
 
-JOYSTICK_POS user_input_joystick_pos(void) {
+JOYSTICK_POS user_input_joystick_pos() {
     JOYSTICK_POS pos;
     pos.x = adc_read(X_CHANNEL);
     pos.y = adc_read(Y_CHANNEL);

@@ -16,13 +16,13 @@
  * the ATMega162 to the ADC. Sets the frequency to half the
  * frequency of the CPU interal clock.
  */
-void adc_config_clock(void); 
+void adc_config_clock(); 
 
 
 /**
  * @brief Initiates the ADC by configuring the external clock.
  */
-void adc_init(void);
+void adc_init();
 
 
 /**

@@ -237,7 +237,7 @@ uint8_t mcp2515_write(uint8_t address, uint8_t data);
  * @brief Requests to send data from the MCP2515. Initiates 
  * the transmission of the data located in transmission buffer @c TX0.
  */
-void mcp2515_request_to_send(void);
+void mcp2515_request_to_send();
 
 
 /**
@@ -245,7 +245,7 @@ void mcp2515_request_to_send(void);
  * 
  * @return The contents of the MCP2515 status register.
  */
-uint8_t mcp2515_read_status(void);
+uint8_t mcp2515_read_status();
 
 
 /**
@@ -263,7 +263,7 @@ void mcp2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data);
 /**
  * @brief Resets the MCP2515.
  */
-void mcp2515_reset(void);
+void mcp2515_reset();
 
 
 /**

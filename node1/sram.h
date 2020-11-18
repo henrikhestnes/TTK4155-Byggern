@@ -15,7 +15,7 @@
  * @brief Initiates the external memory by enabling 
  * the required pins on the MCU.
  */
-void sram_init(void);
+void sram_init();
 
 
 /**
@@ -45,7 +45,7 @@ uint8_t sram_read(uint16_t addr);
  * @brief Performs a SRAM test with random writes and consequent reads. 
  * Prints the result using @c printf().
  */
-void sram_test(void);
+void sram_test();
 
 
 #endif

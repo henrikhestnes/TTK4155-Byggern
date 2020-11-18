@@ -2,7 +2,7 @@
 #include <avr/io.h>
 
 
-void spi_init(void){
+void spi_init(){
     // set SS, MOSI and SCK output, all others input
     DDRB |= (1 << PB4) | (1 << PB5) | (1 << PB7);
     DDRB &= ~(1 << PB1) & ~(1 << PB2) & ~(1 << PB3) & ~(1 << PB6);

@@ -16,7 +16,7 @@
  * 
  * @return The current FSM state, of data type @c FSM_STATE.
  */
-FSM_STATE fsm_get_state(void);
+FSM_STATE fsm_get_state();
 
 
 /**

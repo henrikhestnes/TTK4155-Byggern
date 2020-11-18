@@ -16,7 +16,7 @@
  * and setting the ATMega162 to be master node.
  * 
  */
-void spi_init(void);
+void spi_init();
 
 
 /**

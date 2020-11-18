@@ -51,10 +51,10 @@ void oled_go_to_line(int line){
 
 void oled_go_to_col(int col){
     if (0 <= col && col <= 127) {
-        // set lower 4 bits
+        // Set lower 4 bits
         oled_write_command(0x00 + (col & 0x0F));
 
-        // set upper 4 bits
+        // Set upper 4 bits
         oled_write_command(0x10 + ((col & 0xF0) >> 4));
     }
 }

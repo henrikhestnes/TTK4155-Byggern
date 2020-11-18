@@ -18,14 +18,14 @@
  * @brief Initiates the highscore by reading the highscore table
  * from the EEPROM memory.
  */
-void highscore_init(void);
+void highscore_init();
 
 
 /**
  * @brief Updates the highscore, by comparing any new set scores
  * to the highscore table.
  */
-void highscore_update(void);
+void highscore_update();
 
 
 /**
@@ -34,13 +34,13 @@ void highscore_update(void);
  * @return The highscore table, as an array with three elements of
  * type @c uint16_t.
  */
-uint16_t* highscore_get(void);
+uint16_t* highscore_get();
 
 
 /**
  * @brief Resets the highscore table, setting all highscores to 0.
  */
-void highscore_reset(void);
+void highscore_reset();
 
 
 /**

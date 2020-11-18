@@ -23,7 +23,7 @@ static void fsm_transmit_state(FSM_STATE state) {
 }
 
 
-FSM_STATE fsm_get_state(void) {
+FSM_STATE fsm_get_state() {
     return current_state;
 }
 

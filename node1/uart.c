@@ -30,7 +30,7 @@ unsigned char uart_recieve() {
     // wait for completed recieve
     while (!(UCSR0A & (1 << RXC0)));
 
-    // read data register
+    // return data register
     return UDR0;
 }
 

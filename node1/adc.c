@@ -9,7 +9,7 @@
 #define NUMBER_OF_CHANNELS 4
 
 
-void adc_config_clock(void) {
+void adc_config_clock() {
     // set PB0 to output PWM timer signal
     DDRB |= 1;
 
@@ -31,7 +31,7 @@ void adc_config_clock(void) {
 }
 
 
-void adc_init(void) {
+void adc_init() {
     adc_config_clock();
 }
 

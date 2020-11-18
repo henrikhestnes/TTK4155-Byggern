@@ -59,7 +59,7 @@ typedef struct {
  * configuring input pins for the button, and setting up a timer
  * for timed transmissions.
  */
-void user_input_init(void);
+void user_input_init();
 
 
 /**
@@ -68,7 +68,7 @@ void user_input_init(void);
  *
  * @return The joystick position.
  */
-JOYSTICK_POS user_input_joystick_pos(void);
+JOYSTICK_POS user_input_joystick_pos();
 
 
 /**
@@ -77,7 +77,7 @@ JOYSTICK_POS user_input_joystick_pos(void);
  *
  * @return The direction the joystick is pointing.
  */
-JOYSTICK_DIR user_input_joystick_dir(void);
+JOYSTICK_DIR user_input_joystick_dir();
 
 
 /**
@@ -86,7 +86,7 @@ JOYSTICK_DIR user_input_joystick_dir(void);
  *
  * @return The slider positions.
  */
-SLIDER_POS user_input_slider_pos(void);
+SLIDER_POS user_input_slider_pos();
 
 
 /**
@@ -95,13 +95,13 @@ SLIDER_POS user_input_slider_pos(void);
  *
  * @return The status of the left, right and joystick buttons.
  */
-BUTTONS user_input_buttons(void);
+BUTTONS user_input_buttons();
 
 
 /**
  * @brief Transmits all the input data over the CAN bus. 
  */
-void user_input_transmit(void);
+void user_input_transmit();
 
 
 /**

@@ -7,7 +7,7 @@
 #define BASE_ADDRESS_SRAM 0x1800
 
 
-void sram_init(void){
+void sram_init(){
     MCUCR |= (1 << SRE);
     SFIOR |= (1 << XMM2);
 }
@@ -26,7 +26,7 @@ uint8_t sram_read(uint16_t addr){
 }
 
 
-void sram_test(void)
+void sram_test()
 {
 	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
     uint16_t ext_ram_size = 0x800;
