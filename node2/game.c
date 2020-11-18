@@ -185,7 +185,7 @@ void game_run() {
         case MICROBIT_SPEED_CTRL:
         {
             ACC_DIR direction = microbit_dir();
-            if (difficulty_select = IMPOSSIBLE) {
+            if (difficulty_select == IMPOSSIBLE) {
                 if (direction == ACC_RIGHT) {
                     direction = ACC_LEFT;
                 }
