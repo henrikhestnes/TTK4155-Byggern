@@ -13,7 +13,7 @@
  */
 
 
-void led_set(void);
+void led_set();
 
 
 #endif

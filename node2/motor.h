@@ -12,13 +12,13 @@
 #include <stdint.h>
 
 
-#define DIR         PIO_PD10
-#define EN          PIO_PD9
-#define SEL         PIO_PD2
-#define NOT_RST     PIO_PD1
-#define NOT_OE      PIO_PD0
+#define DIR             PIO_PD10
+#define EN              PIO_PD9
+#define SEL             PIO_PD2
+#define NOT_RST         PIO_PD1
+#define NOT_OE          PIO_PD0
 
-#define DO0_IDX     1
+#define DO0_IDX             1
 
 #define MOTOR_TIMER_FREQ    50
 
@@ -27,19 +27,19 @@
  * @brief Initiates the motor by initiating the DAC, and enabling
  * the pins and clock used by the motor.
  */
-void motor_init(void);
+void motor_init();
 
 
 /**
  * @brief Disables the motor. Sets the speed to 0.
  */
-void motor_disable(void);
+void motor_disable();
 
 
 /**
  * @brief Enables the motor. Resets the PID errors.
  */
-void motor_enable(void);
+void motor_enable();
 
 
 /**
@@ -47,7 +47,7 @@ void motor_enable(void);
  * 
  * @return The read encoder value.
  */
-int motor_read_encoder(void);
+int motor_read_encoder();
 
 
 /**

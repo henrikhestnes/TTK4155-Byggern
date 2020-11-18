@@ -1,10 +1,14 @@
 #ifndef TIMER_H
 #define TIMER_H
+
+
 #include <stdint.h>
+
 
 #define TIMER0 ((NRF_TIMER_REG*)0x40008000)
 #define TIMER1 ((NRF_TIMER_REG*)0x40009000)
 #define TIMER2 ((NRF_TIMER_REG*)0x4000a000)
+
 
 typedef struct {
     /* Tasks */
@@ -32,5 +36,6 @@ typedef struct {
     volatile uint32_t RESERVED6[11];
     volatile uint32_t CC[4];
 } NRF_TIMER_REG;
+
 
 #endif

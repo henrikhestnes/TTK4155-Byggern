@@ -4,7 +4,6 @@
 #include "pid_controller.h"
 #include "sam/sam3x/include/sam.h"
 #include "../common/user_input.h"
-#include <math.h>
 
 
 #define ENCODER_DATA_MASK   (0xFF << DO0_IDX)
@@ -107,12 +106,12 @@ void motor_run_slider(int reference) {
     
     if (u > 0) {
         motor_set_direction(RIGHT);
+        motor_set_speed(u);
     }
     else {
         motor_set_direction(LEFT);
+        motor_set_speed(-u);
     }
-
-    motor_set_speed(abs(u));
 }
 
 
@@ -124,9 +123,8 @@ void motor_run_joystick(int joystick_value) {
         motor_set_direction(LEFT);
     }
 
-    // set motor speed
     uint16_t speed = (uint16_t) (0x4FF * abs(joystick_value) / 100);
-    dac_write(speed);
+    motor_set_speed(speed);
 }
 
 

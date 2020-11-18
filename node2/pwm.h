@@ -17,7 +17,7 @@
  * position, pin 45 to initially not have a pulse 
  * to play music later
  */
-void pwm_init(void);
+void pwm_init();
 
 
 /**

@@ -94,7 +94,6 @@ void game_init() {
 
 
 int game_count_fails() {
-
     uint16_t ir_level = adc_read();
 
     if ((ir_level < IR_TRESHOLD) && !counting_flag) {
@@ -155,8 +154,7 @@ void game_set_user_data(char* data) {
 }
 
 
-static void game_run() {
-
+void game_run() {
     switch (controller_select) {
         case SLIDER_POS_CTRL:
         {
@@ -204,7 +202,6 @@ static void game_run() {
             break;
     }
 
-
     if (game_count_fails()) {
         CAN_MESSAGE m = {
             .id = GAME_LIVES_LEFT_ID,
@@ -241,12 +238,4 @@ void game_reset_score() {
 
 void game_reset_lives_left() {
     lives_left = INITIAL_LIVES;
-}
-
-
-void TC0_Handler(void) {
-    game_run();
-
-    // clear interrupt flag
-    TC0->TC_CHANNEL[0].TC_SR;
 }

@@ -8,7 +8,7 @@
 
 
 void microbit_init() {
-    // enables the PIO to control the corresponding pins
+    // enable the PIO to control the corresponding pins
     PIOB->PIO_PER |= (MB_LEFT_PIN | MB_RIGHT_PIN | MB_BUTTON_PIN);
 
     PMC->PMC_PCR = PMC_PCR_EN | PMC_PCR_DIV_PERIPH_DIV_MCK | (ID_PIOB << PMC_PCR_PID_Pos);

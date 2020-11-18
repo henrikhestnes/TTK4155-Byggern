@@ -16,7 +16,6 @@ void fsm_transition_to(FSM_STATE state) {
     switch (state) {
         case STATE_MENU:
         {
-            // reset number of lives
             game_reset_lives_left();
             CAN_MESSAGE m = {
                 .id = GAME_LIVES_LEFT_ID,

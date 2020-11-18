@@ -1,6 +1,7 @@
 #include "accelerometer.h"
 #include "twi.h"
 
+
 #define ACCELEROMETER_ADDRESS   0x19
 
 #define CTRL_REG1_A             0x20
@@ -21,6 +22,7 @@
 #define FIFO_BOOT_NORMAL_MODE   0x00
 #define DISABLE_BOOT_PIN        0x00
 
+
 static void set_reg(uint8_t reg, uint8_t value){
     twi_write(ACCELEROMETER_ADDRESS, reg, 1, &value);
 }
@@ -32,6 +34,7 @@ static void sign_extend_12_bit(int16_t * p_number){
     }
 }
 
+
 void accelerometer_init(){
     twi_init();
     set_reg(CTRL_REG1_A, ENABLE_XYZ | DATA_RATE_100_HZ);
@@ -41,6 +44,7 @@ void accelerometer_init(){
     set_reg(CTRL_REG5_A, FIFO_BOOT_NORMAL_MODE);
     set_reg(CTRL_REG6_A, DISABLE_BOOT_PIN);
 }
+
 
 void accelerometer_read(int16_t * p_x, int16_t * p_y, int16_t * p_z){
     uint8_t data[6];

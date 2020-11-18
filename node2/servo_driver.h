@@ -12,7 +12,7 @@
  * @brief Initializes servo by setting PWM-signal, 
  * and sets position of servo to zero
  */
-void servo_init(void);
+void servo_init();
 
 
 /**

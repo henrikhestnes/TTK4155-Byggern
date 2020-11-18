@@ -12,7 +12,7 @@
  * @brief Initiates the solenoid by setting pin A0
  * on the shield as output, active low
  */
-void solenoid_init(void);
+void solenoid_init();
 
 
 /**

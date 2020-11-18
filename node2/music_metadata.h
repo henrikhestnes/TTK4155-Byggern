@@ -1,6 +1,6 @@
 /**
  * @file 
- * @brief Module for song notes
+ * @brief Module for song notes.
  */
 
 
@@ -9,13 +9,8 @@
 
 
 /**
- * @brief Frequencies of corresponding notes 
+ * @brief Frequencies of corresponding notes.
  */
-
-
-/*************************************************
- * Public Constants
- *************************************************/
 
 
 #define NOTE_B0  31
@@ -112,7 +107,7 @@
 
 
 /**
- * @brief Notes of Mii Theme
+ * @brief Notes of Mii Theme.
  */
 static const int mii_theme_notes[] = {
     // Mii Channel theme 
@@ -191,7 +186,7 @@ static const int mii_theme_notes[] = {
 
 
 /**
- * @brief Notes of Super Mario
+ * @brief Notes of Super Mario.
  */
 static const int super_mario_notes[] = {
     NOTE_E5,  8,  NOTE_E5,  8,  REST,     8,  NOTE_E5,  8,  REST,     8,  NOTE_C5,  8,  NOTE_E5,  8, //1
@@ -274,7 +269,7 @@ static const int super_mario_notes[] = {
 
 
 /**
- * @brief Notes of Harry Potter
+ * @brief Notes of Harry Potter.
  */
 int harry_potter_notes[] = {
     // Hedwig's theme fromn the Harry Potter Movies
@@ -319,7 +314,7 @@ int harry_potter_notes[] = {
 
 
 /**
- * @brief Notes of Savage Love
+ * @brief Notes of Savage Love.
  */
 static const int savage_love_notes[] = {
     NOTE_B4,  12, REST,     12,   NOTE_F4,  12,   REST,     12,   NOTE_E4,  12,   REST,     4,
@@ -329,15 +324,6 @@ static const int savage_love_notes[] = {
     NOTE_B4,  12, REST,     12,   NOTE_F4,  12,   REST,     12,   NOTE_E4,  12,   REST,     4,
     NOTE_G4,  12, NOTE_B5,  12,   NOTE_B5,  12,   NOTE_B5,  12,   NOTE_G4,  12,   NOTE_B5,  12, NOTE_B5, 12,  NOTE_B5, 12, 
     NOTE_C4,  8,  NOTE_F4,  8,    NOTE_E5,  8,    NOTE_F4,  8,    NOTE_G4,  8,    NOTE_B5,  8,  NOTE_B5, 8,   NOTE_B5, 8,   NOTE_B5, 8 
-};
-
-
-/**
- * @brief Notes of game over sound
- */
-const int game_over_notes[] = {                                              
-    NOTE_C4,  8, NOTE_B3, 8, NOTE_B3, 8, NOTE_G3, 8, NOTE_B3, 4, NOTE_E3, 4, NOTE_A3, 6, NOTE_B3, 6, NOTE_A3, 6, NOTE_GS3, 6, NOTE_AS3, 6, 
-    NOTE_GS3, 6, NOTE_G3, 8, NOTE_F3, 8, NOTE_G3, 4
 };
 
 

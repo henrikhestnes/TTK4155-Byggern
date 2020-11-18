@@ -15,7 +15,7 @@
  * @brief Initiates the DAC by setting its mode and clock source,
  * choosing channel, and configuring its PMC settings.
  */
-void dac_init(void);
+void dac_init();
 
 
 /**

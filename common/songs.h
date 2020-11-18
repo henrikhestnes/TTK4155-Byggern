@@ -13,7 +13,6 @@ typedef enum {
     MARIO,
     SAVAGE_LOVE,
     HARRY_POTTER,
-    GAME_OVER_SOUND,
     STOP
 } SONG;
 

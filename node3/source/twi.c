@@ -2,20 +2,22 @@
 #include "gpio.h"
 #include "timer.h"
 
-#define PIN_SCL 0
-#define PIN_SDA 30
+
+#define PIN_SCL                 0
+#define PIN_SDA                 30
 #define STANDARD_0_DISCONNECT_1 0x0600
-#define TWI_100_KBPS 0x01980000
-#define TWI_DISABLE 0
-#define TWI_ENABLE 5
+#define TWI_100_KBPS            0x01980000
+#define TWI_DISABLE             0
+#define TWI_ENABLE              5
 
-#define MODE_TIMER 0
-#define BITMODE_24_BIT 2
-#define FREQUENCY_2HZ 8000000
-#define FREQUENCY_100HZ 160000
-#define CLEAR_ON_COMPARE0 1
+#define MODE_TIMER              0
+#define BITMODE_24_BIT          2
+#define FREQUENCY_2HZ           8000000
+#define FREQUENCY_100HZ         160000
+#define CLEAR_ON_COMPARE0       1
 
-#define TWI0 ((NRF_TWI_REG*)0x40003000)
+#define TWI0                    ((NRF_TWI_REG*)0x40003000)
+
 
 typedef struct {
 	// Tasks
@@ -60,6 +62,7 @@ typedef struct {
 	volatile uint32_t ADDRESS;
 } NRF_TWI_REG;
 
+
 static void start_timer(uint32_t frequency){
     TIMER1->STOP = 1;
     TIMER1->CLEAR = 1;
@@ -74,13 +77,16 @@ static void start_timer(uint32_t frequency){
     TIMER1->START = 1;
 }
 
+
 static void start_watchdog(){
     start_timer(FREQUENCY_2HZ);
 }
 
+
 static uint8_t watchdog_expired(){
     return TIMER1->COMPARE[0];
 }
+
 
 static void recover_bus_from_halt(){
     TWI0->ENABLE = 0;
@@ -106,6 +112,7 @@ static void recover_bus_from_halt(){
 
     twi_init();
 }
+
 
 static uint8_t twi_read_with_watchdog(
     uint8_t slave_address,
@@ -160,6 +167,7 @@ static uint8_t twi_read_with_watchdog(
     return 1;
 }
 
+
 static uint8_t twi_write_with_watchdog(
     uint8_t slave_address,
     uint8_t start_register,
@@ -194,6 +202,7 @@ static uint8_t twi_write_with_watchdog(
     return 1;
 }
 
+
 void twi_init(){
     TWI0->ENABLE = TWI_DISABLE;
 
@@ -211,6 +220,7 @@ void twi_init(){
 
     TWI0->ENABLE = TWI_ENABLE;
 }
+
 
 void twi_read(
     uint8_t slave_address,
@@ -234,6 +244,7 @@ void twi_read(
         }
     }
 }
+
 
 void twi_write(
     uint8_t slave_address,

@@ -2,6 +2,7 @@
 #define ACCELEROMETER_H
 #include <stdint.h>
 
+
 /**
 * @file
 * @brief Module for accelerometer-fuctionality, based on microbit-task in
@@ -32,5 +33,6 @@ void accelerometer_init();
  * @param p_z Pointer to storage of Z reading after call.
  */
 void accelerometer_read(int16_t * p_x, int16_t * p_y, int16_t * p_z);
+
 
 #endif

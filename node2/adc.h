@@ -15,7 +15,7 @@
  * @brief Initiates the ADC by setting its mode and clock source,
  * and configuring its PMC settings.
  */
-void adc_init(void);
+void adc_init();
 
 
 /**

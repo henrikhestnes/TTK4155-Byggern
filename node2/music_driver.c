@@ -5,8 +5,6 @@
 #include "can/can_controller.h"
 #include "../common/songs.h"
 
-#define F_CPU 84000000
-
 
 #define MII_THEME_TEMPO     114
 #define MARIO_TEMPO         200
@@ -89,13 +87,6 @@ void music_play(SONG song){
         {
             int size = sizeof(harry_potter_notes)/sizeof(int);
             music_play_song(harry_potter_notes, size, HARRY_POTTER_TEMPO, 0.1);
-            break;
-        }
-
-        case GAME_OVER_SOUND:
-        {
-            int size = sizeof(game_over_notes)/sizeof(int);
-            music_play_song(game_over_notes, size, GAME_PVER_TEMPO, 0.1);
             break;
         }
 

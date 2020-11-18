@@ -20,7 +20,7 @@
  * enabling the timer for timed updating of the game signals, and
  * initiating the PID controller for the motor.
  */
-void game_init(void);
+void game_init();
 
 
 /**
@@ -29,7 +29,7 @@ void game_init(void);
  *
  * @return 1 if the IR beam is disrupted, 0 if not.
  */
-int game_count_fails(void);
+int game_count_fails();
 
 
 /**
@@ -57,6 +57,13 @@ void game_set_controller(CONTROLLER_SEL controller);
  * to be used in the game.
  */
 void game_set_difficulty(DIFFICULTY difficulty);
+
+
+/**
+ * @brief Runs the game by setting motor, servo and solenoid signals from
+ * the selected user input.
+ */
+void game_run();
 
 
 /**
