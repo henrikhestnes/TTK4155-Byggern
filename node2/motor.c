@@ -130,7 +130,7 @@ void motor_run_joystick(int joystick_value) {
 }
 
 
-void motor_run_microbit(acc_dir_t direction) {
+void motor_run_microbit(ACC_DIR direction) {
     switch(direction) {
         case(ACC_LEFT):
         {   

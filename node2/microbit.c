@@ -16,7 +16,7 @@ void microbit_init() {
 }
 
 
-const acc_dir_t microbit_dir() {
+const ACC_DIR microbit_dir() {
     if (PIOB->PIO_PDSR & MB_LEFT_PIN) {
         return ACC_LEFT;
     }

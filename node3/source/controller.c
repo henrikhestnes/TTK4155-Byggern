@@ -2,6 +2,7 @@
 #include "gpio.h"
 #include "button.h"
 
+
 #define THRESHOLD  200
 
 #define PIN_0   3
@@ -16,7 +17,7 @@ void controller_init_pins(){
 }
 
 
-const acc_dir_t controller_get_dir(const int16_t* x_pt){
+const ACC_DIR controller_get_dir(const int16_t* x_pt){
     if(*x_pt < -THRESHOLD){
         return ACC_RIGHT;
     }
@@ -29,7 +30,7 @@ const acc_dir_t controller_get_dir(const int16_t* x_pt){
 }
 
 
-void controller_set_pin_high(acc_dir_t* acc_dir){
+void controller_set_pin_high(ACC_DIR* acc_dir){
     switch(*acc_dir){
         case(ACC_LEFT):
             GPIO->OUTSET = (1 << PIN_0);
@@ -52,7 +53,7 @@ void controller_set_pin_high(acc_dir_t* acc_dir){
 
 void controller_send_dir(int16_t* x_pt){
 
-    acc_dir_t acc_dir = controller_get_dir(x_pt);
+    ACC_DIR acc_dir = controller_get_dir(x_pt);
 
     controller_set_pin_high(&acc_dir);
 }

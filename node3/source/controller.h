@@ -17,7 +17,7 @@ typedef enum {
     ACC_MIDDLE = 1,
     ACC_LEFT,
     ACC_RIGHT
-} acc_dir_t;
+} ACC_DIR;
 
 
 /**
@@ -31,12 +31,12 @@ void controller_init_pins(void);
  *
  * @param x_pt Pointer to x-value from accelerometer of type int16_t.
  *
- * @return values of type @c acc_dir_t;
+ * @return values of type @c ACC_DIR;
  *  LEFT if the accelerometer is tilted left;
  *  RIGHT if the accelerometer is tilted right;
  *  MIDDLE if the accelerometer is horizontal.
  */
-const acc_dir_t controller_get_dir(const int16_t* x_pt);
+const ACC_DIR controller_get_dir(const int16_t* x_pt);
 
 
 /**
@@ -44,7 +44,7 @@ const acc_dir_t controller_get_dir(const int16_t* x_pt);
  *
  * @param dir Pointer to dir of type dir_t.
  */
-void controller_set_pin_high(acc_dir_t* dir);
+void controller_set_pin_high(ACC_DIR* dir);
 
 
 /**

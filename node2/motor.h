@@ -76,7 +76,7 @@ void motor_run_joystick(int joystick_value);
  * @param direction The direction the microbit is tilted. Varies between left, 
  * right, and neutral.
  */
-void motor_run_microbit(acc_dir_t direction); 
+void motor_run_microbit(ACC_DIR direction); 
 
 
 /**

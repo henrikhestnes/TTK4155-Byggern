@@ -23,7 +23,7 @@ void microbit_init();
  *
  * @return Returns either ACC_LEFT, ACC_MIDDLE, ACC_RIGHT
  */
-const acc_dir_t microbit_dir();
+const ACC_DIR microbit_dir();
 
 
 /**
