@@ -271,7 +271,7 @@ static const int super_mario_notes[] = {
 /**
  * @brief Notes of Harry Potter.
  */
-int harry_potter_notes[] = {
+static const int harry_potter_notes[] = {
     // Hedwig's theme fromn the Harry Potter Movies
     // Socre from https://musescore.com/user/3811306/scores/4906610
 
@@ -316,15 +316,17 @@ int harry_potter_notes[] = {
 /**
  * @brief Notes of Savage Love.
  */
-static const int savage_love_notes[] = {
-    NOTE_B4,  12, REST,     12,   NOTE_F4,  12,   REST,     12,   NOTE_E4,  12,   REST,     4,
-    NOTE_G4,  12, NOTE_B5,  12,   NOTE_B5,  12,   NOTE_B5,  12,   NOTE_G4,  12,   NOTE_B5,  12, NOTE_B5, 12,  NOTE_B5, 12,
-    NOTE_B4,  12, REST,     12,   NOTE_F4,  12,   REST,     12,   NOTE_E4,  12,   REST,     4,
-    NOTE_G4,  12, NOTE_B5,  12,   NOTE_B5,  12,   NOTE_B5,  12,   NOTE_G4,  12,   NOTE_B5,  12, NOTE_B5, 12,  NOTE_B5, 12,
-    NOTE_B4,  12, REST,     12,   NOTE_F4,  12,   REST,     12,   NOTE_E4,  12,   REST,     4,
-    NOTE_G4,  12, NOTE_B5,  12,   NOTE_B5,  12,   NOTE_B5,  12,   NOTE_G4,  12,   NOTE_B5,  12, NOTE_B5, 12,  NOTE_B5, 12, 
-    NOTE_C4,  8,  NOTE_F4,  8,    NOTE_E5,  8,    NOTE_F4,  8,    NOTE_G4,  8,    NOTE_B5,  8,  NOTE_B5, 8,   NOTE_B5, 8,   NOTE_B5, 8 
-};
 
+static const int savage_love_notes[] = {
+    NOTE_AS4, 8,  REST,     16,   NOTE_F4,  8,    REST,     16,   NOTE_DS4, 8,    REST,     4,
+    NOTE_G4,  12, NOTE_AS4, 12,   NOTE_AS4, 12,   NOTE_AS4, 12,   NOTE_G4,  12,   NOTE_AS4, 12, NOTE_AS4,12,  NOTE_AS4,12,
+    NOTE_AS4, 8,  REST,     16,   NOTE_F4,  8,    REST,     16,   NOTE_DS4, 8,    REST,     4,
+    NOTE_G4,  12, NOTE_AS4, 12,   NOTE_AS4, 12,   NOTE_AS4, 12,   NOTE_G4,  12,   NOTE_AS4, 12, NOTE_C5, 12,  NOTE_AS4,12,
+    NOTE_AS4, 8,  REST,     16,   NOTE_F4,  8,    REST,     16,   NOTE_DS4, 8,    REST,     4,
+    NOTE_G4,  12, NOTE_AS4, 12,   NOTE_AS4, 12,   NOTE_AS4, 12,   NOTE_G4,  12,   NOTE_AS4, 12, NOTE_AS4,12,  NOTE_AS4,12,
+    NOTE_C5,  8,  REST,     16,   NOTE_F4,  8,    REST,     16,   NOTE_DS4, 8,    REST,     4,
+    NOTE_DS4, 12, NOTE_G4,  12,   NOTE_AS4, 12,   NOTE_AS4, 12,   NOTE_AS4, 12,   REST,     12,
+    NOTE_AS4, 12, NOTE_DS5, 12,   NOTE_D5,  12,   NOTE_C5,  8
+};
 
 #endif
